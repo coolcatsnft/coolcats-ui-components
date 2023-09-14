@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "../Styled";
 import { styledButtonPartial } from "../partials";
 import { CoolCatsUITheme } from "../constants";
 
@@ -15,30 +15,30 @@ export const ButtonTheme = (props: ButtonThemeType) => {
   return `
     ${styledButtonPartial}
 
-    ${$extended && `
+    ${typeof $extended !== 'undefined' ? `
       width: 100%;
-    `}
+    ` : ``}
 
-    ${$theme && `
+    ${typeof $theme !== 'undefined' ? `
       color: var(--cc-font-color-${$theme.toLowerCase()});
       background-color: var(--cc-color-${$theme.toLowerCase()});
-    `}
+    ` : ``}
 
-    ${$theme === CoolCatsUITheme.PRIMARY && `
+    ${typeof $theme !== 'undefined' && $theme === CoolCatsUITheme.PRIMARY ? `
       &:not(:active) {
         box-shadow: 4px 4px 0px 0px var(--cc-color-disabled);
       }
-    `}
+    ` : ``}
   `;
 };
 
-const StyledButton = styled.button<{ $extended?: boolean, $theme?: CoolCatsUITheme }>`
+const StyledButton = styled.button<ButtonType>`
   ${({ $extended, $theme }) => ButtonTheme({$extended, $theme})}
-`
+`;
 
 export function Button(props: ButtonType) {
   const [promising, setPromising] = useState(false);
-  const { onClick: propsOnClick, disabled, title } = props;
+  const { onClick: propsOnClick, disabled } = props;
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (propsOnClick) {
@@ -61,7 +61,7 @@ export function Button(props: ButtonType) {
 
 
   return (
-    <StyledButton {...props} onClick={onClick} disabled={disabled || promising} />
+    <StyledButton {...props as any} onClick={onClick} disabled={disabled || promising} />
   )
 }
 

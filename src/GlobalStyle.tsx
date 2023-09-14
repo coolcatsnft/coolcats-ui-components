@@ -5,7 +5,7 @@ const Variables = {
   radius: '20px',
   gap: '20px',
   'default-font': '-apple-system, BlinkMacSystemFont, Ubuntu, Helvetica Neue, sans-serif',
-  'default-font-size': '1rem',
+  'default-font-size': '16px',
 
 
   // Colours
@@ -50,10 +50,6 @@ export const GlobalStyle = createGlobalStyle`
   *::after {
     box-sizing: border-box;
     transition: all 0.3s;
-  }
-
-  body {
-    font-size: 62.5%;
   }
 `;
 

@@ -92,6 +92,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@types/react-test-renderer": "18.0.0",
+    "@types/styled-components": "^5.1.27",
     "@typescript-eslint/eslint-plugin": "6.5.0",
     "@typescript-eslint/parser": "6.5.0",
     "babel-loader": "9.1.3",
@@ -135,6 +136,6 @@
   },
   "dependencies": {
     "cool-cats-ui": "file:.yalc/cool-cats-ui",
-    "styled-components": "^6.0.8"
+    "styled-components": "^5.3.6"
   }
 }
