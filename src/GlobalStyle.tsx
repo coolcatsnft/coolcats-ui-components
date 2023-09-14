@@ -35,7 +35,7 @@ const Variables = {
   'font-color-outlineblack': 'white',
 };
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   :root {
     ${Object.entries(Variables).map(([k, v]) => `--cc-${k}: var(--cc-theme-${k}, ${v});`)}
   }

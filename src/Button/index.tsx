@@ -27,7 +27,7 @@ export type ButtonType = React.ComponentProps<"button"> & {
   $theme?: CoolCatsUITheme
 }
 
-export default function Button(props: ButtonType) {
+export function Button(props: ButtonType) {
   const [promising, setPromising] = useState(false);
   const { onClick: propsOnClick, disabled, title } = props;
 
@@ -55,3 +55,5 @@ export default function Button(props: ButtonType) {
     <StyledButton {...props} onClick={onClick} disabled={disabled || promising} />
   )
 }
+
+export default Button;
