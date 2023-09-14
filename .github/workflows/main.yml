@@ -27,7 +27,7 @@ jobs:
         run: npm install --frozen-lockfile
 
       - name: Check types
-        run: npm rnun type-check
+        run: npm run type-check
 
       - name: Check linting
         run: npm run lint
