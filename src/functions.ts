@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css } from 'styled-components';
 
 export function lineClamp(lines: number) {
   return css`
@@ -8,4 +8,4 @@ export function lineClamp(lines: number) {
     overflow: hidden;
     text-overflow: ellipsis;
   `
-}
+};

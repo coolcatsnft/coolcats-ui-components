@@ -13,8 +13,6 @@
     "dev": "npm run build --watch",
     "build": "tsup --onSuccess \"npm run link:self\"",
     "type-check": "tsc",
-    "lint": "eslint --ignore-path .gitignore \"{src,tests}/**/*.+(ts|js|tsx)\"",
-    "lint:fix": "npm run lint --fix && prettier --write .",
     "commit": "cz",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
@@ -51,12 +49,6 @@
   "files": [
     "dist"
   ],
-  "lint-staged": {
-    "./{src,tests}/**/*.{ts,js,jsx,tsx}": [
-      "eslint --ignore-path .gitignore --fix"
-    ],
-    "*": "prettier --write"
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/@ryansonshine/cz-conventional-changelog"
