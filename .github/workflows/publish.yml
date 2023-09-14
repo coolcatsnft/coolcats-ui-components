@@ -20,20 +20,20 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: lts/*
-          cache: 'yarn'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm install --frozen-lockfile
 
       - name: Build and Deploy Storybook
-        run: yarn deploy-storybook --ci
+        run: npm run deploy-storybook --ci
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
 
       # - name: Build and publish to npm
       #   if: github.ref == 'refs/tags/v*' # Only run on version tags
       #   run: |
-      #     yarn build
+      #     npm build
       #     npm login --registry=https://registry.npmjs.org/ --scope=your-scope
       #     npm publish
       #   env:
