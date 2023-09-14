@@ -3,29 +3,38 @@ import styled, { css } from "styled-components";
 import { styledButtonPartial } from "../partials";
 import { CoolCatsUITheme } from "../constants";
 
-const StyledButton = styled.button<{ $extended?: boolean, $theme?: CoolCatsUITheme }>`
-  ${styledButtonPartial}
-
-  ${({ $extended }) => $extended && css`
-    width: 100%;
-  `}
-
-  ${({ $theme }) => $theme && css`
-    color: var(--cc-font-color-${$theme.toLowerCase()});
-    background-color: var(--cc-color-${$theme.toLowerCase()});
-  `}
-
-  ${({ $theme }) => $theme === CoolCatsUITheme.PRIMARY && css`
-    &:not(:active) {
-      box-shadow: 4px 4px 0px 0px var(--cc-color-disabled);
-    }
-  `}
-`
-
-export type ButtonType = React.ComponentProps<"button"> & {
+export type ButtonThemeType = {
   $extended?: boolean;
   $theme?: CoolCatsUITheme
 }
+
+export type ButtonType = React.ComponentProps<"button"> & ButtonThemeType;
+
+export const ButtonTheme = (props: ButtonThemeType) => {
+  const { $extended, $theme } = props;
+  return `
+    ${styledButtonPartial}
+
+    ${$extended && `
+      width: 100%;
+    `}
+
+    ${$theme && `
+      color: var(--cc-font-color-${$theme.toLowerCase()});
+      background-color: var(--cc-color-${$theme.toLowerCase()});
+    `}
+
+    ${$theme === CoolCatsUITheme.PRIMARY && `
+      &:not(:active) {
+        box-shadow: 4px 4px 0px 0px var(--cc-color-disabled);
+      }
+    `}
+  `;
+};
+
+const StyledButton = styled.button<{ $extended?: boolean, $theme?: CoolCatsUITheme }>`
+  ${({ $extended, $theme }) => ButtonTheme({$extended, $theme})}
+`
 
 export function Button(props: ButtonType) {
   const [promising, setPromising] = useState(false);

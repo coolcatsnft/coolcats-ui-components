@@ -134,6 +134,7 @@
     "yaml": ">=2.2.2"
   },
   "dependencies": {
+    "cool-cats-ui": "file:.yalc/cool-cats-ui",
     "styled-components": "^6.0.8"
   }
 }
