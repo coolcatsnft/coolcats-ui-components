@@ -65,8 +65,48 @@ export const styledButtonPartial = `
 
   &:active {
     &:not([disabled]) {
-      box-shadow: 0px 0px 0px 0px var(--cc-color-primary);
+      box-shadow: none;
       transform: translateX(4px) translateY(4px);
     }
+  }
+`;
+
+export const styledCircleButtonPartial = `
+  ${styledButtonPartial}
+  height: 44px;
+  width: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding: 0;
+    
+  svg {
+    height: 100%;
+    width: 100%;
+    path {
+      fill: var(--cc-color-primary);
+    }
+  }
+
+  > svg,
+  > i {
+    height: 24px;
+    width: 24px;
+    padding: 0;
+  }
+
+  &[disabled] {
+    i {
+      svg {
+        path {
+          fill: var(--cc-color-disabled);
+        }
+      }
+    }
+  }
+
+  span {
+    display: none;
   }
 `;

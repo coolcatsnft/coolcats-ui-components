@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import styled from "../Styled";
-import { styledButtonPartial } from "../partials";
+import { styledButtonPartial, styledCircleButtonPartial } from "../partials";
 import { CoolCatsUITheme } from "../constants";
 
 export type ButtonThemeType = {
   $extended?: boolean;
-  $theme?: CoolCatsUITheme
+  $theme?: CoolCatsUITheme;
+  $circle?: boolean;
 }
 
 export type ButtonType = React.ComponentProps<"button"> & ButtonThemeType;
 
 export const ButtonTheme = (props: ButtonThemeType) => {
-  const { $extended, $theme } = props;
+  const { $extended, $theme, $circle } = props;
   return `
-    ${styledButtonPartial}
+    ${$circle ===  true ? `${styledCircleButtonPartial}`: `${styledButtonPartial}`}
 
-    ${typeof $extended !== 'undefined' ? `
+    ${$extended === true ? `
       width: 100%;
     ` : ``}
 
@@ -33,10 +34,10 @@ export const ButtonTheme = (props: ButtonThemeType) => {
 };
 
 const StyledButton = styled.button<ButtonType>`
-  ${({ $extended, $theme }) => ButtonTheme({$extended, $theme})}
+  ${({ $extended, $theme, $circle }) => ButtonTheme({$extended, $theme, $circle})}
 `;
 
-export function Button(props: ButtonType) {
+export const Button = forwardRef((props: ButtonType, ref) => {
   const [promising, setPromising] = useState(false);
   const { onClick: propsOnClick, disabled } = props;
 
@@ -59,10 +60,9 @@ export function Button(props: ButtonType) {
     return Promise.resolve();
   }
 
-
   return (
-    <StyledButton {...props as any} onClick={onClick} disabled={disabled || promising} />
+    <StyledButton {...props as any} ref={ref} onClick={onClick} disabled={disabled || promising} />
   )
-}
+});
 
 export default Button;

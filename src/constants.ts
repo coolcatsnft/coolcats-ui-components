@@ -49,5 +49,6 @@ export enum CoolCatsUITheme {
   YELLOW = 'YELLOW',
   BLUECAT = 'BLUECAT',
   JORED = 'JORED',
-  ARDIGREY = 'ARDIGREY'
+  ARDIGREY = 'ARDIGREY',
+  WHITE = 'WHITE'
 }
