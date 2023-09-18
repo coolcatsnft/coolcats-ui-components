@@ -3,13 +3,18 @@ import { Meta, StoryFn } from '@storybook/react';
 import { 
   ArrowLeftIcon, 
   ArrowRightIcon, 
+  BackgroundIcon, 
+  BottomIcon, 
+  CharacterIcon, 
   CloseIcon, 
   CopyIcon, 
   CrossIcon,
   DiscordIcon,
   DownloadIcon,
+  EffectIcon,
   EqualsIcon,
   EtherscanIcon,
+  FaceIcon,
   InstagramIcon,
   LinkedInIcon,
   MagicIcon,
@@ -23,8 +28,11 @@ import {
   RefreshIcon,
   SearchIcon,
   ShareIcon,
+  ShoesIcon,
+  SidekickIcon,
   ThreadsIcon,
   TiktokIcon,
+  TopIcon,
   TwitchIcon,
   TwitterIcon,
   VolumeIcon,
@@ -127,3 +135,27 @@ export const WalletConnect = Template29.bind({});
 
 const Template30: StoryFn<typeof YoutubeIcon> = (args) => <YoutubeIcon {...args} />; 
 export const Youtube = Template30.bind({});
+
+const Template31: StoryFn<typeof BackgroundIcon> = (args) => <BackgroundIcon {...args} />; 
+export const Background = Template31.bind({});
+
+const Template32: StoryFn<typeof BottomIcon> = (args) => <BottomIcon {...args} />; 
+export const Bottom = Template32.bind({});
+
+const Template33: StoryFn<typeof CharacterIcon> = (args) => <CharacterIcon {...args} />; 
+export const Character = Template33.bind({});
+
+const Template34: StoryFn<typeof EffectIcon> = (args) => <EffectIcon {...args} />; 
+export const Effect = Template34.bind({});
+
+const Template35: StoryFn<typeof FaceIcon> = (args) => <FaceIcon {...args} />; 
+export const Face = Template35.bind({});
+
+const Template36: StoryFn<typeof ShoesIcon> = (args) => <ShoesIcon {...args} />; 
+export const Shoes = Template36.bind({});
+
+const Template37: StoryFn<typeof SidekickIcon> = (args) => <SidekickIcon {...args} />; 
+export const Sidekick = Template37.bind({});
+
+const Template38: StoryFn<typeof TopIcon> = (args) => <TopIcon {...args} />; 
+export const Top = Template38.bind({});
