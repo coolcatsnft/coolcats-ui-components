@@ -4,6 +4,7 @@ import {
   ArrowLeftIcon, 
   ArrowRightIcon, 
   BackgroundIcon, 
+  BorderIcon, 
   BottomIcon, 
   CharacterIcon, 
   CloseIcon, 
@@ -159,3 +160,6 @@ export const Sidekick = Template37.bind({});
 
 const Template38: StoryFn<typeof TopIcon> = (args) => <TopIcon {...args} />; 
 export const Top = Template38.bind({});
+
+const Template39: StoryFn<typeof BorderIcon> = (args) => <BorderIcon {...args} />; 
+export const Border = Template39.bind({});

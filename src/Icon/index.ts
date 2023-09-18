@@ -36,4 +36,5 @@ export { default as TopIcon } from './Top';
 export { default as ShoesIcon } from './Shoes';
 export { default as BottomIcon } from './Bottom';
 export { default as FaceIcon } from './Face';
+export { default as BorderIcon } from './Border';
 export { default as Svg, SvgProps } from './Svg';
