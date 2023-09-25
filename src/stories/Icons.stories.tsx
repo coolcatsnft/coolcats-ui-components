@@ -11,6 +11,7 @@ import {
   CopyIcon, 
   CrossIcon,
   DiscordIcon,
+  DotsIcon,
   DownloadIcon,
   EffectIcon,
   EqualsIcon,
@@ -163,3 +164,6 @@ export const Top = Template38.bind({});
 
 const Template39: StoryFn<typeof BorderIcon> = (args) => <BorderIcon {...args} />; 
 export const Border = Template39.bind({});
+
+const Template40: StoryFn<typeof DotsIcon> = (args) => <DotsIcon {...args} />; 
+export const Dots = Template40.bind({});
