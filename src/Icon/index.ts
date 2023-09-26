@@ -38,4 +38,5 @@ export { default as BottomIcon } from './Bottom';
 export { default as FaceIcon } from './Face';
 export { default as BorderIcon } from './Border';
 export { default as DotsIcon } from './Dots';
+export { default as SettingIcon } from './Setting';
 export { default as Svg, SvgProps } from './Svg';

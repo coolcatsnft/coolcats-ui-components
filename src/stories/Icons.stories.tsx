@@ -29,6 +29,7 @@ import {
   QuestionIcon,
   RefreshIcon,
   SearchIcon,
+  SettingIcon,
   ShareIcon,
   ShoesIcon,
   SidekickIcon,
@@ -167,3 +168,6 @@ export const Border = Template39.bind({});
 
 const Template40: StoryFn<typeof DotsIcon> = (args) => <DotsIcon {...args} />; 
 export const Dots = Template40.bind({});
+
+const Template41: StoryFn<typeof SettingIcon> = (args) => <SettingIcon {...args} />; 
+export const Setting = Template41.bind({});
