@@ -24,6 +24,7 @@ import {
   MetamaskIcon,
   MinusIcon,
   OpenseaIcon,
+  PantsIcon,
   PencilIcon,
   PlusIcon,
   QuestionIcon,
@@ -171,3 +172,6 @@ export const Dots = Template40.bind({});
 
 const Template41: StoryFn<typeof SettingIcon> = (args) => <SettingIcon {...args} />; 
 export const Setting = Template41.bind({});
+
+const Template42: StoryFn<typeof PantsIcon> = (args) => <PantsIcon {...args} />; 
+export const Pants = Template42.bind({});
