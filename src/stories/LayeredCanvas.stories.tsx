@@ -117,16 +117,16 @@ const Template5: StoryFn<typeof LayeredCanvas> = (args) => {
       {...args}
       layers={[
         {
-          src: '/cc-arms.png'
+          src: 'cc-arms.png'
         },
         {
-          src: '/cc-body.png'
+          src: 'cc-body.png'
         },
         {
-          src: '/cc-head.png'
+          src: 'cc-head.png'
         },
         {
-          src: '/cc-whiskers.png'
+          src: 'cc-whiskers.png'
         }
       ]}
       height={800}
