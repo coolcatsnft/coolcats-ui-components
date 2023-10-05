@@ -253,7 +253,9 @@ export const generateLayeredCanvas = (
     return canv;
   };
 
-  const ctx = (canvas || canvasCreate(width, height)).getContext('2d');
+
+  const layeredCanvas = (canvas || canvasCreate(width, height));
+  const ctx = layeredCanvas.getContext('2d');
 
   layers.forEach((l) => {
     const lWidth = l.width || width;
@@ -405,5 +407,5 @@ export const generateLayeredCanvas = (
     );
   })
 
-  return canvas;
+  return layeredCanvas;
 }
