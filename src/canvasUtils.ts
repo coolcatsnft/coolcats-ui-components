@@ -1,12 +1,15 @@
 import { PropsWithChildren } from "react";
 
-export type CanvasConfig = PropsWithChildren & {
-  layers: CanvasLayer[];
+export type BaseCanvasConfig = PropsWithChildren & {
   height: number;
   width: number;
   debug?: boolean;
   reset?: boolean;
   bordered?: boolean;
+}
+
+export type CanvasConfig = BaseCanvasConfig & {
+  layers: CanvasLayer[];
 }
 
 export type CanvasLayer = {
@@ -30,6 +33,7 @@ export type CanvasLayer = {
   maxLimit?: number;
   color?: string;
   shadow?: boolean;
+  canvasCallbacks?: Function[]
 }
 
 const imgCache = {} as any;
@@ -39,6 +43,17 @@ const hex = (arrayBuffer: any) => {
     new Uint8Array(arrayBuffer),
     n => n.toString(16).padStart(2, "0")
   ).join("");
+}
+
+/**
+ * @returns {HTMLCanvasElement}
+ */
+export function createClientCanvas(width: number, height: number) {
+  const canv = document.createElement('canvas')
+  canv.width = width;
+  canv.height = height;
+
+  return canv;
 }
 
 /**
@@ -373,6 +388,12 @@ export const generateLayeredCanvas = (
         tempCanvas.width,
         tempCanvas.height
       );
+    }
+
+    if (l.canvasCallbacks) {
+      l.canvasCallbacks.forEach(effect => {
+        effect(layerCanvas, layerCtx);
+      })
     }
   
     ctx.drawImage(

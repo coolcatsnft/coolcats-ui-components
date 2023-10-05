@@ -57,7 +57,7 @@ export const LayeredCanvas = forwardRef((props: CanvasConfig, ref: any) => {
             })
           }
   
-          return Promise.resolve(l)
+          return Promise.resolve(l);
       })).then((newLayers) => {
         setLayers(newLayers as any);
       });

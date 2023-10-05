@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import LayeredCanvas from '../LayeredCanvas';
 
 export default {
-  title: 'LayeredCanvas',
+  title: 'Layered Canvas',
   component: LayeredCanvas,
   argTypes: {
     bordered: { control: 'boolean' }
