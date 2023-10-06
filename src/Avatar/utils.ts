@@ -67,12 +67,20 @@ export function createAvatarCanvasLayers(
     baseUrl
   } = config;
 
+  const hasSidekick = traits.find(t => t.traitType === TraitType.SIDEKICK && t.name !== 'no sidekick');
+
   // Map out traits into the Layered canvas config.  
   // This may require reducing as some layers will have multiple images
   const sortedTraits = traits.map((trait: Trait) => {
     // Apply any trait mutations necessary
     // Mutate any images with mutate rules
     return evaluateTraitMutateRules(trait, traits);
+  }).filter(t => {
+    if (hasSidekick && view === AvatarView.FRONT) {
+      return t.traitType !== TraitType.SIDEKICK;
+    }
+
+    return true;
   }).map((trait: Trait) => {
     if (view === AvatarView.FRONT && trait.traitType !== TraitType.BACKGROUND) {
       return {
@@ -81,6 +89,17 @@ export function createAvatarCanvasLayers(
         offsetX: ((width || CANVAS_WIDTH) * -1) / 2,
         width: (width || CANVAS_WIDTH) * 2,
         height: (height || CANVAS_HEIGHT) * 2
+      }
+    }
+
+    if (hasSidekick 
+      && view === AvatarView.FULL 
+      && trait.traitType !== TraitType.BACKGROUND 
+      && trait.traitType !== TraitType.SIDEKICK
+    ) {
+      return {
+        ...trait,
+        offsetX: (width || CANVAS_WIDTH) * 0.11
       }
     }
     return trait;

@@ -4,6 +4,7 @@ import AvatarCanvas from '../AvatarCanvas';
 import { Avatar, AvatarView, TraitRarity, TraitType } from '../Avatar/types';
 
 const pantsTraits = [
+  '',
   'astro',
   'astro-black',
   'astro-orange',
@@ -108,6 +109,10 @@ const shoeTraits = [
   '', 'astro','astro-black','astro-orange','bandana-green','bandana-purple','bandana-red','baseball-blue','baseball-red','buttondown-black-flannel','buttondown-blue-flannel','buttondown-green','buttondown-red-flannel','buttondown-tan','chain','combat-black','combat-green','cowboy-black','cowboy-brown','deepsea-bronze','deepsea-orange','epaulette-black','epaulette-red','epaulette-white','gown-black','gown-purple','gown-white','hoodie-black','hoodie-purple','hoodie-red','knight','knight-black','knight-leather','labcoat','lederhosen','monk','mononoke','ninja-black','ninja-blue','ninja-red','nurse','overalls-blue','overalls-flannel','overalls-pink','overalls-red','overalls-yellow','pirate-black','pirate-red','punk','robe-blue','robe-king','robe-red','robe-white','shirt-bowtie','shirt-white','shirt-yellow','sweater-black','sweater-green-chain','sweater-orange','sweater-pink','tanktop-orange','tanktop-pink','tanktop-sailor-black','tanktop-sailor-blue','tanktop-sailor-red','tanktop-tattoo','tanktop-white','toga','tshirt-blue','tshirt-green','tshirt-metal','tshirt-pink','tshirt-red','tshirt-white','tshirt-yellow','viking-brown','viking-navy','winter-blue','winter-red','work-blue','work-red'
 ]
 
+const sidekicks = [
+  '', 'bones', 'milo', 'swordsman-bones-red'
+];
+
 export default {
   title: 'Custom Avatar',
   component: AvatarCanvas,
@@ -117,6 +122,7 @@ export default {
     shirt: '',
     pants: '',
     shoes: '',
+    sidekick: '',
     baseUrl: 'https://content.coolcatsnft.com/avatar/cat/$traitType/',
     view: 'FULL',
     bordered: false
@@ -148,6 +154,10 @@ export default {
     shoes: {
       control: 'select',
       options: shoeTraits
+    },
+    sidekick: {
+      control: 'select',
+      options: sidekicks
     }
   }
   
@@ -192,7 +202,7 @@ const BlueCatTraits = [
 
 const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   
-  const { pants, shirt, face, shoes, hat } = args as any;
+  const { pants, shirt, face, shoes, hat, sidekick } = args as any;
   const traits = BlueCatTraits.concat(
     hat ? [
       {
@@ -268,6 +278,22 @@ const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
         images: [
           {
             uri: `${shoes}-shoes.png`
+          }
+        ],
+        rules: []
+      }
+    ] : []
+  ).concat(
+    sidekick ? [
+      {
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.SIDEKICK,
+        name: sidekick,
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: `${sidekick}.png`
           }
         ],
         rules: []

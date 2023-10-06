@@ -5,7 +5,13 @@ import { Avatar, AvatarView, TraitRarity, TraitType } from '../Avatar/types';
 
 export default {
   title: 'Avatar',
-  component: AvatarCanvas
+  component: AvatarCanvas,
+  args: {
+    baseUrl: 'https://content.coolcatsnft.com/avatar/cat2000x2000/$traitType/',
+    width: 400,
+    height: 400,
+    view: 'FULL'
+  }
 } as Meta<typeof AvatarCanvas>;
 
 const BlueCatTraits = [
@@ -62,8 +68,6 @@ const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
     <AvatarCanvas 
       {...args}
       traits={BlueCatTraits}
-      height={400}
-      width={400}
     />
   )
 }
@@ -187,13 +191,57 @@ const Cat4710Template: StoryFn<typeof AvatarCanvas> = (args) => {
     <AvatarCanvas 
       {...args}
       traits={Cat4710Traits}
-      height={400}
-      width={400}
     />
   )
 }
 
 export const Cat4710 = Cat4710Template.bind({});
+
+const WithBonesTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      traits={Cat4710Traits.concat([{
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.SIDEKICK,
+        name: 'bones',
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: 'bones.png'
+          }
+        ],
+        rules: []
+      }])}
+    />
+  )
+}
+
+export const WithBones = WithBonesTemplate.bind({});
+
+const WithMiloTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      traits={Cat4710Traits.concat([{
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.SIDEKICK,
+        name: 'milo',
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: 'milo.png'
+          }
+        ],
+        rules: []
+      }])}
+    />
+  )
+}
+
+export const WithMilo = WithMiloTemplate.bind({});
 
 const BlackAndWhiteRules = [
   {
@@ -219,8 +267,6 @@ const BlackAndWhiteTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
         ],
         rules: BlackAndWhiteRules
       }])}
-      height={400}
-      width={400}
     />
   )
 }
@@ -251,8 +297,6 @@ const InverseTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
         ],
         rules: InverseRules
       }])}
-      height={400}
-      width={400}
     />
   )
 }
@@ -264,8 +308,6 @@ const GownWhiteTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
     <AvatarCanvas 
       {...args}
       traits={GownTraits}
-      height={400}
-      width={400}
     />
   )
 }
@@ -277,8 +319,6 @@ const GownShoesTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
     <AvatarCanvas 
       {...args}
       traits={Cat4710Traits.filter(t => t.traitType !== TraitType.SHOES).concat(GownTraits.filter(t => t.traitType === TraitType.SHOES))}
-      height={400}
-      width={400}
     />
   )
 }
