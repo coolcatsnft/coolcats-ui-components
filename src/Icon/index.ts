@@ -40,4 +40,7 @@ export { default as BorderIcon } from './Border';
 export { default as DotsIcon } from './Dots';
 export { default as SettingIcon } from './Setting';
 export { default as PantsIcon } from './Pants';
+export { default as JourneysIcon } from './Journeys';
+export { default as MeowpadIcon } from './Meowpad';
+export { default as MenuIcon } from './Menu';
 export { default as Svg } from './Svg';

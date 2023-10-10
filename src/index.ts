@@ -12,5 +12,7 @@ export * from './Dots';
 export * from './Label';
 export * from './LayeredCanvas';
 export * from './AvatarCanvas';
+export * from './Header';
+export * from './IconButton';
 
 export * as AvatarTypes from './Avatar/types';

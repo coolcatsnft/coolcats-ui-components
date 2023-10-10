@@ -6,7 +6,8 @@ const Variables = {
   gap: '20px',
   'default-font': '-apple-system, BlinkMacSystemFont, Ubuntu, Helvetica Neue, sans-serif',
   'default-font-size': '16px',
-
+  'mobile-header-height': '60px',
+  'desktop-header-height': '90px',
 
   // Colours
   'color-white': 'white',
