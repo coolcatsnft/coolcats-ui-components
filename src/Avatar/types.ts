@@ -94,6 +94,7 @@ export type Trait = {
   contract?: TraitContract;
   images: TraitImage[];
   displayImage?: TraitImage;
+  displayName?: string;
   additional?: boolean;
   rules?: TraitRule[];
   description?: string;
