@@ -1,4 +1,4 @@
-import { AvatarView, CreateAvatarTraitsConfig, Trait, TraitImage, TraitRule, TraitRuleType, TraitType } from "./types";
+import { AvatarView, CreateAvatarTraitsConfig, Trait, TraitImage, TraitRule, TraitRuleFunction, TraitRuleType, TraitType } from "./types";
 import { effects, mutations } from './rules'
 import { CanvasLayer } from "../canvasUtils";
 
@@ -72,9 +72,32 @@ export function createAvatarCanvasLayers(
   // Map out traits into the Layered canvas config.  
   // This may require reducing as some layers will have multiple images
   const sortedTraits = traits.map((trait: Trait) => {
+    // Apply default rules
+    return {
+      ...trait,
+      rules: (trait.rules || []).concat(
+        trait.type === 'CAT' && trait.traitType === TraitType.PANTS ? [
+          {
+            fn: TraitRuleFunction.MOVE_PANTS_OVER_SHIRT,
+            type: TraitRuleType.MUTATE
+          }
+        ] : []
+      ).concat(
+        trait.type === 'CAT' && trait.traitType === TraitType.PANTS ? [
+          {
+            fn: TraitRuleFunction.MOVE_PANTS_UNDER_SHIRT,
+            type: TraitRuleType.MUTATE
+          }
+        ] : []
+      )
+    }
+  }).map((trait: Trait) => {
     // Apply any trait mutations necessary
     // Mutate any images with mutate rules
-    return evaluateTraitMutateRules(trait, traits);
+    return evaluateTraitMutateRules(
+      trait,
+      traits
+    );
   }).filter(t => {
     if (hasSidekick && view === AvatarView.FRONT) {
       return t.traitType !== TraitType.SIDEKICK;

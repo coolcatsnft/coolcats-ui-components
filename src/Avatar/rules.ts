@@ -63,6 +63,35 @@ export const EFFECT_INVERSE = (canvas: HTMLCanvasElement, ctx: CanvasRenderingCo
   ctx.putImageData(imgData, 0, 0);
 };
 
+
+const ROBES = ['robe white', 'robe king', 'robe blue', 'robe red', 'toga'];
+const PANTS = ['lederhosen', 'nurse', 'overalls-yellow', 'overalls-blue', 'overalls-flannel', 'overalls-pink', 'overalls-red'];
+
+export const MOVE_PANTS_UNDER_SHIRT = (trait: Trait, traits: Trait[]) => {
+  if (trait.traitType === TraitType.PANTS && traits.find(t => t.traitType === TraitType.SHIRT && ROBES.includes(t.name))) {
+    return {
+      ...trait,
+      weight: 2
+    }
+  }
+
+  return trait;
+};
+
+export const MOVE_PANTS_OVER_SHIRT = (trait: Trait, traits: Trait[]) => {
+  if (trait.traitType === TraitType.PANTS 
+    && PANTS.includes(trait.name) 
+    && !traits.find(t => t.traitType === TraitType.SHIRT && ROBES.includes(t.name.split('-').join(' ')))
+  ) {
+    return {
+      ...trait,
+      weight: 4.5
+    }
+  }
+
+  return trait;
+};
+
 export const HIDE_VISOR_IF = (trait: Trait, traits: Trait[]) => {
   if (traits.find(t => t.traitType === TraitType.FACE && t.name.includes('tvface'))) {
     return {
@@ -189,7 +218,9 @@ export const effects = {
 } as TraitRuleFunctionMap;
 
 export const mutations = {
-  [TraitRuleFunction.HIDE_VISOR]: HIDE_VISOR_IF
+  [TraitRuleFunction.HIDE_VISOR]: HIDE_VISOR_IF,
+  [TraitRuleFunction.MOVE_PANTS_UNDER_SHIRT]: MOVE_PANTS_UNDER_SHIRT,
+  [TraitRuleFunction.MOVE_PANTS_OVER_SHIRT]: MOVE_PANTS_OVER_SHIRT,
 } as TraitRuleFunctionMap;
 
 export default {
