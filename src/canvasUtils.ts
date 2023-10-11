@@ -18,6 +18,7 @@ export type CanvasLayer = {
   height?: number;
   width?: number;
   transform?: Array<number>;
+  rotate?: number;
   arc?: [number, number, number, number, number, boolean?];
   background?: string;
   border?: string;
@@ -266,6 +267,12 @@ export const generateLayeredCanvas = (
     );
 
     const layerCtx = layerCanvas.getContext('2d', { willReadFrequently: true });
+
+    if (l.rotate) {
+      layerCtx.translate(lWidth / 2, lHeight / 2);
+      layerCtx.rotate((-l.rotate) * Math.PI / l.rotate);
+      layerCtx.translate(-lWidth / 2,-lHeight / 2);
+    }
   
     if (l.transform) {
       layerCtx.transform(
@@ -392,9 +399,9 @@ export const generateLayeredCanvas = (
       );
     }
 
-    if (l.canvasCallbacks) {
+    if (l.canvasCallbacks && l.canvasCallbacks.length > 0) {
       l.canvasCallbacks.forEach(effect => {
-        effect(layerCanvas, layerCtx);
+        effect(layerCanvas, layerCtx, l);
       })
     }
   

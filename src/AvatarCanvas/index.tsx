@@ -7,7 +7,7 @@ import { createAvatarCanvasLayers } from "../Avatar/utils";
 type AvatarCanvasConfig = CanvasConfig & BaseCanvasConfig;
 
 export const AvatarCanvas = forwardRef((props: AvatarCanvasConfig, ref: any) => {
-  const { traits, height, children, reset, bordered, width, view, baseUrl } = props;
+  const { traits, height, children, reset, bordered, width, view, baseUrl, type, tokenId } = props;
 
   return (
     <LayeredCanvas 
@@ -20,6 +20,8 @@ export const AvatarCanvas = forwardRef((props: AvatarCanvasConfig, ref: any) => 
       layers={
         createAvatarCanvasLayers({
           view,
+          type,
+          tokenId,
           traits,
           height,
           width,

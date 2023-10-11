@@ -123,6 +123,7 @@ export default {
     pants: '',
     shoes: '',
     sidekick: '',
+    tokenId: '',
     baseUrl: 'https://content.coolcatsnft.com/avatar/cat/$traitType/',
     view: 'FULL',
     bordered: false
@@ -151,6 +152,10 @@ export default {
       control: 'select',
       options: pantsTraits
     },
+    baseUrl: {
+      control: 'select',
+      options: ['https://content.coolcatsnft.com/avatar/cat/$traitType/', 'https://content.coolcatsnft.com/avatar/cat2000x2000/$traitType/']
+    },
     shoes: {
       control: 'select',
       options: shoeTraits
@@ -158,33 +163,28 @@ export default {
     sidekick: {
       control: 'select',
       options: sidekicks
+    },
+    tokenId: {
+      control: 'select',
+      options: [
+        '',
+        '500',
+        '2288',
+        '3330',
+        '4695',
+        '5280',
+        '6972',
+        '8800',
+        '9580',
+        '1490',
+        '8968' // Tiger
+      ]
     }
   }
   
 } as Meta<typeof AvatarCanvas>;
 
 const BlueCatTraits = [
-  {
-    type: Avatar.CAT,
-    view: AvatarView.FULL,
-    traitType: TraitType.BODY,
-    name: 'blue cat skin',
-    rarity: TraitRarity.COMMON,
-    images: [
-      {
-        uri: 'cc-body.png'
-      },
-      {
-        uri: 'cc-arms.png'
-      },
-      {
-        uri: 'cc-head.png'
-      },
-      {
-        uri: 'cc-whiskers.png'
-      }
-    ]
-  },
   {
     type: Avatar.CAT,
     view: AvatarView.FULL,
@@ -201,8 +201,7 @@ const BlueCatTraits = [
 ]
 
 const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
-  
-  const { pants, shirt, face, shoes, hat, sidekick } = args as any;
+  const { pants, shirt, face, shoes, hat, sidekick, tokenId } = args as any;
   const traits = BlueCatTraits.concat(
     hat ? [
       {
@@ -300,8 +299,7 @@ const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
       }
     ] : []
   );
-
-
+  
   return (
     <AvatarCanvas 
       {...args}

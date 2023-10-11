@@ -1,9 +1,14 @@
-import { AvatarView, CreateAvatarTraitsConfig, Trait, TraitImage, TraitRule, TraitRuleFunction, TraitRuleType, TraitType } from "./types";
+import { Avatar, AvatarView, CreateAvatarTraitsConfig, Trait, TraitImage, TraitRarity, TraitRule, TraitRuleFunction, TraitRuleType, TraitType } from "./types";
 import { effects, mutations } from './rules'
 import { CanvasLayer } from "../canvasUtils";
 
 const CANVAS_WIDTH = 1000;
 const CANVAS_HEIGHT = 1000;
+const BODY_OVERRIDES = [
+  'CAT_2288_Skeleton', 'CAT_3330_Robot', 'CAT_4695_Lucky', 'CAT_500_Upsidedown', 'CAT_5280_Demon', 'CAT_6972_Celestial', 'CAT_8800_Angel', 'CAT_9580_Alien', 'CAT_1490_Zombie'
+];
+const TIGERS = ['8968', '1146', '4687', '6054', '6250', '2477', '6688', '526', '1718', '4960', '6749', '4717', '4952', '6169', '6635', '9607', '9882', '1544', '3611', '5843', '6482', '1180', '1233', '5416', '7107', '3772', '4178', '8645', '8170', '2980', '3019', '2172', '2156', '8579', '1515', '1977', '7262', '8815', '611', '6954', '1279', '6967', '8084', '5735', '3623', '5949', '6705', '3213', '8969', '6136', '2179', '7460', '1451', '9254', '1785', '5708', '5617', '4735'];
+
 
 export function applyDefaultWeights(trait: Trait) {
   return {
@@ -61,6 +66,8 @@ export function createAvatarCanvasLayers(
 ) {
   const {
     view,
+    type,
+    tokenId,
     traits, 
     width, 
     height,
@@ -69,9 +76,86 @@ export function createAvatarCanvasLayers(
 
   const hasSidekick = traits.find(t => t.traitType === TraitType.SIDEKICK && t.name !== 'no sidekick');
 
+  const LEGENDARY_OVERRIDE = BODY_OVERRIDES.find(o => type === Avatar.CAT && tokenId ? o.startsWith(`${type || ''}_${tokenId || ''}`) : false);
+  const LEGENDARY_OVERRIDE_TRAIT = {
+    type: type || Avatar.CAT,
+    view: AvatarView.FULL,
+    traitType: TraitType.BODY,
+    name: (LEGENDARY_OVERRIDE || '___').split('_')[2],
+    rarity: TraitRarity.LEGENDARY,
+    images: [
+      {
+        uri: `${(LEGENDARY_OVERRIDE || '___').split('_')[1]}.png`
+      }
+    ],
+    rules: []
+  } as Trait;
+
+  const isUpsideDown = LEGENDARY_OVERRIDE === 'CAT_500_Upsidedown';
+  const isTiger = typeof tokenId === 'string' && TIGERS.includes(tokenId) && type === Avatar.CAT;
+
+  const bodyImages = [
+    isTiger ? { uri: 'tiger.png', weight: 100 } : undefined
+  ].filter(i => i).concat(
+    type === Avatar.CAT ? [
+      {
+        uri: 'cc-body.png',
+        weight: 1
+      },
+      {
+        uri: 'cc-arms.png',
+        weight: 2
+      },
+      {
+        uri: 'cc-head.png',
+        weight: 3
+      },
+      {
+        uri: 'cc-whiskers.png',
+        weight: 4
+      }
+    ] : undefined
+  ).filter(i => i) as TraitImage[]
+
+  const body = {
+    type,
+    view: AvatarView.FULL,
+    traitType: TraitType.BODY,
+    name: 'body',
+    rarity: TraitRarity.NONE,
+    images: bodyImages,
+    rules: []
+  }
+
+  // Add body trait
+  const traitsIncludingBody = traits.concat(
+    [body]
+  ).map(t => t.traitType === TraitType.BODY ? {
+    ...t,
+    images: LEGENDARY_OVERRIDE ? LEGENDARY_OVERRIDE_TRAIT.images : t.images,
+  } : t).concat(
+    LEGENDARY_OVERRIDE && !traits.find(t => t.traitType === TraitType.BACKGROUND) ? [{
+      ...LEGENDARY_OVERRIDE_TRAIT,
+      traitType: TraitType.BACKGROUND
+    }] : []
+  ).map(t => {
+    // Apply special rules for upside down cat...!
+    if (type === Avatar.CAT && tokenId === '500' && ![TraitType.BACKGROUND, TraitType.BODY].includes(t.traitType)) {
+      return {
+        ...t,
+        rules: [{
+          fn: TraitRuleFunction.EFFECT_UPSIDE_DOWN,
+          type: TraitRuleType.EFFECT
+        }].concat(t.rules || [])
+      }
+    }
+
+    return t;
+  });
+
   // Map out traits into the Layered canvas config.  
   // This may require reducing as some layers will have multiple images
-  const sortedTraits = traits.map((trait: Trait) => {
+  const sortedTraits = traitsIncludingBody.map((trait: Trait) => {
     // Apply default rules
     return {
       ...trait,
@@ -108,7 +192,7 @@ export function createAvatarCanvasLayers(
     if (view === AvatarView.FRONT && trait.traitType !== TraitType.BACKGROUND) {
       return {
         ...trait,
-        offsetY: (height || CANVAS_HEIGHT) / 10,
+        offsetY: isUpsideDown ? ((height || CANVAS_HEIGHT) * -1.1) : ((height || CANVAS_HEIGHT) / 10),
         offsetX: ((width || CANVAS_WIDTH) * -1) / 2,
         width: (width || CANVAS_WIDTH) * 2,
         height: (height || CANVAS_HEIGHT) * 2
@@ -122,7 +206,7 @@ export function createAvatarCanvasLayers(
     ) {
       return {
         ...trait,
-        offsetX: (width || CANVAS_WIDTH) * 0.11
+        offsetX: (width || CANVAS_WIDTH) * (isUpsideDown ? -0.11 : 0.11)
       }
     }
     return trait;
@@ -140,7 +224,13 @@ export function createAvatarCanvasLayers(
       ).map(tr => effects[tr?.fn || ''] as Function);
   
       return traitEffects.concat(funcs);
-    }, []);
+    }, []).concat(
+      trait.traitType !== TraitType.EFFECT ? (trait.rules || []).filter(
+        r => r.type === TraitRuleType.EFFECT
+      ).map(
+        e => effects[e.fn] as Function
+      ) : []
+    );
 
     // Transform the trait layer into a canvas layer
     const newLayer = trait.images.sort((a: TraitImage, b: TraitImage) => {
@@ -153,7 +243,8 @@ export function createAvatarCanvasLayers(
           width: trait.width || width || CANVAS_WIDTH,
           x: typeof trait.offsetX === 'number' ? trait.offsetX : 0,
           y: typeof trait.offsetY === 'number' ? trait.offsetY : 0,
-          canvasCallbacks: canvasEffects
+          canvasCallbacks: canvasEffects,
+          rotate: (trait.rules || []).find(r => r.fn === TraitRuleFunction.EFFECT_UPSIDE_DOWN) ? 180 : undefined
         }
       ])
     }, []);

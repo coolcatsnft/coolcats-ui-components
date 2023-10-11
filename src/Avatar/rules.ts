@@ -1,6 +1,7 @@
+import { CanvasLayer } from "../canvasUtils";
 import { Avatar, AvatarView, Trait, TraitRuleFunction, TraitRuleFunctionMap, TraitType } from "./types";
 
-export const EFFECT_BLACK_AND_WHITE = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+export const EFFECT_BLACK_AND_WHITE = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, layer: CanvasLayer) => {
   const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const { data }= imgData;
 
@@ -35,11 +36,11 @@ export const EFFECT_OUTLINE_PARENT = (canvas: HTMLCanvasElement, ctx: CanvasRend
   ctx.putImageData(imgData, 0, 0);
 };
 
-export const EFFECT_OUTLINE = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+export const EFFECT_OUTLINE = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, layer: CanvasLayer) => {
   return EFFECT_OUTLINE_PARENT(canvas, ctx, [35], [31], [32]);
 };
 
-export const EFFECT_OUTLINE_LEFT_CAT = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+export const EFFECT_OUTLINE_LEFT_CAT = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, layer: CanvasLayer) => {
   const bounds = Array.from(Array(10).keys()).map(i => i + 29);
   return EFFECT_OUTLINE_PARENT(
     canvas,
@@ -50,7 +51,7 @@ export const EFFECT_OUTLINE_LEFT_CAT = (canvas: HTMLCanvasElement, ctx: CanvasRe
   );
 };
 
-export const EFFECT_INVERSE = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+export const EFFECT_INVERSE = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, layer: CanvasLayer) => {
   const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const { data }= imgData;
 
@@ -61,6 +62,10 @@ export const EFFECT_INVERSE = (canvas: HTMLCanvasElement, ctx: CanvasRenderingCo
   }
   
   ctx.putImageData(imgData, 0, 0);
+};
+
+export const EFFECT_UPSIDE_DOWN = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, layer: CanvasLayer) => {
+  
 };
 
 
@@ -215,6 +220,7 @@ export const effects = {
   [TraitRuleFunction.EFFECT_OUTLINE]: EFFECT_OUTLINE,
   [TraitRuleFunction.EFFECT_INVERSE]: EFFECT_INVERSE,
   [TraitRuleFunction.EFFECT_OUTLINE_LEFT_CAT]: EFFECT_OUTLINE_LEFT_CAT,
+  [TraitRuleFunction.EFFECT_UPSIDE_DOWN]: EFFECT_UPSIDE_DOWN,
 } as TraitRuleFunctionMap;
 
 export const mutations = {

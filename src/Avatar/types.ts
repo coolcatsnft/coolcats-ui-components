@@ -56,6 +56,7 @@ export enum TraitRuleFunction {
   EFFECT_INVERSE = 'EFFECT_INVERSE',
   MOVE_PANTS_UNDER_SHIRT = 'MOVE_PANTS_UNDER_SHIRT',
   MOVE_PANTS_OVER_SHIRT = 'MOVE_PANTS_OVER_SHIRT',
+  EFFECT_UPSIDE_DOWN = 'EFFECT_UPSIDE_DOWN',
   EFFECT_OUTLINE_LEFT_CAT = 'EFFECT_OUTLINE_LEFT_CAT'
 }
 
@@ -126,6 +127,8 @@ export type CanvasConfigImages = {
 
 export type CreateAvatarTraitsConfig = {
   view: AvatarView;
+  type: Avatar;
+  tokenId?: string;
   traits: Trait[];
   width?: number;
   height?: number;
