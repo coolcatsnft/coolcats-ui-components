@@ -18,27 +18,6 @@ const BlueCatTraits = [
   {
     type: Avatar.CAT,
     view: AvatarView.FULL,
-    traitType: TraitType.BODY,
-    name: 'blue cat skin',
-    rarity: TraitRarity.COMMON,
-    images: [
-      {
-        uri: 'cc-body.png'
-      },
-      {
-        uri: 'cc-arms.png'
-      },
-      {
-        uri: 'cc-head.png'
-      },
-      {
-        uri: 'cc-whiskers.png'
-      }
-    ]
-  },
-  {
-    type: Avatar.CAT,
-    view: AvatarView.FULL,
     traitType: TraitType.BACKGROUND,
     name: 'cool_2',
     rarity: TraitRarity.COMMON,
@@ -67,12 +46,40 @@ const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 
       {...args}
+      type={Avatar.CAT}
       traits={BlueCatTraits}
     />
   )
 }
 
 export const BlueCat = BlueCatTemplate.bind({});
+
+const WolfTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      baseUrl={args.baseUrl?.replace('/cat', '/shadowwolf')}
+      type={Avatar.SHADOWWOLF}
+      traits={[
+        {
+          type: Avatar.SHADOWWOLF,
+          view: args.view,
+          traitType: TraitType.FACE,
+          name: 'shadow wolf',
+          rarity: TraitRarity.COMMON,
+          images: [
+            {
+              uri: 'shadow-wolf.png'
+            }
+          ],
+          rules: []
+        }
+      ]}
+    />
+  )
+}
+
+export const Wolf = WolfTemplate.bind({});
 
 const Cat4710Traits = [
   ...BlueCatTraits,
