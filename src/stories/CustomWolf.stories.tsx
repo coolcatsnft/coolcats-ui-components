@@ -199,7 +199,7 @@ export default {
     shoes: '',
     sidekick: '',
     tokenId: '',
-    baseUrl: 'https://content.coolcatsnft.com/avatar/shadowwolves/$traitType/',
+    baseUrl: 'https://content.coolcatsnft.com/avatar/shadowwolf/$traitType/',
     view: 'FULL',
     type: 'SHADOWWOLF',
     bordered: false
@@ -238,12 +238,13 @@ export default {
     },
     baseUrl: {
       control: 'select',
-      options: ['https://content.coolcatsnft.com/avatar/shadowwolves/$traitType/', 'https://content.coolcatsnft.com/avatar/shadowwolves2000x2000/$traitType/']
+      options: ['https://content.coolcatsnft.com/avatar/shadowwolf/$traitType/', 'https://content.coolcatsnft.com/avatar/shadowwolf2000x2000/$traitType/']
     },
     tokenId: {
       control: 'select',
       options: [
         '',
+        '6',
         '4687', // Tribal
         '4668', // Skele
         '3928', // Blood Moon

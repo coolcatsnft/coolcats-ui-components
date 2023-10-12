@@ -78,8 +78,7 @@ export function createAvatarCanvasLayers(
   } = config;
 
   const hasSidekick = traits.find(t => t.traitType === TraitType.SIDEKICK && t.name !== 'no sidekick');
-
-  const LEGENDARY_OVERRIDE = BODY_OVERRIDES.find(o => tokenId ? o.startsWith(`${type || ''}_${tokenId || ''}`) : false);
+  const LEGENDARY_OVERRIDE = BODY_OVERRIDES.find(o => tokenId ? o.split('_').slice(0, 2).join('_') === `${type || ''}_${tokenId || ''}` : false);
   const LEGENDARY_OVERRIDE_TRAIT = {
     type: type || Avatar.CAT,
     view: AvatarView.FULL,
@@ -98,7 +97,7 @@ export function createAvatarCanvasLayers(
   const isTiger = typeof tokenId === 'string' && TIGERS.includes(tokenId) && type === Avatar.CAT;
   const isTribal = typeof tokenId === 'string' && TRIBAL.includes(tokenId) && type === Avatar.SHADOWWOLF;
   const isSkeleton = typeof tokenId === 'string' && SKELETON.includes(tokenId) && type === Avatar.SHADOWWOLF;
-  const isScholar = typeof tokenId === 'string' && SCHOLARS.includes(tokenId) && type === Avatar.SHADOWWOLF;
+  const isScholar = typeof tokenId === 'string' && SCHOLARS.find(s => s === tokenId) && type === Avatar.SHADOWWOLF;
 
   const bodyImages = [
     isTiger ? { uri: 'tiger.png', weight: 100 } : undefined
