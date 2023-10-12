@@ -69,11 +69,20 @@ export const EFFECT_UPSIDE_DOWN = (canvas: HTMLCanvasElement, ctx: CanvasRenderi
 };
 
 
-const ROBES = ['robe white', 'robe king', 'robe blue', 'robe red', 'toga'];
-const PANTS = ['lederhosen', 'nurse', 'overalls-yellow', 'overalls-blue', 'overalls-flannel', 'overalls-pink', 'overalls-red'];
+const ROBES = [
+  'robe white', 'robe king', 'robe blue', 'robe red', 'toga', 
+  'puffy coat', 'puffy-coat-sparkle', 'lord-blue', 'lord-red', 'shaman', 'wings', 'samurai blue', 'samurai red', 'samurai black', 'traveling merchant', 'varsity', 'varsity torn', 'fire princess', 'celestial pink', 'celestial blue'
+];
+const PANTS = [
+  'lederhosen', 'nurse', 'overalls yellow', 'overalls blue', 'overalls flannel', 'overalls pink', 'overalls red',
+  'overalls skull'
+];
+const SHIRTS = [
+  'dueler', 'scarf plaid', 'scarf red'
+]
 
 export const MOVE_PANTS_UNDER_SHIRT = (trait: Trait, traits: Trait[]) => {
-  if (trait.traitType === TraitType.PANTS && traits.find(t => t.traitType === TraitType.SHIRT && ROBES.includes(t.name))) {
+  if (trait.traitType === TraitType.PANTS && traits.find(t => t.traitType === TraitType.SHIRT && ROBES.includes(t.name.split('-').join(' ')))) {
     return {
       ...trait,
       weight: 2
@@ -85,12 +94,25 @@ export const MOVE_PANTS_UNDER_SHIRT = (trait: Trait, traits: Trait[]) => {
 
 export const MOVE_PANTS_OVER_SHIRT = (trait: Trait, traits: Trait[]) => {
   if (trait.traitType === TraitType.PANTS 
-    && PANTS.includes(trait.name) 
-    && !traits.find(t => t.traitType === TraitType.SHIRT && ROBES.includes(t.name.split('-').join(' ')))
+    && PANTS.includes(trait.name.split('-').join(' ').toLowerCase()) 
+    && !traits.find(t => t.traitType === TraitType.SHIRT && ROBES.includes(t.name.split('-').join(' ').toLowerCase()))
   ) {
     return {
       ...trait,
       weight: 4.5
+    }
+  }
+
+  return trait;
+};
+
+export const MOVE_SHIRTS_OVER_HATS = (trait: Trait, traits: Trait[]) => {
+  if (trait.traitType === TraitType.SHIRT 
+    && SHIRTS.includes(trait.name.split('-').join(' ').toLowerCase()) 
+  ) {
+    return {
+      ...trait,
+      weight: 6.5
     }
   }
 
@@ -227,6 +249,7 @@ export const mutations = {
   [TraitRuleFunction.HIDE_VISOR]: HIDE_VISOR_IF,
   [TraitRuleFunction.MOVE_PANTS_UNDER_SHIRT]: MOVE_PANTS_UNDER_SHIRT,
   [TraitRuleFunction.MOVE_PANTS_OVER_SHIRT]: MOVE_PANTS_OVER_SHIRT,
+  [TraitRuleFunction.MOVE_SHIRTS_OVER_HATS]: MOVE_SHIRTS_OVER_HATS,
 } as TraitRuleFunctionMap;
 
 export default {
