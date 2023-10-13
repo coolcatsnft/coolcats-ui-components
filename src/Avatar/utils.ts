@@ -19,6 +19,7 @@ export function applyDefaultWeights(trait: Trait) {
     weight: {
       [TraitType.BACKGROUND]: 0,
       [TraitType.BODY]: 1,
+      [TraitType.SKIN]: 1.5,
       [TraitType.PANTS]: 2,
       [TraitType.SHOES]: 3,
       [TraitType.SHIRT]: 4,
@@ -26,6 +27,7 @@ export function applyDefaultWeights(trait: Trait) {
       [TraitType.HAT]: 6,
       [TraitType.BORDER]: 7,
       [TraitType.SIDEKICK]: 8,
+      [TraitType.ACCESSORY]: 9,
       [TraitType.EFFECT]: 100
     }[trait.traitType]
   }

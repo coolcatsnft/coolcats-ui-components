@@ -4,6 +4,7 @@ import {
   ArrowLeftIcon, 
   ArrowRightIcon, 
   BackgroundIcon, 
+  BodyIcon, 
   BorderIcon, 
   BottomIcon, 
   CharacterIcon, 
@@ -29,6 +30,7 @@ import {
   PlusIcon,
   QuestionIcon,
   RefreshIcon,
+  RingIcon,
   SearchIcon,
   SettingIcon,
   ShareIcon,
@@ -175,3 +177,9 @@ export const Setting = Template41.bind({});
 
 const Template42: StoryFn<typeof PantsIcon> = (args) => <PantsIcon {...args} />; 
 export const Pants = Template42.bind({});
+
+const Template43: StoryFn<typeof BodyIcon> = (args) => <BodyIcon {...args} />; 
+export const Body = Template43.bind({});
+
+const Template44: StoryFn<typeof RingIcon> = (args) => <RingIcon {...args} />; 
+export const Ring = Template44.bind({});

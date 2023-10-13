@@ -43,4 +43,6 @@ export { default as PantsIcon } from './Pants';
 export { default as JourneysIcon } from './Journeys';
 export { default as MeowpadIcon } from './Meowpad';
 export { default as MenuIcon } from './Menu';
+export { default as RingIcon } from './Ring';
+export { default as BodyIcon } from './Body';
 export { default as Svg } from './Svg';

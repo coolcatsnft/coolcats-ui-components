@@ -15,6 +15,7 @@ export enum AvatarView {
 export enum TraitType {
   BACKGROUND = 'BACKGROUND',
   BODY = 'BODY',
+  SKIN = 'SKIN',
   SHIRT = 'SHIRT',
   FACE = 'FACE',
   HAT = 'HAT',
@@ -22,6 +23,7 @@ export enum TraitType {
   SHOES = 'SHOES',
   EFFECT = 'EFFECT',
   BORDER = 'BORDER',
+  ACCESSORY = 'ACCESSORY',
   SIDEKICK = 'SIDEKICK'
 }
 
