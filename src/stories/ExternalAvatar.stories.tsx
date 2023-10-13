@@ -123,6 +123,7 @@ export default {
     pants: '',
     shoes: '',
     sidekick: '',
+    type: 'CAT',
     tokenId: '',
     baseUrl: 'https://content.coolcatsnft.com/avatar/cat/$traitType/',
     view: 'FULL',

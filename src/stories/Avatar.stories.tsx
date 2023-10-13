@@ -10,7 +10,8 @@ export default {
     baseUrl: 'https://content.coolcatsnft.com/avatar/cat2000x2000/$traitType/',
     width: 400,
     height: 400,
-    view: 'FULL'
+    view: 'FULL',
+    type: 'CAT'
   }
 } as Meta<typeof AvatarCanvas>;
 
@@ -197,6 +198,7 @@ const Cat4710Template: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 
       {...args}
+      type={Avatar.CAT}
       traits={Cat4710Traits}
     />
   )
@@ -208,6 +210,7 @@ const WithBonesTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 
       {...args}
+      type={Avatar.CAT}
       traits={Cat4710Traits.concat([{
         type: Avatar.CAT,
         view: AvatarView.FULL,
@@ -231,6 +234,7 @@ const WithMiloTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 
       {...args}
+      type={Avatar.CAT}
       traits={Cat4710Traits.concat([{
         type: Avatar.CAT,
         view: AvatarView.FULL,
@@ -261,6 +265,7 @@ const BlackAndWhiteTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 
       {...args}
+      type={Avatar.CAT}
       traits={Cat4710Traits.concat([{
         type: Avatar.CAT,
         view: AvatarView.FULL,
@@ -280,6 +285,37 @@ const BlackAndWhiteTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
 
 export const BlackAndWhiteEffect = BlackAndWhiteTemplate.bind({});
 
+const SepiaRules = [
+  {
+    type: "EFFECT",
+    fn: "EFFECT_SEPIA"
+  }
+] as any;
+
+const SepiaTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      type={Avatar.CAT}
+      traits={Cat4710Traits.concat([{
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.EFFECT,
+        name: 'Sepia',
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: 'transparent.png'
+          }
+        ],
+        rules: SepiaRules
+      }])}
+    />
+  )
+}
+
+export const SepiaEffect = SepiaTemplate.bind({});
+
 const InverseRules = [
   {
     type: "EFFECT",
@@ -291,6 +327,7 @@ const InverseTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 
       {...args}
+      type={Avatar.CAT}
       traits={Cat4710Traits.concat([{
         type: Avatar.CAT,
         view: AvatarView.FULL,
@@ -314,6 +351,7 @@ const GownWhiteTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 
       {...args}
+      type={Avatar.CAT}
       traits={GownTraits}
     />
   )
@@ -325,6 +363,7 @@ const GownShoesTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 
       {...args}
+      type={Avatar.CAT}
       traits={Cat4710Traits.filter(t => t.traitType !== TraitType.SHOES).concat(GownTraits.filter(t => t.traitType === TraitType.SHOES))}
     />
   )
