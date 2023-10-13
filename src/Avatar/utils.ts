@@ -231,7 +231,7 @@ export function createAvatarCanvasLayers(
       traits
     );
   }).filter(t => {
-    if (hasSidekick && view === AvatarView.FRONT) {
+    if (view === AvatarView.FRONT) {
       return t.traitType !== TraitType.SIDEKICK;
     }
 
@@ -247,16 +247,6 @@ export function createAvatarCanvasLayers(
       }
     }
 
-    if (hasSidekick 
-      && view === AvatarView.FULL 
-      && trait.traitType !== TraitType.BACKGROUND 
-      && trait.traitType !== TraitType.SIDEKICK
-    ) {
-      return {
-        ...trait,
-        offsetX: (width || CANVAS_WIDTH) * (isUpsideDown ? -0.11 : 0.11)
-      }
-    }
     return trait;
   }).sort((a: Trait, b: Trait) => {
     return applyWeights(a, b);
