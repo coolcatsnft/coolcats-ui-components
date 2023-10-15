@@ -249,7 +249,7 @@ export function createAvatarCanvasLayers(
 
     return true;
   }).map((trait: Trait) => {
-    if (view === AvatarView.FRONT && trait.traitType !== TraitType.BACKGROUND
+    if (view === AvatarView.FRONT && trait.traitType !== TraitType.BACKGROUND && trait.traitType !== TraitType.BORDER
       && typeof trait.offsetX !== 'number'
     ) {
       return {
