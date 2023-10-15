@@ -208,11 +208,8 @@ export const HIDE_VISOR_IF = (trait: Trait, traits: Trait[]) => {
 };
 
 export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number) => {
-  if (trait.traitType === TraitType.BACKGROUND) {
-    return {
-      ...trait,
-      parentBackground: 'red'
-    }
+  if (trait.traitType === TraitType.BORDER || trait.traitType === TraitType.BACKGROUND) {
+    return trait;
   }
   
   return {

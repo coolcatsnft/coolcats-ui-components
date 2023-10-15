@@ -410,10 +410,10 @@ const CustomBackgroundAndEffectTemplate: StoryFn<typeof AvatarCanvas> = (args) =
       {...args}
       type={Avatar.CAT}
       traits={
-        Cat4710Traits.filter(t => t.traitType !== TraitType.BACKGROUND).concat([MiloTrait]).concat([{
+        Cat4710Traits.concat([MiloTrait]).concat([{
           type: Avatar.CAT,
           view: AvatarView.FULL,
-          traitType: TraitType.BACKGROUND,
+          traitType: TraitType.BORDER,
           name: 'comic con',
           rarity: TraitRarity.COMMON,
           weight: 200,
