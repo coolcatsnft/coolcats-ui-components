@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 
 import AvatarCanvas from '../AvatarCanvas';
-import { Avatar, AvatarView, TraitRarity, TraitType } from '../Avatar/types';
+import { Avatar, AvatarView, TraitRarity, TraitRuleFunction, TraitRuleType, TraitType } from '../Avatar/types';
 
 export default {
   title: 'Avatar',
@@ -230,24 +230,26 @@ const WithBonesTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
 
 export const WithBones = WithBonesTemplate.bind({});
 
+const MiloTrait = {
+  type: Avatar.CAT,
+  view: AvatarView.FULL,
+  traitType: TraitType.SIDEKICK,
+  name: 'milo',
+  rarity: TraitRarity.COMMON,
+  images: [
+    {
+      uri: 'milo.png'
+    }
+  ],
+  rules: []
+};
+
 const WithMiloTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 
       {...args}
       type={Avatar.CAT}
-      traits={Cat4710Traits.concat([{
-        type: Avatar.CAT,
-        view: AvatarView.FULL,
-        traitType: TraitType.SIDEKICK,
-        name: 'milo',
-        rarity: TraitRarity.COMMON,
-        images: [
-          {
-            uri: 'milo.png'
-          }
-        ],
-        rules: []
-      }])}
+      traits={Cat4710Traits.concat([MiloTrait])}
     />
   )
 }
@@ -347,6 +349,37 @@ const InverseTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
 
 export const InverseEffect = InverseTemplate.bind({});
 
+const StickerRules = [
+  {
+    type: "EFFECT",
+    fn: "EFFECT_STICKER"
+  }
+] as any;
+
+const StickerTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      type={Avatar.CAT}
+      traits={Cat4710Traits.concat([{
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.EFFECT,
+        name: 'sticker',
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: 'transparent.png'
+          }
+        ],
+        rules: StickerRules
+      }])}
+    />
+  )
+}
+
+export const StickerEffect = StickerTemplate.bind({});
+
 const GownWhiteTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 
@@ -370,3 +403,35 @@ const GownShoesTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
 }
 
 export const GownShoes = GownShoesTemplate.bind({});
+
+const CustomBackgroundAndEffectTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      type={Avatar.CAT}
+      traits={
+        Cat4710Traits.filter(t => t.traitType !== TraitType.BACKGROUND).concat([MiloTrait]).concat([{
+          type: Avatar.CAT,
+          view: AvatarView.FULL,
+          traitType: TraitType.BACKGROUND,
+          name: 'comic con',
+          rarity: TraitRarity.COMMON,
+          weight: 200,
+          images: [
+            {
+              uri: 'comic-con.png'
+            }
+          ],
+          rules: [
+            {
+              type: TraitRuleType.MUTATE_ALL,
+              fn: TraitRuleFunction.COMIC_CON_PLACEMENT
+            }
+          ] as any
+        }] as any)
+      }
+    />
+  )
+}
+
+export const CustomBackgroundAndEffect = CustomBackgroundAndEffectTemplate.bind({});

@@ -21,6 +21,31 @@ export const EFFECT_BLACK_AND_WHITE = (canvas: HTMLCanvasElement, ctx: CanvasRen
   ctx.putImageData(imgData, 0, 0);
 };
 
+export const EFFECT_STICKER = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, layer: CanvasLayer, createCanvas: Function, index: number) => {
+  if (index === 0) {
+    return;
+  }
+
+  const underCanv = createCanvas((layer.width || 1000) + 50, (layer.height || 1000) + 50);
+  const underCtx = underCanv.getContext('2d');
+  console.log(layer)
+  underCtx.drawImage(canvas, 0, 0, underCanv.width, underCanv.height);
+
+  const imgData = underCtx.getImageData(0, 0, canvas.width, canvas.height);
+  const { data } = imgData;
+
+  for (let i = 0; i < data.length; i += 4) {
+    data[i + 0] = 255;
+    data[i + 1] = 255;
+    data[i + 2] = 255;
+  }
+
+  underCtx.putImageData(imgData, 0, 0);
+
+  // underCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
+  ctx.drawImage(underCanv, 0, 0, canvas.width, canvas.height);
+};
+
 export const EFFECT_OUTLINE_PARENT = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, r: number[], g: number[], b: number[]) => {
   const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const { data }= imgData;
@@ -98,19 +123,28 @@ export const EFFECT_SEPIA = (canvas: HTMLCanvasElement, ctx: CanvasRenderingCont
 };
 
 const ROBES = [
-  'robe white', 'robe king', 'robe blue', 'robe red', 'toga', 
-  'puffy coat', 'puffy-coat-sparkle', 'lord-blue', 'lord-red', 'shaman', 'wings', 'samurai blue', 'samurai red', 'samurai black', 'traveling merchant', 'varsity', 'varsity torn', 'fire princess', 'celestial pink', 'celestial blue'
+  'robe white', 'robe king', 'robe blue', 'robe red', 'toga'
 ];
 const PANTS = [
-  'lederhosen', 'nurse', 'overalls yellow', 'overalls blue', 'overalls flannel', 'overalls pink', 'overalls red',
-  'overalls skull'
+  'lederhosen', 'nurse', 'overalls yellow', 'overalls blue', 'overalls flannel', 'overalls pink', 'overalls red'
 ];
+const WOLFPANTS = [
+  'overalls skull'
+]
 const SHIRTS = [
-  'dueler', 'scarf plaid', 'scarf red'
+  'dueler', 'scarf plaid', 'scarf red', 'chain', 'necklace flint', 'necklace jaw', 'necklace teeth'
+];
+const OVERSHIRTS = [
+  'pinstripe vest', 'dress'
 ]
 
 export const MOVE_PANTS_UNDER_SHIRT = (trait: Trait, traits: Trait[]) => {
-  if (trait.traitType === TraitType.PANTS && traits.find(t => t.traitType === TraitType.SHIRT && ROBES.includes(t.name.split('-').join(' ')))) {
+  if (trait.type === Avatar.CAT 
+    && trait.traitType === TraitType.PANTS 
+    && traits.find(
+      t => t.traitType === TraitType.SHIRT && ROBES.includes(t.name.split('-').join(' ').toLowerCase())
+    )
+  ) {
     return {
       ...trait,
       weight: 2
@@ -122,8 +156,12 @@ export const MOVE_PANTS_UNDER_SHIRT = (trait: Trait, traits: Trait[]) => {
 
 export const MOVE_PANTS_OVER_SHIRT = (trait: Trait, traits: Trait[]) => {
   if (trait.traitType === TraitType.PANTS 
-    && PANTS.includes(trait.name.split('-').join(' ').toLowerCase()) 
-    && !traits.find(t => t.traitType === TraitType.SHIRT && ROBES.includes(t.name.split('-').join(' ').toLowerCase()))
+    && (
+      (trait.type === Avatar.CAT && PANTS.includes(trait.name.split('-').join(' ').toLowerCase()))
+      || (trait.type === Avatar.SHADOWWOLF && WOLFPANTS.includes(trait.name.split('-').join(' ').toLowerCase()))
+    ) && !traits.find(
+      t => t.traitType === TraitType.SHIRT && ROBES.includes(t.name.split('-').join(' ').toLowerCase())
+    )
   ) {
     return {
       ...trait,
@@ -143,6 +181,17 @@ export const MOVE_SHIRTS_OVER_HATS = (trait: Trait, traits: Trait[]) => {
       weight: 6.5
     }
   }
+  if (trait.traitType === TraitType.PANTS 
+    && OVERSHIRTS.includes(trait.name.split('-').join(' ').toLowerCase()) 
+    && traits.find(
+      t => t.traitType === TraitType.SHIRT && OVERSHIRTS.includes(t.name.split('-').join(' ').toLowerCase())
+    )
+  ) {
+    return {
+      ...trait,
+      weight: 4.5
+    }
+  }
 
   return trait;
 };
@@ -156,6 +205,23 @@ export const HIDE_VISOR_IF = (trait: Trait, traits: Trait[]) => {
   }
 
   return trait;
+};
+
+export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number) => {
+  if (trait.traitType === TraitType.BACKGROUND) {
+    return {
+      ...trait,
+      parentBackground: 'red'
+    }
+  }
+  
+  return {
+    ...trait,
+    width: (width || 2000) * 1,
+    height: (height || 2000) * 1,
+    offsetX: width * 0.165,
+    offsetY: height * 0.4
+  }
 };
 
 const APPLY_TRAIT_RULE = (
@@ -270,6 +336,7 @@ export const effects = {
   [TraitRuleFunction.EFFECT_OUTLINE]: EFFECT_OUTLINE,
   [TraitRuleFunction.EFFECT_INVERSE]: EFFECT_INVERSE,
   [TraitRuleFunction.EFFECT_OUTLINE_LEFT_CAT]: EFFECT_OUTLINE_LEFT_CAT,
+  [TraitRuleFunction.EFFECT_STICKER]: EFFECT_STICKER,
   [TraitRuleFunction.EFFECT_UPSIDE_DOWN]: EFFECT_UPSIDE_DOWN,
   [TraitRuleFunction.EFFECT_SEPIA]: EFFECT_SEPIA,
 } as TraitRuleFunctionMap;
@@ -279,6 +346,7 @@ export const mutations = {
   [TraitRuleFunction.MOVE_PANTS_UNDER_SHIRT]: MOVE_PANTS_UNDER_SHIRT,
   [TraitRuleFunction.MOVE_PANTS_OVER_SHIRT]: MOVE_PANTS_OVER_SHIRT,
   [TraitRuleFunction.MOVE_SHIRTS_OVER_HATS]: MOVE_SHIRTS_OVER_HATS,
+  [TraitRuleFunction.COMIC_CON_PLACEMENT]: COMIC_CON_PLACEMENT
 } as TraitRuleFunctionMap;
 
 export default {

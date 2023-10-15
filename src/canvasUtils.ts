@@ -6,6 +6,7 @@ export type BaseCanvasConfig = PropsWithChildren & {
   debug?: boolean;
   reset?: boolean;
   bordered?: boolean;
+  background?: string;
 }
 
 export type CanvasConfig = BaseCanvasConfig & {
@@ -21,6 +22,7 @@ export type CanvasLayer = {
   rotate?: number;
   arc?: [number, number, number, number, number, boolean?];
   background?: string;
+  parentBackground?: string;
   border?: string;
   src?: string | HTMLImageElement | HTMLCanvasElement;
   transparent?: boolean,
@@ -245,7 +247,9 @@ export const generateLayeredCanvas = (
   canvas?: HTMLCanvasElement,
   createCanvas?: Function,
 ) => {
-  const { width, height, layers, debug } = config;
+  const { width, height, layers, debug, background } = config;
+  const parentBackground = layers.find(l => l.parentBackground);
+
   const canvasCreate = createCanvas || function(w: number, h: number) {
     const canv = document.createElement('canvas');
     canv.width = w;
@@ -254,11 +258,14 @@ export const generateLayeredCanvas = (
     return canv;
   };
 
-
   const layeredCanvas = (canvas || canvasCreate(width, height));
   const ctx = layeredCanvas.getContext('2d');
+  if (background || parentBackground) {
+    ctx.fillStyle = (background || parentBackground?.parentBackground);
+    ctx.fillRect(0, 0, width, height);
+  }
 
-  layers.forEach((l) => {
+  layers.forEach((l, index) => {
     const lWidth = l.width || width;
     const lHeight = l.height || height;
     const layerCanvas = canvasCreate(
@@ -401,7 +408,7 @@ export const generateLayeredCanvas = (
 
     if (l.canvasCallbacks && l.canvasCallbacks.length > 0) {
       l.canvasCallbacks.forEach(effect => {
-        effect(layerCanvas, layerCtx, l);
+        effect(layerCanvas, layerCtx, l, canvasCreate, index);
       })
     }
   

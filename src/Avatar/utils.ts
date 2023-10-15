@@ -33,27 +33,36 @@ export function applyDefaultWeights(trait: Trait) {
   }
 }
 
-export function evaluateTraitMutateRules(trait: Trait, traits: Trait[]) {
+function evaluateRule(rules: TraitRule[], trait: Trait, traits: Trait[], width: number, height: number) {
+  return rules.map(r => {
+    const fn = mutations[r.fn];
+    if (typeof fn === 'function') {
+      return fn(trait, traits, width, height);
+    }
+
+    return;
+  }).filter(
+    r => r
+  ).reduce((cur, i) => {
+    return {
+      ...cur,
+      ...i
+    };
+  }, trait);
+}
+
+export function evaluateTraitMutateAllRules(trait: Trait, traits: Trait[], width: number, height: number) {
+  const rules = traits.reduce((rules: TraitRule[], trait: Trait) => {
+    return rules.concat((trait?.rules || []).filter(r => r.type === TraitRuleType.MUTATE_ALL));
+  }, []);
+
+  return evaluateRule(rules, trait, traits, width, height);
+}
+
+export function evaluateTraitMutateRules(trait: Trait, traits: Trait[], width: number, height: number) {
   const rules = (trait.rules || []).filter(r => r.type === TraitRuleType.MUTATE);
-  if (rules.length > 0) {
-    return rules.map(r => {
-      const fn = mutations[r.fn];
-      if (typeof fn === 'function') {
-        return fn(trait, traits)
-      }
-
-      return;
-    }).filter(
-      r => r
-    ).reduce((cur, i) => {
-      return {
-        ...cur,
-        ...i
-      };
-    }, trait);
-  }
-
-  return trait;
+  
+  return evaluateRule(rules, trait, traits, width, height);
 }
 
 export function applyWeights(traitA: Trait, traitB: Trait) {
@@ -79,7 +88,6 @@ export function createAvatarCanvasLayers(
     baseUrl
   } = config;
 
-  const hasSidekick = traits.find(t => t.traitType === TraitType.SIDEKICK && t.name !== 'no sidekick');
   const LEGENDARY_OVERRIDE = BODY_OVERRIDES.find(o => tokenId ? o.split('_').slice(0, 2).join('_') === `${type || ''}_${tokenId || ''}` : false);
   const LEGENDARY_OVERRIDE_TRAIT = {
     type: type || Avatar.CAT,
@@ -183,6 +191,8 @@ export function createAvatarCanvasLayers(
       traitType: TraitType.BACKGROUND
     }] : []
   ).map(t => {
+    return evaluateTraitMutateAllRules(t, traits, width || CANVAS_WIDTH, height || CANVAS_HEIGHT);
+  }).map(t => {
     // Apply special rules for upside down cat...!
     if (type === Avatar.CAT && tokenId === '500' && ![TraitType.BACKGROUND, TraitType.BODY].includes(t.traitType)) {
       return {
@@ -228,7 +238,9 @@ export function createAvatarCanvasLayers(
     // Mutate any images with mutate rules
     return evaluateTraitMutateRules(
       trait,
-      traits
+      traits,
+      width || CANVAS_WIDTH,
+      height || CANVAS_HEIGHT
     );
   }).filter(t => {
     if (view === AvatarView.FRONT) {
@@ -237,7 +249,9 @@ export function createAvatarCanvasLayers(
 
     return true;
   }).map((trait: Trait) => {
-    if (view === AvatarView.FRONT && trait.traitType !== TraitType.BACKGROUND) {
+    if (view === AvatarView.FRONT && trait.traitType !== TraitType.BACKGROUND
+      && typeof trait.offsetX !== 'number'
+    ) {
       return {
         ...trait,
         offsetY: isUpsideDown ? ((height || CANVAS_HEIGHT) * -1.1) : ((height || CANVAS_HEIGHT) / 10),
@@ -282,7 +296,9 @@ export function createAvatarCanvasLayers(
           x: typeof trait.offsetX === 'number' ? trait.offsetX : 0,
           y: typeof trait.offsetY === 'number' ? trait.offsetY : 0,
           canvasCallbacks: canvasEffects,
-          rotate: (trait.rules || []).find(r => r.fn === TraitRuleFunction.EFFECT_UPSIDE_DOWN) ? 180 : undefined
+          rotate: (trait.rules || []).find(r => r.fn === TraitRuleFunction.EFFECT_UPSIDE_DOWN) ? 180 : undefined,
+          background: trait.background,
+          parentBackground: trait.parentBackground
         }
       ])
     }, []);

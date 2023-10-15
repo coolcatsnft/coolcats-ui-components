@@ -39,6 +39,7 @@ export type AvatarToken = AvatarType & {
 export enum TraitRuleType {
   FILTER = 'FILTER',
   MUTATE = 'MUTATE',
+  MUTATE_ALL = 'MUTATE_ALL',
   EFFECT = 'EFFECT'
 }
 
@@ -61,6 +62,8 @@ export enum TraitRuleFunction {
   MOVE_SHIRTS_OVER_HATS = 'MOVE_SHIRTS_OVER_HATS',
   EFFECT_UPSIDE_DOWN = 'EFFECT_UPSIDE_DOWN',
   EFFECT_OUTLINE_LEFT_CAT = 'EFFECT_OUTLINE_LEFT_CAT',
+  COMIC_CON_PLACEMENT = 'COMIC_CON_PLACEMENT',
+  EFFECT_STICKER = 'EFFECT_STICKER',
   EFFECT_SEPIA = 'EFFECT_SEPIA',
 }
 
@@ -105,6 +108,8 @@ export type Trait = {
   additional?: boolean;
   rules?: TraitRule[];
   description?: string;
+  background?: string;
+  parentBackground?: string;
   weight?: number;
   height?: number;
   boundTo?: ApiToken;
