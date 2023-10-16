@@ -332,6 +332,7 @@ export default {
       options: [
         '',
         '6',
+        '10',
         '4687', // Tribal
         '4668', // Skele
         '3928', // Blood Moon

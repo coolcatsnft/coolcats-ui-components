@@ -204,6 +204,20 @@ export function createAvatarCanvasLayers(
       }
     }
 
+    if (isScholar && t.traitType === TraitType.FACE) {
+      return {
+        ...t,
+        weight: 6.6
+      }
+    }
+
+    if (isScholar && t.traitType === TraitType.BODY) {
+      return {
+        ...t,
+        weight: 6.5
+      }
+    }
+
     return t;
   });
 
