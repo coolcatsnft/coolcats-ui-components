@@ -207,7 +207,7 @@ export const HIDE_VISOR_IF = (trait: Trait, traits: Trait[]) => {
   return trait;
 };
 
-export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number) => {
+export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
   if (trait.traitType === TraitType.BORDER || trait.traitType === TraitType.BACKGROUND) {
     return trait;
   }
@@ -216,8 +216,8 @@ export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number
     ...trait,
     width: (width || 2000) * 1,
     height: (height || 2000) * 1,
-    offsetX: width * 0.165,
-    offsetY: height * 0.4
+    offsetX: (width * 0.165) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
+    offsetY: (height * 0.4) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1)
   }
 };
 

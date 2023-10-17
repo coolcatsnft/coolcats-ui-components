@@ -33,11 +33,11 @@ export function applyDefaultWeights(trait: Trait) {
   }
 }
 
-function evaluateRule(rules: TraitRule[], trait: Trait, traits: Trait[], width: number, height: number) {
+function evaluateRule(rules: TraitRule[], trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) {
   return rules.map(r => {
     const fn = mutations[r.fn];
     if (typeof fn === 'function') {
-      return fn(trait, traits, width, height);
+      return fn(trait, traits, width, height, tokenId, type);
     }
 
     return;
@@ -51,12 +51,12 @@ function evaluateRule(rules: TraitRule[], trait: Trait, traits: Trait[], width: 
   }, trait);
 }
 
-export function evaluateTraitMutateAllRules(trait: Trait, traits: Trait[], width: number, height: number) {
+export function evaluateTraitMutateAllRules(trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) {
   const rules = traits.reduce((rules: TraitRule[], trait: Trait) => {
     return rules.concat((trait?.rules || []).filter(r => r.type === TraitRuleType.MUTATE_ALL));
   }, []);
 
-  return evaluateRule(rules, trait, traits, width, height);
+  return evaluateRule(rules, trait, traits, width, height, tokenId, type);
 }
 
 export function evaluateTraitMutateRules(trait: Trait, traits: Trait[], width: number, height: number) {
@@ -191,7 +191,14 @@ export function createAvatarCanvasLayers(
       traitType: TraitType.BACKGROUND
     }] : []
   ).map(t => {
-    return evaluateTraitMutateAllRules(t, traits, width || CANVAS_WIDTH, height || CANVAS_HEIGHT);
+    return evaluateTraitMutateAllRules(
+      t,
+      traits,
+      width || CANVAS_WIDTH,
+      height || CANVAS_HEIGHT,
+      tokenId,
+      type
+    );
   }).map(t => {
     // Apply special rules for upside down cat...!
     if (type === Avatar.CAT && tokenId === '500' && ![TraitType.BACKGROUND, TraitType.BODY].includes(t.traitType)) {
