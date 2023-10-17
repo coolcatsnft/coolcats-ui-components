@@ -44,6 +44,7 @@ import {
   TwitchIcon,
   TwitterIcon,
   UserIcon,
+  UserRotateIcon,
   VolumeIcon,
   WalletConnectIcon,
   WalletIcon,
@@ -195,3 +196,6 @@ export const Hat = Template46.bind({});
 
 const Template47: StoryFn<typeof UserIcon> = (args) => <UserIcon {...args} />; 
 export const User = Template47.bind({});
+
+const Template48: StoryFn<typeof UserRotateIcon> = (args) => <UserRotateIcon {...args} />; 
+export const UserRotate = Template48.bind({});
