@@ -45,4 +45,7 @@ export { default as MeowpadIcon } from './Meowpad';
 export { default as MenuIcon } from './Menu';
 export { default as RingIcon } from './Ring';
 export { default as BodyIcon } from './Body';
+export { default as SkinIcon } from './Skin';
+export { default as HatIcon } from './Hat';
+export { default as UserIcon } from './User';
 export { default as Svg } from './Svg';

@@ -18,6 +18,7 @@ import {
   EqualsIcon,
   EtherscanIcon,
   FaceIcon,
+  HatIcon,
   InstagramIcon,
   LinkedInIcon,
   MagicIcon,
@@ -36,11 +37,13 @@ import {
   ShareIcon,
   ShoesIcon,
   SidekickIcon,
+  SkinIcon,
   ThreadsIcon,
   TiktokIcon,
   TopIcon,
   TwitchIcon,
   TwitterIcon,
+  UserIcon,
   VolumeIcon,
   WalletConnectIcon,
   WalletIcon,
@@ -183,3 +186,12 @@ export const Body = Template43.bind({});
 
 const Template44: StoryFn<typeof RingIcon> = (args) => <RingIcon {...args} />; 
 export const Ring = Template44.bind({});
+
+const Template45: StoryFn<typeof SkinIcon> = (args) => <SkinIcon {...args} />; 
+export const Skin = Template45.bind({});
+
+const Template46: StoryFn<typeof HatIcon> = (args) => <HatIcon {...args} />; 
+export const Hat = Template46.bind({});
+
+const Template47: StoryFn<typeof UserIcon> = (args) => <UserIcon {...args} />; 
+export const User = Template47.bind({});
