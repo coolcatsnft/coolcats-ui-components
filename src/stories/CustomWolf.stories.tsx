@@ -333,6 +333,7 @@ export default {
         '',
         '6',
         '10',
+        '4953', // Poison Mushroom
         '4687', // Tribal
         '4668', // Skele
         '3928', // Blood Moon

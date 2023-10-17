@@ -100,6 +100,7 @@ export function createAvatarCanvasLayers(
         uri: `${(LEGENDARY_OVERRIDE || '___').split('_')[1]}.png`
       }
     ],
+    weight: type === Avatar.SHADOWWOLF ? 6.8 : undefined,
     rules: []
   } as Trait;
 
@@ -186,6 +187,7 @@ export function createAvatarCanvasLayers(
   ).map(t => t.traitType === TraitType.BODY ? {
     ...t,
     images: LEGENDARY_OVERRIDE ? LEGENDARY_OVERRIDE_TRAIT.images : t.images,
+    weight: LEGENDARY_OVERRIDE ? LEGENDARY_OVERRIDE_TRAIT.weight : t.weight
   } : t).concat(
     LEGENDARY_OVERRIDE && !traits.find(t => t.traitType === TraitType.BACKGROUND) ? [{
       ...LEGENDARY_OVERRIDE_TRAIT,
