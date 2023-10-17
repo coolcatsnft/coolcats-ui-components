@@ -108,6 +108,7 @@ export function createAvatarCanvasLayers(
   const isTribal = typeof tokenId === 'string' && TRIBAL.includes(tokenId) && type === Avatar.SHADOWWOLF;
   const isSkeleton = typeof tokenId === 'string' && SKELETON.includes(tokenId) && type === Avatar.SHADOWWOLF;
   const isScholar = typeof tokenId === 'string' && SCHOLARS.find(s => s === tokenId) && type === Avatar.SHADOWWOLF;
+  const hasShirt = traits.find(t => t.traitType === TraitType.SHIRT);
 
   const bodyImages = [
     isTiger ? { uri: 'tiger.png', weight: 100 } : undefined
@@ -225,6 +226,13 @@ export function createAvatarCanvasLayers(
       }
     }
 
+    if (type === Avatar.SHADOWWOLF && hasShirt && t.traitType === TraitType.BODY) {
+      return {
+        ...t,
+        images: (t.images || []).filter((img: TraitImage) => img.uri !== 'sw-shoulders.png')
+      }
+    }
+
     return t;
   });
 
@@ -275,7 +283,7 @@ export function createAvatarCanvasLayers(
     ) {
       return {
         ...trait,
-        offsetY: isUpsideDown ? ((height || CANVAS_HEIGHT) * -1.1) : ((height || CANVAS_HEIGHT) / 10),
+        offsetY: isUpsideDown ? ((height || CANVAS_HEIGHT) * -1.1) : 0,
         offsetX: ((width || CANVAS_WIDTH) * -1) / 2,
         width: (width || CANVAS_WIDTH) * 2,
         height: (height || CANVAS_HEIGHT) * 2
