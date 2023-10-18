@@ -118,8 +118,6 @@ export function createAvatarCanvasLayers(
   ).concat(
     isSkeleton ? [{ uri: 'skeleton.png', weight: 100 }] : undefined
   ).concat(
-    isScholar ? [{ uri: `${tokenId}.png`, weight: 100 }] : undefined
-  ).concat(
     type === Avatar.CAT ? [
       {
         uri: 'cc-body.png',
@@ -181,6 +179,17 @@ export function createAvatarCanvasLayers(
     rules: []
   }
 
+  const scholarSkin = isScholar ? {
+    type,
+    view: AvatarView.FULL,
+    traitType: TraitType.SHIRT,
+    name: 'scholar',
+    weight: 6.8,
+    rarity: TraitRarity.EPIC,
+    images: [{ uri: `${tokenId}.png`, weight: 100 }],
+    rules: []
+  } : undefined;
+
   // Add body trait
   const traitsIncludingBody = traits.concat(
     [body]
@@ -193,6 +202,8 @@ export function createAvatarCanvasLayers(
       ...LEGENDARY_OVERRIDE_TRAIT,
       traitType: TraitType.BACKGROUND
     }] : []
+  ).filter(t => scholarSkin ? t.traitType !== TraitType.SHIRT : true).concat(
+    scholarSkin ? [scholarSkin] : []
   ).map(t => {
     return evaluateTraitMutateAllRules(
       t,
@@ -218,13 +229,6 @@ export function createAvatarCanvasLayers(
       return {
         ...t,
         weight: 6.6
-      }
-    }
-
-    if (isScholar && t.traitType === TraitType.BODY) {
-      return {
-        ...t,
-        weight: 6.5
       }
     }
 
