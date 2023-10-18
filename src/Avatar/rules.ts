@@ -221,6 +221,17 @@ export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number
   }
 };
 
+export const HIDE_FACE_FOR_MECHANICAL = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+  if (trait.traitType === TraitType.FACE && traits.find(t => t.traitType === TraitType.SKIN && t.name.toLowerCase().includes('mechanical'))) {
+    return {
+      ...trait,
+      weight: 0
+    };
+  }
+  
+  return trait;
+};
+
 const APPLY_TRAIT_RULE = (
   trait: Trait,
   traits: Trait[],
@@ -343,7 +354,8 @@ export const mutations = {
   [TraitRuleFunction.MOVE_PANTS_UNDER_SHIRT]: MOVE_PANTS_UNDER_SHIRT,
   [TraitRuleFunction.MOVE_PANTS_OVER_SHIRT]: MOVE_PANTS_OVER_SHIRT,
   [TraitRuleFunction.MOVE_SHIRTS_OVER_HATS]: MOVE_SHIRTS_OVER_HATS,
-  [TraitRuleFunction.COMIC_CON_PLACEMENT]: COMIC_CON_PLACEMENT
+  [TraitRuleFunction.COMIC_CON_PLACEMENT]: COMIC_CON_PLACEMENT,
+  [TraitRuleFunction.HIDE_FACE_FOR_MECHANICAL]: HIDE_FACE_FOR_MECHANICAL
 } as TraitRuleFunctionMap;
 
 export default {

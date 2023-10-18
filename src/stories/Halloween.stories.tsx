@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 
 import AvatarCanvas from '../AvatarCanvas';
-import { Avatar, AvatarView, TraitRarity, TraitType } from '../Avatar/types';
+import { Avatar, AvatarView, TraitRarity, TraitRuleFunction, TraitRuleType, TraitType } from '../Avatar/types';
 
 const pantsTraits = [
   '',
@@ -259,7 +259,10 @@ const HalloweenCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
             uri: `${skin}.png`
           }
         ],
-        rules: []
+        rules: [{
+          type: TraitRuleType.MUTATE_ALL,
+          fn: TraitRuleFunction.HIDE_FACE_FOR_MECHANICAL
+        }]
       }
     ] : []
   ).concat(
