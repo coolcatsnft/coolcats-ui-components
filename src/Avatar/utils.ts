@@ -111,6 +111,7 @@ export function createAvatarCanvasLayers(
   const isScholar = typeof tokenId === 'string' && SCHOLARS.find(s => s === tokenId) && type === Avatar.SHADOWWOLF;
   const hasShirt = traits.find(t => t.traitType === TraitType.SHIRT);
   const hasShoes = traits.find(t => t.traitType === TraitType.SHOES);
+  const hasHat = traits.find(t => t.traitType === TraitType.HAT);
 
   const bodyImages = [
     isTiger ? { uri: 'tiger.png', weight: 100 } : undefined
@@ -233,6 +234,21 @@ export function createAvatarCanvasLayers(
       return {
         ...t,
         weight: 6.6
+      }
+    }
+
+    if (type === Avatar.CAT && t.traitType === TraitType.BODY) {
+      return {
+        ...t,
+        images: (t.images || []).filter(
+          (img: TraitImage) => {
+            if (hasHat) {
+              return img.uri !== 'cc-whiskers.png'
+            }
+
+            return true;
+          }
+        )
       }
     }
 
