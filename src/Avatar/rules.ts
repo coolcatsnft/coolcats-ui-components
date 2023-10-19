@@ -232,6 +232,24 @@ export const HIDE_FACE_FOR_MECHANICAL = (trait: Trait, traits: Trait[], width: n
   return trait;
 };
 
+export const HIDE_LEGS_AND_FEET = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+  if (trait.traitType === TraitType.SHOES) {
+    return {
+      ...trait,
+      weight: -1
+    };
+  }
+
+  if (trait.traitType === TraitType.BODY) {
+    return {
+      ...trait,
+      images: trait.images.filter(i => !i.uri.includes('body'))
+    };
+  }
+  
+  return trait;
+};
+
 const APPLY_TRAIT_RULE = (
   trait: Trait,
   traits: Trait[],
@@ -355,7 +373,8 @@ export const mutations = {
   [TraitRuleFunction.MOVE_PANTS_OVER_SHIRT]: MOVE_PANTS_OVER_SHIRT,
   [TraitRuleFunction.MOVE_SHIRTS_OVER_HATS]: MOVE_SHIRTS_OVER_HATS,
   [TraitRuleFunction.COMIC_CON_PLACEMENT]: COMIC_CON_PLACEMENT,
-  [TraitRuleFunction.HIDE_FACE_FOR_MECHANICAL]: HIDE_FACE_FOR_MECHANICAL
+  [TraitRuleFunction.HIDE_FACE_FOR_MECHANICAL]: HIDE_FACE_FOR_MECHANICAL,
+  [TraitRuleFunction.HIDE_LEGS_AND_FEET]: HIDE_LEGS_AND_FEET
 } as TraitRuleFunctionMap;
 
 export default {

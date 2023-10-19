@@ -279,7 +279,10 @@ const HalloweenCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
             uri: `${pants}.png`
           }
         ],
-        rules: []
+        rules: pants === 'ghost-tail-cc' ? [{
+          type: TraitRuleType.MUTATE_ALL,
+          fn: TraitRuleFunction.HIDE_LEGS_AND_FEET
+        }] : []
       }
     ] : []
   ).concat(
