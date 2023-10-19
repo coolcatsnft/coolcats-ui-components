@@ -1,7 +1,8 @@
 export enum Avatar {
   CAT = 'CAT',
   SHADOWWOLF = 'SHADOWWOLF',
-  EXPLORER = 'EXPLORER'
+  EXPLORER = 'EXPLORER',
+  NONE = 'NONE'
 }
 
 export enum AvatarView {

@@ -88,6 +88,8 @@ export function createAvatarCanvasLayers(
     baseUrl
   } = config;
 
+  console.log(type)
+
   const LEGENDARY_OVERRIDE = BODY_OVERRIDES.find(o => tokenId ? o.split('_').slice(0, 2).join('_') === `${type || ''}_${tokenId || ''}` : false);
   const LEGENDARY_OVERRIDE_TRAIT = {
     type: type || Avatar.CAT,
@@ -167,6 +169,13 @@ export function createAvatarCanvasLayers(
         weight: 7
       }
     ] : undefined
+  ).concat(
+    type === Avatar.NONE ? [
+      {
+        uri: 'body.png',
+        weight: 1
+      }
+    ] : undefined
   ).filter(i => i) as TraitImage[]
 
   const body = {
@@ -178,7 +187,7 @@ export function createAvatarCanvasLayers(
     images: bodyImages,
     rules: []
   }
-
+  
   const scholarSkin = isScholar ? {
     type,
     view: AvatarView.FULL,
@@ -325,7 +334,7 @@ export function createAvatarCanvasLayers(
     }).reduce((newLayers: CanvasLayer[], traitImage: TraitImage) => {
       return newLayers.concat([
         {
-          src: `${(baseUrl || '').replace('$traitType', trait.traitType.toLowerCase())}${traitImage.uri}`,
+          src: `${(baseUrl || '').replace('$type', type.toLowerCase()).replace('$traitType', trait.traitType.toLowerCase())}${traitImage.uri}`,
           height: trait.height || height || CANVAS_HEIGHT,
           width: trait.width || width || CANVAS_WIDTH,
           x: typeof trait.offsetX === 'number' ? trait.offsetX : 0,

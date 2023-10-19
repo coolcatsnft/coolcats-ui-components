@@ -117,7 +117,7 @@ export default {
     sidekick: '',
     type: 'CAT',
     tokenId: '',
-    baseUrl: 'https://content.coolcatsnft.com/avatar/cat/$traitType/',
+    baseUrl: 'https://content.coolcatsnft.com/avatar/$type/$traitType/',
     view: 'FULL',
     bordered: false
   },
@@ -136,6 +136,7 @@ export default {
     background: {
       control: 'select',
       options: [
+        '',
         'cool_2',
         'white',
         'fracture',
@@ -168,7 +169,7 @@ export default {
     },
     baseUrl: {
       control: 'select',
-      options: ['https://content.coolcatsnft.com/avatar/cat/$traitType/', 'https://content.coolcatsnft.com/avatar/cat2000x2000/$traitType/']
+      options: ['https://content.coolcatsnft.com/avatar/$type/$traitType/', 'https://content.coolcatsnft.com/avatar/$type2000x2000/$traitType/']
     },
     shoes: {
       control: 'select',
@@ -335,7 +336,6 @@ const HalloweenCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
     <AvatarCanvas 
       {...args}
       traits={traits}
-      type={Avatar.CAT}
       tokenId={tokenId}
       height={400}
       width={400}
