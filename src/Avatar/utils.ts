@@ -88,8 +88,6 @@ export function createAvatarCanvasLayers(
     baseUrl
   } = config;
 
-  console.log(type)
-
   const LEGENDARY_OVERRIDE = BODY_OVERRIDES.find(o => tokenId ? o.split('_').slice(0, 2).join('_') === `${type || ''}_${tokenId || ''}` : false);
   const LEGENDARY_OVERRIDE_TRAIT = {
     type: type || Avatar.CAT,
