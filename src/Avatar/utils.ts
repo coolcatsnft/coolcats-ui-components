@@ -161,10 +161,6 @@ export function createAvatarCanvasLayers(
       {
         uri: 'sw-head.png',
         weight: 6
-      },
-      {
-        uri: 'sw-ears.png',
-        weight: 7
       }
     ] : undefined
   ).concat(
