@@ -430,6 +430,22 @@ const WolfTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
       }
     ] : []
   ).concat(
+    shoes ? [
+      {
+        type: Avatar.SHADOWWOLF,
+        view: AvatarView.FULL,
+        traitType: TraitType.SHOES,
+        name: shoes,
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: `${shoes.toLowerCase().replace(' ', '-')}-shoes.png`
+          }
+        ],
+        rules: []
+      }
+    ] : []
+  ).concat(
     sidekick ? [
       {
         type: Avatar.SHADOWWOLF,
