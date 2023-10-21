@@ -20,6 +20,7 @@ export type CanvasLayer = {
   width?: number;
   transform?: Array<number>;
   rotate?: number;
+  flip?: 'horizontal' | 'vertical';
   arc?: [number, number, number, number, number, boolean?];
   background?: string;
   parentBackground?: string;
@@ -279,6 +280,11 @@ export const generateLayeredCanvas = (
       layerCtx.translate(lWidth / 2, lHeight / 2);
       layerCtx.rotate((-l.rotate) * Math.PI / l.rotate);
       layerCtx.translate(-lWidth / 2,-lHeight / 2);
+    }
+
+    if (l.flip === 'horizontal') {
+      layerCtx.translate(lWidth, 0);
+      layerCtx.scale(-1, 1);
     }
   
     if (l.transform) {

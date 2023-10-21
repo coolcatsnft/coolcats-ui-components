@@ -103,6 +103,10 @@ const sidekicks = [
   '', 'bones', 'milo', 'swordsman-bones-red'
 ];
 
+const accessories = [
+  '', 'pumpkin-candy-bucket', 'ghost-pirate-hook', 'red-riding-basket'
+];
+
 export default {
   title: 'Halloween',
   component: AvatarCanvas,
@@ -113,6 +117,7 @@ export default {
     pants: 'buttondown-tan-pants',
     shoes: 'buttondown-tan-shoes',
     background: 'cool_2',
+    accessory: '',
     skin: '',
     sidekick: '',
     type: 'CAT',
@@ -179,6 +184,10 @@ export default {
       control: 'select',
       options: sidekicks
     },
+    accessory: {
+      control: 'select',
+      options: accessories
+    },
     tokenId: {
       control: 'select',
       options: [
@@ -200,7 +209,7 @@ export default {
 } as Meta<typeof AvatarCanvas>;
 
 const HalloweenCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
-  const { pants, shirt, face, shoes, hat, sidekick, skin, tokenId, background } = args as any;
+  const { pants, shirt, face, shoes, hat, sidekick, skin, tokenId, background, accessory } = args as any;
   const traits = (background ? [
     {
       type: Avatar.CAT,
@@ -328,6 +337,22 @@ const HalloweenCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
         images: [
           {
             uri: `${sidekick}.png`
+          }
+        ],
+        rules: []
+      }
+    ] : []
+  ).concat(
+    accessory ? [
+      {
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.ACCESSORY,
+        name: accessory,
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: `${accessory}.png`
           }
         ],
         rules: []

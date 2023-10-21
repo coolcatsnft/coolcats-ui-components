@@ -26,8 +26,8 @@ export function applyDefaultWeights(trait: Trait) {
       [TraitType.FACE]: 5,
       [TraitType.HAT]: 6,
       [TraitType.BORDER]: 7,
-      [TraitType.SIDEKICK]: 8,
-      [TraitType.ACCESSORY]: 9,
+      [TraitType.ACCESSORY]: 8,
+      [TraitType.SIDEKICK]: 9,
       [TraitType.EFFECT]: 100
     }[trait.traitType]
   }
@@ -112,6 +112,7 @@ export function createAvatarCanvasLayers(
   const hasShirt = traits.find(t => t.traitType === TraitType.SHIRT);
   const hasShoes = traits.find(t => t.traitType === TraitType.SHOES);
   const hasHat = traits.find(t => t.traitType === TraitType.HAT);
+  const hasAccessory = traits.find(t => t.traitType === TraitType.ACCESSORY && t.name !== 'no accessory');
 
   const bodyImages = [
     isTiger ? { uri: 'tiger.png', weight: 100 } : undefined
@@ -225,6 +226,16 @@ export function createAvatarCanvasLayers(
         ...t,
         rules: [{
           fn: TraitRuleFunction.EFFECT_UPSIDE_DOWN,
+          type: TraitRuleType.EFFECT
+        }].concat(t.rules || [])
+      }
+    }
+
+    if (t.traitType === TraitType.SIDEKICK && t.name !== 'no sidekick' && hasAccessory) {
+      return {
+        ...t,
+        rules: [{
+          fn: TraitRuleFunction.EFFECT_FLIP_HORIZONTAL,
           type: TraitRuleType.EFFECT
         }].concat(t.rules || [])
       }
@@ -366,6 +377,7 @@ export function createAvatarCanvasLayers(
           y: typeof trait.offsetY === 'number' ? trait.offsetY : 0,
           canvasCallbacks: canvasEffects,
           rotate: (trait.rules || []).find(r => r.fn === TraitRuleFunction.EFFECT_UPSIDE_DOWN) ? 180 : undefined,
+          flip: (trait.rules || []).find(r => r.fn === TraitRuleFunction.EFFECT_FLIP_HORIZONTAL) ? 'horizontal' : undefined,
           background: trait.background,
           parentBackground: trait.parentBackground
         }
