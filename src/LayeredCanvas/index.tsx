@@ -65,7 +65,7 @@ export const LayeredCanvas = forwardRef((props: CanvasConfig, ref: any) => {
   }, [propsLayers, reset]);
 
   useEffect(() => {
-    if ((ref?.current || canvasRef?.current)) {
+    if (layers.length > 0 && (ref?.current || canvasRef?.current)) {
       generateLayeredCanvas(
         {
           ...props,

@@ -208,7 +208,7 @@ export function createAvatarCanvasLayers(
       ...LEGENDARY_OVERRIDE_TRAIT,
       traitType: TraitType.BACKGROUND
     }] : []
-  ).filter(t => scholarSkin ? t.traitType !== TraitType.SHIRT : true).concat(
+  ).filter(t => scholarSkin ? ![TraitType.SHIRT, TraitType.HAT].includes(t.traitType) : true).concat(
     scholarSkin ? [scholarSkin] : []
   ).map(t => {
     return evaluateTraitMutateAllRules(
