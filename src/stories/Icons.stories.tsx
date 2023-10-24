@@ -26,12 +26,14 @@ import {
   MetamaskIcon,
   MinusIcon,
   OpenseaIcon,
+  PadlockIcon,
   PantsIcon,
   PencilIcon,
   PlusIcon,
   QuestionIcon,
   RefreshIcon,
   RingIcon,
+  RoundedStarIcon,
   SearchIcon,
   SettingIcon,
   ShareIcon,
@@ -199,3 +201,9 @@ export const User = Template47.bind({});
 
 const Template48: StoryFn<typeof UserRotateIcon> = (args) => <UserRotateIcon {...args} />; 
 export const UserRotate = Template48.bind({});
+
+const Template49: StoryFn<typeof PadlockIcon> = (args) => <PadlockIcon {...args} />; 
+export const Padlock = Template49.bind({});
+
+const Template50: StoryFn<typeof RoundedStarIcon> = (args) => <RoundedStarIcon {...args} />; 
+export const RoundedStar = Template50.bind({});

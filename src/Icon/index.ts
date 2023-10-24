@@ -49,4 +49,6 @@ export { default as SkinIcon } from './Skin';
 export { default as HatIcon } from './Hat';
 export { default as UserIcon } from './User';
 export { default as UserRotateIcon } from './UserRotate';
+export { default as PadlockIcon } from './Padlock';
+export { default as RoundedStarIcon } from './RoundedStar';
 export { default as Svg } from './Svg';
