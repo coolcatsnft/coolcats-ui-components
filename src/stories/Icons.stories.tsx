@@ -4,6 +4,7 @@ import {
   ArrowLeftIcon, 
   ArrowRightIcon, 
   BackgroundIcon, 
+  BinIcon, 
   BodyIcon, 
   BorderIcon, 
   BottomIcon, 
@@ -207,3 +208,6 @@ export const Padlock = Template49.bind({});
 
 const Template50: StoryFn<typeof RoundedStarIcon> = (args) => <RoundedStarIcon {...args} />; 
 export const RoundedStar = Template50.bind({});
+
+const Template51: StoryFn<typeof BinIcon> = (args) => <BinIcon {...args} />; 
+export const Bin = Template51.bind({});
