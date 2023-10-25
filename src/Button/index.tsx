@@ -7,17 +7,23 @@ export type ButtonThemeType = {
   $extended?: boolean;
   $theme?: CoolCatsUITheme;
   $circle?: boolean;
+  $size?: 'large';
 }
 
 export type ButtonType = React.ComponentProps<"button"> & ButtonThemeType;
 
 export const ButtonTheme = (props: ButtonThemeType) => {
-  const { $extended, $theme, $circle } = props;
+  const { $extended, $theme, $circle, $size } = props;
   return `
     ${$circle ===  true ? `${styledCircleButtonPartial}`: `${styledButtonPartial}`}
 
     ${$extended === true ? `
       width: 100%;
+    ` : ``}
+
+    ${$size === 'large' ? `
+      line-height: 48px;
+      border-radius: 26px;
     ` : ``}
 
     ${typeof $theme !== 'undefined' ? `
@@ -34,7 +40,7 @@ export const ButtonTheme = (props: ButtonThemeType) => {
 };
 
 const StyledButton = styled.button<ButtonType>`
-  ${({ $extended, $theme, $circle }) => ButtonTheme({$extended, $theme, $circle})}
+  ${({ $extended, $theme, $circle, $size }) => ButtonTheme({$extended, $theme, $circle, $size})}
 `;
 
 export const Button = forwardRef((props: ButtonType, ref) => {
