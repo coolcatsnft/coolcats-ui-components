@@ -84,7 +84,7 @@ export const styledCircleButtonPartial = `
   svg {
     height: 100%;
     width: 100%;
-    path {
+    path:not([fill]) {
       fill: var(--cc-color-primary);
     }
   }
