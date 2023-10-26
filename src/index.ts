@@ -10,6 +10,7 @@ export * from './Button';
 export * from './Icon';
 export * from './Dots';
 export * from './Label';
+export * from './Header';
 export * from './LayeredCanvas';
 export * from './AvatarCanvas';
 export * from './Header';

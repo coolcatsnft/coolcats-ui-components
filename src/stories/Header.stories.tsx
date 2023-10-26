@@ -8,13 +8,12 @@ export default {
   component: Header
 } as Meta<typeof Header>;
 
-const Template: StoryFn<typeof Header> = () => <Header logoSrc='logo-with-text.svg' />; 
+const Template: StoryFn<typeof Header> = () => <Header><img src='logo-with-text.svg' /></Header>; 
 export const Basic = Template.bind({});
 
 const Template2: StoryFn<typeof Header> = () => {
   return (
     <Header 
-      logoSrc='logo-with-text.svg'
       icons={[
         {
           clickAction: (e) => alert('Test') as any,
@@ -33,7 +32,9 @@ const Template2: StoryFn<typeof Header> = () => {
           active: true
         }
       ]}
-    />
+    >
+      <img src='logo-with-text.svg' />
+    </Header>
   )
 }; 
 export const WithIcons = Template2.bind({});

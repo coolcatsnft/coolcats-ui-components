@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactElement, useState } from "react";
+import { MouseEventHandler, PropsWithChildren, ReactElement, useState } from "react";
 import styled from "../Styled";
 import { device } from "../constants";
 import IconButton from "../IconButton";
@@ -100,7 +100,6 @@ export const UserMenuNavButtons = styled.div<{ visible?: boolean }>`
 `;
 
 type HeaderProps = {
-  logoSrc: string,
   icons?: {
     title: string,
     label?: string,
@@ -108,20 +107,20 @@ type HeaderProps = {
     active?: boolean,
     clickAction: MouseEventHandler<HTMLButtonElement>
   }[]
-};
+} & PropsWithChildren;
 
 export default function Header(props: HeaderProps) {
   const [visible, setVisible] = useState(false);
 
   const {
-    logoSrc,
+    children,
     icons
   } = props;
 
   return (
     <StyledHeader>
       <StyledHeaderLogo>
-        <img src={logoSrc} alt='Cool Cats' />
+        {children || null}
       </StyledHeaderLogo>
       <UserMenuNav visible={visible}>
         <UserMenuNavButtons visible={visible}>
