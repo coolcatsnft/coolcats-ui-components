@@ -1,6 +1,6 @@
 import Styled from "../Styled";
 
-const IconButton = Styled.button<{ active?: boolean }>`
+export const IconButton = Styled.button<{ active?: boolean }>`
   font-family: var(--cc-default-font);
   font-size: 10px;
   font-weight: bold;

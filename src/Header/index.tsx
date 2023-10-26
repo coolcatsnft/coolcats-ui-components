@@ -1,4 +1,4 @@
-import { MouseEventHandler, PropsWithChildren, ReactElement, useState } from "react";
+import { MouseEventHandler, PropsWithChildren, ReactElement, forwardRef, useState } from "react";
 import styled from "../Styled";
 import { device } from "../constants";
 import IconButton from "../IconButton";
@@ -109,7 +109,7 @@ type HeaderProps = {
   }[]
 } & PropsWithChildren;
 
-export default function Header(props: HeaderProps) {
+export const Header = forwardRef((props: HeaderProps, ref: any) => {
   const [visible, setVisible] = useState(false);
 
   const {
@@ -118,7 +118,7 @@ export default function Header(props: HeaderProps) {
   } = props;
 
   return (
-    <StyledHeader>
+    <StyledHeader ref={ref}>
       <StyledHeaderLogo>
         {children || null}
       </StyledHeaderLogo>
@@ -140,4 +140,6 @@ export default function Header(props: HeaderProps) {
       </UserMenuNav>
     </StyledHeader>
   )
-}
+});
+
+export default Header;
