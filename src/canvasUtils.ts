@@ -13,11 +13,18 @@ export type CanvasConfig = BaseCanvasConfig & {
   layers: CanvasLayer[];
 }
 
-export type CanvasLayer = {
+export type BaseCanvasLayer = {
   x?: number;
   y?: number;
   height?: number;
   width?: number;
+}
+
+export type RenderedCanvasLayer = BaseCanvasLayer & {
+  canvas: HTMLCanvasElement;
+}
+
+export type CanvasLayer = BaseCanvasLayer & {
   transform?: Array<number>;
   rotate?: number;
   flip?: 'horizontal' | 'vertical';
@@ -37,6 +44,8 @@ export type CanvasLayer = {
   maxLimit?: number;
   color?: string;
   shadow?: boolean;
+  sticker?: boolean;
+  stickerSpecial?: boolean;
   canvasCallbacks?: Function[]
 }
 
@@ -243,6 +252,33 @@ export function drawMultilineText(ctx: CanvasRenderingContext2D, text: string, o
   return fontSize;
 }
 
+const applyStickerEffect = (canvasCreate: Function, layerCanvas: HTMLCanvasElement) => {
+  const thickness = 3;
+  const samples = 36;
+  const x = thickness + 1;
+  const y = thickness + 1;
+
+  const stickerCanv = canvasCreate(layerCanvas.width + x * 2, layerCanvas.height + y * 2);
+  const stickerCtx = stickerCanv.getContext('2d')!;
+
+  for (let angle = 0; angle < 360; angle += 360 / samples) {
+    stickerCtx.drawImage(
+      layerCanvas,
+      thickness * Math.sin((Math.PI * 2 * angle) / 360) + x,
+      thickness * Math.cos((Math.PI * 2 * angle) / 360) + y
+    );
+  }
+
+  stickerCtx.globalCompositeOperation = 'source-in';
+  stickerCtx.fillStyle = 'white';
+  stickerCtx.fillRect(0, 0, stickerCanv.width, stickerCanv.height);
+
+  stickerCtx.globalCompositeOperation = 'source-over';
+  stickerCtx.drawImage(layerCanvas, x, y);
+
+  return stickerCanv;
+}
+
 export const generateLayeredCanvas = (
   config: CanvasConfig,
   canvas?: HTMLCanvasElement,
@@ -250,6 +286,8 @@ export const generateLayeredCanvas = (
 ) => {
   const { width, height, layers, debug, background } = config;
   const parentBackground = layers.find(l => l.parentBackground);
+  const stickerEffect = layers.find(l => l.stickerSpecial);
+  const renderedLayers = [] as RenderedCanvasLayer[];
 
   const canvasCreate = createCanvas || function(w: number, h: number) {
     const canv = document.createElement('canvas');
@@ -417,15 +455,69 @@ export const generateLayeredCanvas = (
         effect(layerCanvas, layerCtx, l, canvasCreate, index);
       })
     }
-  
+
+    if (l.sticker) {
+      const stickerCanv = applyStickerEffect(canvasCreate, layerCanvas);
+      renderedLayers.push({
+        canvas: stickerCanv,
+        x: l.x || 0,
+        y: l.y || 0,
+        width: layerCanvas.width,
+        height: layerCanvas.height
+      })
+    } else {
+      renderedLayers.push({
+        canvas: layerCanvas,
+        x: l.x || 0,
+        y: l.y || 0,
+        width: layerCanvas.width,
+        height: layerCanvas.height
+      })
+    }
+  });
+
+  if (stickerEffect) {
+    renderedLayers.slice(0, 1).forEach(r => {
+      ctx.drawImage(
+        r.canvas,
+        r.x,
+        r.y,
+        r.width,
+        r.height
+      );
+    });
+
+    const forground = canvasCreate(width, height);
+    const forgroundCtx = forground.getContext('2d');
+    renderedLayers.slice(1, renderedLayers.length - 1).forEach(r => {
+      forgroundCtx.drawImage(
+        r.canvas,
+        r.x,
+        r.y,
+        r.width,
+        r.height
+      );
+    });
+    const stickerCanv = applyStickerEffect(canvasCreate, forground);
+
     ctx.drawImage(
-      layerCanvas,
-      l.x || 0,
-      l.y || 0,
-      layerCanvas.width,
-      layerCanvas.height
+      stickerCanv,
+      0,
+      0,
+      width,
+      height
     );
-  })
+  } else {
+    renderedLayers.forEach(r => {
+      ctx.drawImage(
+        r.canvas,
+        r.x,
+        r.y,
+        r.width,
+        r.height
+      );
+    })
+  }
 
   return layeredCanvas;
 }

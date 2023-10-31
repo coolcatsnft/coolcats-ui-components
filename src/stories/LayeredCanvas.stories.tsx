@@ -117,16 +117,19 @@ const Template5: StoryFn<typeof LayeredCanvas> = (args) => {
       {...args}
       layers={[
         {
-          src: 'cc-arms.png'
+          src: 'https://content.coolcatsnft.com/avatar/shadowwolf/background/primal-1.png'
         },
         {
-          src: 'cc-body.png'
+          src: 'https://content.coolcatsnft.com/avatar/cat/body/cc-body.png'
         },
         {
-          src: 'cc-head.png'
+          src: 'https://content.coolcatsnft.com/avatar/cat/body/cc-arms.png',
         },
         {
-          src: 'cc-whiskers.png'
+          src: 'https://content.coolcatsnft.com/avatar/cat/body/cc-head.png'
+        },
+        {
+          src: 'https://content.coolcatsnft.com/avatar/cat/body/cc-whiskers.png'
         }
       ]}
       height={800}
@@ -136,3 +139,28 @@ const Template5: StoryFn<typeof LayeredCanvas> = (args) => {
 }
 
 export const AvatarBody = Template5.bind({});
+
+const Template6: StoryFn<typeof LayeredCanvas> = (args) => {
+  return (
+    <LayeredCanvas 
+      {...args}
+      layers={[
+        {
+          src: 'https://content.coolcatsnft.com/avatar/shadowwolf/background/primal-1.png'
+        },
+        {
+          src: 'https://coolcats.com/images/about-cool-cats.png',
+          x: (400 - 263) / 2,
+          y: (400 - 317) / 2,
+          width: 263,
+          height: 317,
+          sticker: true
+        }
+      ]}
+      height={400}
+      width={400}
+    />
+  )
+}
+
+export const StickerEffect = Template6.bind({});

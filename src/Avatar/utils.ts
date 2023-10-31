@@ -378,6 +378,7 @@ export function createAvatarCanvasLayers(
           canvasCallbacks: canvasEffects,
           rotate: (trait.rules || []).find(r => r.fn === TraitRuleFunction.EFFECT_UPSIDE_DOWN) ? 180 : undefined,
           flip: (trait.rules || []).find(r => r.fn === TraitRuleFunction.EFFECT_FLIP_HORIZONTAL) ? 'horizontal' : undefined,
+          stickerSpecial: typeof (trait.rules || []).find(r => r.fn === TraitRuleFunction.EFFECT_STICKER) !== 'undefined',
           background: trait.background,
           parentBackground: trait.parentBackground
         }

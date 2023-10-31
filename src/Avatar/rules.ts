@@ -22,28 +22,7 @@ export const EFFECT_BLACK_AND_WHITE = (canvas: HTMLCanvasElement, ctx: CanvasRen
 };
 
 export const EFFECT_STICKER = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, layer: CanvasLayer, createCanvas: Function, index: number) => {
-  if (index === 0) {
-    return;
-  }
-
-  const underCanv = createCanvas((layer.width || 1000) + 50, (layer.height || 1000) + 50);
-  const underCtx = underCanv.getContext('2d');
-  console.log(layer)
-  underCtx.drawImage(canvas, 0, 0, underCanv.width, underCanv.height);
-
-  const imgData = underCtx.getImageData(0, 0, canvas.width, canvas.height);
-  const { data } = imgData;
-
-  for (let i = 0; i < data.length; i += 4) {
-    data[i + 0] = 255;
-    data[i + 1] = 255;
-    data[i + 2] = 255;
-  }
-
-  underCtx.putImageData(imgData, 0, 0);
-
-  // underCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-  ctx.drawImage(underCanv, 0, 0, canvas.width, canvas.height);
+  
 };
 
 export const EFFECT_OUTLINE_PARENT = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, r: number[], g: number[], b: number[]) => {
