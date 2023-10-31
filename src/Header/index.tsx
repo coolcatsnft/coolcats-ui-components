@@ -99,7 +99,7 @@ export const UserMenuNavButtons = styled.div<{ visible?: boolean }>`
   }
 `;
 
-type HeaderProps = {
+export type HeaderProps = {
   icons?: {
     title: string,
     label?: string,
