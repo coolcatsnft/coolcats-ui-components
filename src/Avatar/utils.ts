@@ -110,7 +110,7 @@ export function createAvatarCanvasLayers(
   const isSkeleton = typeof tokenId === 'string' && SKELETON.includes(tokenId) && type === Avatar.SHADOWWOLF;
   const isScholar = typeof tokenId === 'string' && SCHOLARS.find(s => s === tokenId) && type === Avatar.SHADOWWOLF;
   const hasShirt = traits.find(t => t.traitType === TraitType.SHIRT);
-  const hasShoes = traits.find(t => t.traitType === TraitType.SHOES);
+  const hasShoes = traits.find(t => t.traitType === TraitType.SHOES && t.name?.toLowerCase() !== 'no shoes');
   const hasHat = traits.find(t => t.traitType === TraitType.HAT);
   const hasAccessory = traits.find(t => t.traitType === TraitType.ACCESSORY && t.name !== 'no accessory');
 
