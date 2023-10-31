@@ -253,7 +253,7 @@ export function drawMultilineText(ctx: CanvasRenderingContext2D, text: string, o
 }
 
 const applyStickerEffect = (canvasCreate: Function, layerCanvas: HTMLCanvasElement) => {
-  const thickness = 3;
+  const thickness = layerCanvas.width * 0.006;
   const samples = 36;
   const x = thickness + 1;
   const y = thickness + 1;
