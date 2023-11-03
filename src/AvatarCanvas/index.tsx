@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState } from "react";
 import { BaseCanvasConfig } from "../canvasUtils";
-import { AvatarView, CanvasConfig } from "../Avatar/types";
+import { AvatarView, CanvasConfig, Trait } from "../Avatar/types";
 import LayeredCanvas from "../LayeredCanvas";
 import { createAvatarCanvasLayers } from "../Avatar/utils";
 
@@ -17,6 +17,14 @@ export const AvatarCanvas = forwardRef((props: AvatarCanvasConfig, ref: any) => 
     }
   }, [view]);
 
+  const [stateTraits, setStateTraits] = useState<Trait[]>(traits);
+
+  useEffect(() => {
+    if (traits) {
+      setStateTraits(traits);
+    }
+  }, [traits]);
+
   return (
     <LayeredCanvas 
       width={width}
@@ -30,7 +38,7 @@ export const AvatarCanvas = forwardRef((props: AvatarCanvasConfig, ref: any) => 
           view: stateView,
           type,
           tokenId,
-          traits,
+          traits: stateTraits,
           height,
           width,
           baseUrl

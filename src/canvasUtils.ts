@@ -300,6 +300,7 @@ export const generateLayeredCanvas = (
 
   const layeredCanvas = (canvas || canvasCreate(width, height));
   const ctx = layeredCanvas.getContext('2d');
+  ctx.clearRect(0, 0, width, height);
   if (background || parentBackground) {
     ctx.fillStyle = (background || parentBackground?.parentBackground);
     ctx.fillRect(0, 0, width, height);
