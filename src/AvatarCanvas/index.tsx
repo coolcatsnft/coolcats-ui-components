@@ -17,14 +17,6 @@ export const AvatarCanvas = forwardRef((props: AvatarCanvasConfig, ref: any) => 
     }
   }, [view]);
 
-  const [stateTraits, setStateTraits] = useState<Trait[]>(traits);
-
-  useEffect(() => {
-    if (traits) {
-      setStateTraits(traits);
-    }
-  }, [traits]);
-
   return (
     <LayeredCanvas 
       width={width}
@@ -38,7 +30,7 @@ export const AvatarCanvas = forwardRef((props: AvatarCanvasConfig, ref: any) => 
           view: stateView,
           type,
           tokenId,
-          traits: stateTraits,
+          traits,
           height,
           width,
           baseUrl
