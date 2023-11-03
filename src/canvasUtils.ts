@@ -275,6 +275,7 @@ const applyStickerEffect = (canvasCreate: Function, layerCanvas: HTMLCanvasEleme
 
   stickerCtx.globalCompositeOperation = 'source-over';
   stickerCtx.drawImage(layerCanvas, x, y);
+  stickerCanv.thickness = thickness;
 
   return stickerCanv;
 }
@@ -503,7 +504,7 @@ export const generateLayeredCanvas = (
     ctx.drawImage(
       stickerCanv,
       0,
-      0,
+      stickerCanv.thickness,
       width,
       height
     );
