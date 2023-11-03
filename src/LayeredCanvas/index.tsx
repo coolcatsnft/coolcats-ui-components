@@ -41,7 +41,7 @@ export const LayeredCanvas = forwardRef((props: CanvasConfig, ref: any) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const { layers: propsLayers, height, children, reset, bordered, width } = props;
-
+  
   useEffect(() => {
     if (reset) {
       setLayers([]);
@@ -65,7 +65,7 @@ export const LayeredCanvas = forwardRef((props: CanvasConfig, ref: any) => {
   }, [propsLayers, reset]);
 
   useEffect(() => {
-    if (layers.length > 0 && (ref?.current || canvasRef?.current)) {
+    if ((ref?.current || canvasRef?.current)) {
       generateLayeredCanvas(
         {
           ...props,
@@ -82,7 +82,7 @@ export const LayeredCanvas = forwardRef((props: CanvasConfig, ref: any) => {
       $loading={layers.length === 0} 
       $height={height}
     >
-      <StyledCanvasImage height={height} width={width} $width='1000px' $bordered={bordered} ref={ref || canvasRef} />
+      {!reset && <StyledCanvasImage height={height} width={width} $width='1000px' $bordered={bordered} ref={ref || canvasRef} />}
       { children || null }
     </StyledLayeredCanvasContainer>
   )

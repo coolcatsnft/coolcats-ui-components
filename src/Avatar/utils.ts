@@ -167,6 +167,29 @@ export function createAvatarCanvasLayers(
       }
     ] : undefined
   ).concat(
+    type === Avatar.EXPLORER ? [
+      {
+        uri: `${typeof tokenId === 'string' ? `${tokenId}-` : ''}socks.png`,
+        weight: 5
+      },
+      {
+        uri: `${typeof tokenId === 'string' ? `${tokenId}-` : ''}body.png`,
+        weight: 1
+      },
+      {
+        uri: `${typeof tokenId === 'string' ? `${tokenId}-` : ''}arms.png`,
+        weight: 2
+      },
+      {
+        uri: `${typeof tokenId === 'string' ? `${tokenId}-` : ''}gloves.png`,
+        weight: 3
+      },
+      {
+        uri: `${typeof tokenId === 'string' ? `${tokenId}-` : ''}head.png`,
+        weight: 4
+      }
+    ] : undefined
+  ).concat(
     type === Avatar.NONE ? [
       {
         uri: 'body.png',

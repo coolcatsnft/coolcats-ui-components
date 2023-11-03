@@ -447,3 +447,17 @@ const CustomBackgroundAndEffectTemplate: StoryFn<typeof AvatarCanvas> = (args) =
 }
 
 export const CustomBackgroundAndEffect = CustomBackgroundAndEffectTemplate.bind({});
+
+const ExplorerTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      tokenId='1'
+      baseUrl='https://content.coolcatsnft.com/avatar/explorer2000x2000/$traitType/'
+      type={Avatar.EXPLORER}
+      traits={[]}
+    />
+  )
+}
+
+export const Explorer = ExplorerTemplate.bind({});
