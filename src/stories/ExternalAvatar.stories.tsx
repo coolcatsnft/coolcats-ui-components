@@ -102,7 +102,9 @@ const faceTraits = [
 ]
 
 const shirtTraits = [
-  '', 'astro','astro-black','astro-orange','bandana-green','bandana-purple','bandana-red','baseball-blue','baseball-red','buttondown-black-flannel','buttondown-blue-flannel','buttondown-green','buttondown-red-flannel','buttondown-tan','chain','combat-black','combat-green','costume-dragon','costume-frog','costume-gorilla','costume-hotdog','cowboy-black','cowboy-brown','deepsea-bronze','deepsea-orange','epaulette-black','epaulette-red','epaulette-white','gown-black','gown-purple','gown-white','hoodie-black','hoodie-purple','hoodie-red','knight','knight-black','knight-leather','labcoat','lederhosen','monk','mononoke','ninja-black','ninja-blue','ninja-red','nurse','overalls-blue','overalls-flannel','overalls-pink','overalls-red','overalls-yellow','pirate-black','pirate-red','punk','robe-blue','robe-king','robe-red','robe-white','shirt-bowtie','shirt-white','shirt-yellow','sweater-black','sweater-green-chain','sweater-orange','sweater-pink','tanktop-orange','tanktop-pink','tanktop-sailor-black','tanktop-sailor-blue','tanktop-sailor-red','tanktop-tattoo','tanktop-white','tiger','toga','tshirt-blue','tshirt-green','tshirt-metal','tshirt-pink','tshirt-red','tshirt-white','tshirt-yellow','viking-brown','viking-navy','wetsuit','winter-blue','winter-red','work-blue','work-red'
+  '', 'astro','astro-black','astro-orange','bandana-green','bandana-purple','bandana-red','baseball-blue','baseball-red','buttondown-black-flannel','buttondown-blue-flannel','buttondown-green','buttondown-red-flannel','buttondown-tan','chain','combat-black','combat-green','costume-dragon','costume-frog','costume-gorilla','costume-hotdog','cowboy-black','cowboy-brown','deepsea-bronze','deepsea-orange','epaulette-black','epaulette-red','epaulette-white','gown-black','gown-purple','gown-white','hoodie-black','hoodie-purple','hoodie-red','knight','knight-black','knight-leather','labcoat','lederhosen','monk','mononoke','ninja-black','ninja-blue','ninja-red','nurse','overalls-blue','overalls-flannel','overalls-pink','overalls-red','overalls-yellow','pirate-black','pirate-red','punk','robe-blue','robe-king','robe-red','robe-white','shirt-bowtie','shirt-white','shirt-yellow','sweater-black','sweater-green-chain','sweater-orange','sweater-pink','tanktop-orange','tanktop-pink','tanktop-sailor-black','tanktop-sailor-blue','tanktop-sailor-red','tanktop-tattoo','tanktop-white','tiger','toga','tshirt-blue','tshirt-green','tshirt-metal','tshirt-pink','tshirt-red','tshirt-white','tshirt-yellow','viking-brown','viking-navy','wetsuit','winter-blue','winter-red','work-blue','work-red',
+  'university-sweatshirt-coffee-cc',
+  'lady-liberty-dress'
 ]
 
 const shoeTraits = [
@@ -123,6 +125,7 @@ export default {
     pants: '',
     shoes: '',
     sidekick: '',
+    accessory: '',
     type: 'CAT',
     tokenId: '',
     baseUrl: 'https://content.coolcatsnft.com/avatar/cat/$traitType/',
@@ -165,6 +168,10 @@ export default {
       control: 'select',
       options: sidekicks
     },
+    accessory: {
+      control: 'select',
+      options: ['', 'chugs-balloon', 'red-riding-basket']
+    },
     tokenId: {
       control: 'select',
       options: [
@@ -202,7 +209,7 @@ const BlueCatTraits = [
 ]
 
 const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
-  const { pants, shirt, face, shoes, hat, sidekick, tokenId } = args as any;
+  const { pants, shirt, face, shoes, hat, sidekick, tokenId, accessory } = args as any;
   const traits = BlueCatTraits.concat(
     hat ? [
       {
@@ -294,6 +301,22 @@ const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
         images: [
           {
             uri: `${sidekick}.png`
+          }
+        ],
+        rules: []
+      }
+    ] : []
+  ).concat(
+    accessory ? [
+      {
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.ACCESSORY,
+        name: accessory,
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: `${accessory}.png`
           }
         ],
         rules: []

@@ -51,9 +51,9 @@ function evaluateRule(rules: TraitRule[], trait: Trait, traits: Trait[], width: 
   }, trait);
 }
 
-export function evaluateTraitMutateAllRules(trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) {
+export function evaluateTraitMutateAllRules(trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar, ruleType?: TraitRuleType) {
   const rules = traits.reduce((rules: TraitRule[], trait: Trait) => {
-    return rules.concat((trait?.rules || []).filter(r => r.type === TraitRuleType.MUTATE_ALL));
+    return rules.concat((trait?.rules || []).filter(r => r.type === (ruleType || TraitRuleType.MUTATE_ALL)));
   }, []);
 
   return evaluateRule(rules, trait, traits, width, height, tokenId, type);
@@ -63,6 +63,10 @@ export function evaluateTraitMutateRules(trait: Trait, traits: Trait[], width: n
   const rules = (trait.rules || []).filter(r => r.type === TraitRuleType.MUTATE);
   
   return evaluateRule(rules, trait, traits, width, height);
+}
+
+export function evaluateTraitMutateLayersRules(traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) {
+  return traits.map(t => evaluateTraitMutateAllRules(t, traits, height, width, tokenId, type, TraitRuleType.MUTATE_LAYERS))
 }
 
 export function applyWeights(traitA: Trait, traitB: Trait) {
@@ -254,16 +258,6 @@ export function createAvatarCanvasLayers(
       }
     }
 
-    if (t.traitType === TraitType.SIDEKICK && t.name !== 'no sidekick' && hasAccessory) {
-      return {
-        ...t,
-        rules: [{
-          fn: TraitRuleFunction.EFFECT_FLIP_HORIZONTAL,
-          type: TraitRuleType.EFFECT
-        }].concat(t.rules || [])
-      }
-    }
-
     if (isScholar && t.traitType === TraitType.FACE) {
       return {
         ...t,
@@ -331,6 +325,27 @@ export function createAvatarCanvasLayers(
         trait.traitType === TraitType.SHIRT && type === Avatar.SHADOWWOLF ? [
           {
             fn: TraitRuleFunction.MOVE_SHIRTS_OVER_HATS,
+            type: TraitRuleType.MUTATE
+          }
+        ] : []
+      ).concat(
+        trait.traitType === TraitType.BODY ? [
+          {
+            fn: TraitRuleFunction.HIDE_ARMS,
+            type: TraitRuleType.MUTATE
+          }
+        ] : []
+      ).concat(
+        trait.traitType === TraitType.ACCESSORY ? [
+          {
+            fn: TraitRuleFunction.FLIP_ACCESSORY,
+            type: TraitRuleType.MUTATE
+          }
+        ] : []
+      ).concat(
+        trait.traitType === TraitType.SIDEKICK ? [
+          {
+            fn: TraitRuleFunction.FLIP_SIDEKICK,
             type: TraitRuleType.MUTATE
           }
         ] : []

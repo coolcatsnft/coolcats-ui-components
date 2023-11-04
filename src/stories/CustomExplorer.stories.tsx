@@ -8,7 +8,9 @@ const hatTraits = [
 ];
 
 const shirtTraits = [
-  ''
+  '',
+  'university-sweatshirt-coffee-ex',
+  'lady-liberty-dress'
 ];
 
 const faceTraits = [

@@ -1,5 +1,5 @@
 import { CanvasLayer } from "../canvasUtils";
-import { Avatar, AvatarView, Trait, TraitRuleFunction, TraitRuleFunctionMap, TraitType } from "./types";
+import { Avatar, AvatarView, Trait, TraitRuleFunction, TraitRuleFunctionMap, TraitRuleType, TraitType } from "./types";
 
 export const EFFECT_BLACK_AND_WHITE = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, layer: CanvasLayer) => {
   const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -228,6 +228,60 @@ export const HIDE_LEGS_AND_FEET = (trait: Trait, traits: Trait[], width: number,
   return trait;
 };
 
+function isShirtAccessory(trait: Trait) {
+  return trait.traitType === TraitType.SHIRT 
+  && (
+    ['university sweatshirt coffee'].includes(trait.name)
+    || trait.name.includes('coffee')
+  )
+}
+
+export const FLIP_SIDEKICK = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+  if (trait.traitType === TraitType.SIDEKICK
+    && !traits.find(isShirtAccessory)
+    && traits.find(t => t.traitType === TraitType.ACCESSORY && t.name !== 'no sidekick')
+  ) {
+    return {
+      ...trait,
+      rules: (trait.rules || []).concat({
+        fn: TraitRuleFunction.EFFECT_FLIP_HORIZONTAL,
+        type: TraitRuleType.EFFECT
+      })
+    };
+  }
+  
+  return trait;
+}
+
+export const FLIP_ACCESSORY = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+  if (trait.traitType === TraitType.ACCESSORY
+    && traits.find(isShirtAccessory)
+  ) {
+    return {
+      ...trait,
+      rules: (trait.rules || []).concat({
+        fn: TraitRuleFunction.EFFECT_FLIP_HORIZONTAL,
+        type: TraitRuleType.EFFECT
+      })
+    };
+  }
+  
+  return trait;
+};
+
+export const HIDE_ARMS = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+  if (trait.traitType === TraitType.BODY
+    && traits.find(isShirtAccessory)
+  ) {
+    return {
+      ...trait,
+      images: trait.images.filter(i => !i.uri.includes('arms') && !i.uri.includes('gloves'))
+    };
+  }
+  
+  return trait;
+};
+
 const APPLY_TRAIT_RULE = (
   trait: Trait,
   traits: Trait[],
@@ -353,7 +407,10 @@ export const mutations = {
   [TraitRuleFunction.MOVE_SHIRTS_OVER_HATS]: MOVE_SHIRTS_OVER_HATS,
   [TraitRuleFunction.COMIC_CON_PLACEMENT]: COMIC_CON_PLACEMENT,
   [TraitRuleFunction.HIDE_FACE_FOR_MECHANICAL]: HIDE_FACE_FOR_MECHANICAL,
-  [TraitRuleFunction.HIDE_LEGS_AND_FEET]: HIDE_LEGS_AND_FEET
+  [TraitRuleFunction.HIDE_LEGS_AND_FEET]: HIDE_LEGS_AND_FEET,
+  [TraitRuleFunction.FLIP_ACCESSORY]: FLIP_ACCESSORY,
+  [TraitRuleFunction.FLIP_SIDEKICK]: FLIP_SIDEKICK,
+  [TraitRuleFunction.HIDE_ARMS]: HIDE_ARMS
 } as TraitRuleFunctionMap;
 
 export default {
