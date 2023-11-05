@@ -231,7 +231,7 @@ export const HIDE_LEGS_AND_FEET = (trait: Trait, traits: Trait[], width: number,
 function isShirtAccessory(trait: Trait) {
   return trait.traitType === TraitType.SHIRT 
   && (
-    ['university sweatshirt coffee'].includes(trait.name)
+    ['university-sweatshirt-coffee', 'snowman-body'].includes(trait.name?.toLowerCase().replace(' ', '-'))
     || trait.name.includes('coffee')
   )
 }

@@ -116,7 +116,6 @@ export function createAvatarCanvasLayers(
   const hasShirt = traits.find(t => t.traitType === TraitType.SHIRT);
   const hasShoes = traits.find(t => t.traitType === TraitType.SHOES && t.name?.toLowerCase() !== 'no shoes');
   const hasHat = traits.find(t => t.traitType === TraitType.HAT);
-  const hasAccessory = traits.find(t => t.traitType === TraitType.ACCESSORY && t.name !== 'no accessory');
 
   const bodyImages = [
     isTiger ? { uri: 'tiger.png', weight: 100 } : undefined
