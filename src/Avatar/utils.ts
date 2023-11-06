@@ -417,7 +417,8 @@ export function createAvatarCanvasLayers(
           flip: (trait.rules || []).find(r => r.fn === TraitRuleFunction.EFFECT_FLIP_HORIZONTAL) ? 'horizontal' : undefined,
           stickerSpecial: typeof (trait.rules || []).find(r => r.fn === TraitRuleFunction.EFFECT_STICKER) !== 'undefined',
           background: trait.background,
-          parentBackground: trait.parentBackground
+          parentBackground: trait.parentBackground,
+          stickerExempt: trait.traitType === TraitType.BORDER
         }
       ])
     }, []);

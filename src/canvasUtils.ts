@@ -22,6 +22,7 @@ export type BaseCanvasLayer = {
 
 export type RenderedCanvasLayer = BaseCanvasLayer & {
   canvas: HTMLCanvasElement;
+  stickerExempt?: boolean;
 }
 
 export type CanvasLayer = BaseCanvasLayer & {
@@ -38,6 +39,7 @@ export type CanvasLayer = BaseCanvasLayer & {
   text?: string;
   textCallback?: Function;
   skipTextFilter?: boolean;
+  stickerExempt?: boolean;
   minFontSize?: number;
   maxFontSize?: number;
   font?: string;
@@ -465,7 +467,8 @@ export const generateLayeredCanvas = (
         x: l.x || 0,
         y: l.y || 0,
         width: layerCanvas.width,
-        height: layerCanvas.height
+        height: layerCanvas.height,
+        stickerExempt: l.stickerExempt || false
       })
     } else {
       renderedLayers.push({
@@ -473,7 +476,8 @@ export const generateLayeredCanvas = (
         x: l.x || 0,
         y: l.y || 0,
         width: layerCanvas.width,
-        height: layerCanvas.height
+        height: layerCanvas.height,
+        stickerExempt: l.stickerExempt || false
       })
     }
   });
@@ -491,7 +495,10 @@ export const generateLayeredCanvas = (
 
     const forground = canvasCreate(width, height);
     const forgroundCtx = forground.getContext('2d');
-    renderedLayers.slice(1, renderedLayers.length - 1).forEach(r => {
+    renderedLayers.slice(
+      1,
+      renderedLayers.filter(l => !l.stickerExempt).length - 1
+    ).forEach(r => {
       forgroundCtx.drawImage(
         r.canvas,
         r.x,
@@ -500,6 +507,7 @@ export const generateLayeredCanvas = (
         r.height
       );
     });
+
     const stickerCanv = applyStickerEffect(canvasCreate, forground);
 
     ctx.drawImage(
@@ -509,6 +517,17 @@ export const generateLayeredCanvas = (
       width,
       height
     );
+
+    renderedLayers.filter(l => l.stickerExempt).forEach(r => {
+      ctx.drawImage(
+        r.canvas,
+        r.x,
+        r.y,
+        r.width,
+        r.height
+      );
+    });
+
   } else {
     renderedLayers.forEach(r => {
       ctx.drawImage(

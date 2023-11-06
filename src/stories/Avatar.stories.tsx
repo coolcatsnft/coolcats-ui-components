@@ -364,15 +364,18 @@ const StickerTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
       traits={Cat4710Traits.concat([{
         type: Avatar.CAT,
         view: AvatarView.FULL,
-        traitType: TraitType.SIDEKICK,
-        name: 'bones',
+        traitType: TraitType.BORDER,
+        name: 'comic con',
         rarity: TraitRarity.COMMON,
         images: [
           {
-            uri: 'bones.png'
+            uri: 'comic-con.png'
           }
         ],
-        rules: []
+        rules: [{
+          type: 'MUTATE_ALL',
+          fn: 'COMIC_CON_PLACEMENT'
+        }] as any
       }]).concat([{
         type: Avatar.CAT,
         view: AvatarView.FULL,
