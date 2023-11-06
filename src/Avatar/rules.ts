@@ -199,6 +199,20 @@ export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number
   }
 };
 
+export const CHRISTMAS_CARD_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+  if (trait.traitType === TraitType.BORDER || trait.traitType === TraitType.BACKGROUND) {
+    return trait;
+  }
+  
+  return {
+    ...trait,
+    width: (width || 2000) * 1,
+    height: (height || 2000) * 1,
+    offsetX: (width * 0) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
+    offsetY: (height * 0.3) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1)
+  }
+};
+
 export const HIDE_FACE_FOR_MECHANICAL = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
   if (trait.traitType === TraitType.FACE && traits.find(t => t.traitType === TraitType.SKIN && t.name.toLowerCase().includes('mechanical'))) {
     return {
@@ -406,6 +420,7 @@ export const mutations = {
   [TraitRuleFunction.MOVE_PANTS_OVER_SHIRT]: MOVE_PANTS_OVER_SHIRT,
   [TraitRuleFunction.MOVE_SHIRTS_OVER_HATS]: MOVE_SHIRTS_OVER_HATS,
   [TraitRuleFunction.COMIC_CON_PLACEMENT]: COMIC_CON_PLACEMENT,
+  [TraitRuleFunction.CHRISTMAS_CARD_PLACEMENT]: CHRISTMAS_CARD_PLACEMENT,
   [TraitRuleFunction.HIDE_FACE_FOR_MECHANICAL]: HIDE_FACE_FOR_MECHANICAL,
   [TraitRuleFunction.HIDE_LEGS_AND_FEET]: HIDE_LEGS_AND_FEET,
   [TraitRuleFunction.FLIP_ACCESSORY]: FLIP_ACCESSORY,

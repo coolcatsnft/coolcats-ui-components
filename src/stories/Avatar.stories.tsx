@@ -464,3 +464,42 @@ const ExplorerTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
 }
 
 export const Explorer = ExplorerTemplate.bind({});
+
+const ChristmasCardTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      type={Avatar.CAT}
+      traits={Cat4710Traits.concat([{
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.BORDER,
+        name: 'christmas card',
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: 'card-border.png'
+          }
+        ],
+        rules: [{
+          type: 'MUTATE_ALL',
+          fn: 'CHRISTMAS_CARD_PLACEMENT'
+        }] as any
+      }]).concat([{
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.EFFECT,
+        name: 'sticker',
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: 'transparent.png'
+          }
+        ],
+        rules: StickerRules
+      }])}
+    />
+  )
+}
+
+export const ChristmasCard = ChristmasCardTemplate.bind({});
