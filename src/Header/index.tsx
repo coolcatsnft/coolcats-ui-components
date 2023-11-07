@@ -1,4 +1,4 @@
-import { MouseEventHandler, PropsWithChildren, ReactElement, forwardRef, useState } from "react";
+import { MouseEventHandler, PropsWithChildren, ReactElement, ReactNode, forwardRef, useState } from "react";
 import styled from "../Styled";
 import { device } from "../constants";
 import IconButton from "../IconButton";
@@ -106,8 +106,9 @@ export type HeaderProps = {
     icon: ReactElement,
     active?: boolean,
     clickAction: MouseEventHandler<HTMLButtonElement>
-  }[]
-} & PropsWithChildren;
+  }[],
+  children: ReactNode | [ReactNode, ReactNode]
+};
 
 export const Header = forwardRef((props: HeaderProps, ref: any) => {
   const [visible, setVisible] = useState(false);
@@ -117,11 +118,16 @@ export const Header = forwardRef((props: HeaderProps, ref: any) => {
     icons
   } = props;
 
+  const isTwoChildren = Array.isArray(children) && children.length === 2;
+
   return (
     <StyledHeader ref={ref}>
-      <StyledHeaderLogo>
+      {!isTwoChildren && <StyledHeaderLogo>
         {children || null}
-      </StyledHeaderLogo>
+      </StyledHeaderLogo>}
+      {isTwoChildren && <StyledHeaderLogo>
+        {children[0]}
+      </StyledHeaderLogo>}
       <UserMenuNav visible={visible}>
         <UserMenuNavButtons visible={visible}>
           {(icons || [])?.map(icon => (
@@ -130,8 +136,11 @@ export const Header = forwardRef((props: HeaderProps, ref: any) => {
               {icon.label || icon.title}
             </IconButton>  
           ))}
+          {isTwoChildren && <>
+            {children[1]}
+          </>}
         </UserMenuNavButtons>
-        {(icons || []).length > 0 && (
+        {((icons || []).length > 0 || isTwoChildren) && (
           <IconButton onClick={() => setVisible(v => !v)} title={visible ? 'Close Menu' : 'Open Menu'}>
             <i><MenuIcon open={visible} /></i>
             {visible ? 'Close' : 'Menu'}
