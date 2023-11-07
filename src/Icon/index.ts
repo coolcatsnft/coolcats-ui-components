@@ -52,4 +52,5 @@ export { default as UserRotateIcon } from './UserRotate';
 export { default as PadlockIcon } from './Padlock';
 export { default as RoundedStarIcon } from './RoundedStar';
 export { default as BinIcon } from './Bin';
+export { default as MailIcon } from './Mail';
 export { default as Svg } from './Svg';

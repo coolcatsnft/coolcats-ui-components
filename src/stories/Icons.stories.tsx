@@ -23,6 +23,7 @@ import {
   InstagramIcon,
   LinkedInIcon,
   MagicIcon,
+  MailIcon,
   MediumIcon,
   MetamaskIcon,
   MinusIcon,
@@ -211,3 +212,6 @@ export const RoundedStar = Template50.bind({});
 
 const Template51: StoryFn<typeof BinIcon> = (args) => <BinIcon {...args} />; 
 export const Bin = Template51.bind({});
+
+const Template52: StoryFn<typeof BinIcon> = (args) => <MailIcon {...args} />; 
+export const Mail = Template52.bind({});
