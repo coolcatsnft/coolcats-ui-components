@@ -115,6 +115,7 @@ export function createAvatarCanvasLayers(
   const isScholar = typeof tokenId === 'string' && SCHOLARS.find(s => s === tokenId) && type === Avatar.SHADOWWOLF;
   const hasShirt = traits.find(t => t.traitType === TraitType.SHIRT);
   const hasShoes = traits.find(t => t.traitType === TraitType.SHOES && t.name?.toLowerCase() !== 'no shoes');
+  const hasFace = traits.find(t => t.traitType === TraitType.FACE && t.name?.toLowerCase() !== 'no face');
   const hasHat = traits.find(t => t.traitType === TraitType.HAT);
 
   const bodyImages = [
@@ -190,6 +191,10 @@ export function createAvatarCanvasLayers(
       {
         uri: `${typeof tokenId === 'string' ? `${tokenId}-` : ''}head.png`,
         weight: 4
+      },
+      {
+        uri: `${typeof tokenId === 'string' ? `${tokenId}-` : ''}face.png`,
+        weight: 5
       }
     ] : undefined
   ).concat(
@@ -271,6 +276,21 @@ export function createAvatarCanvasLayers(
           (img: TraitImage) => {
             if (hasHat) {
               return img.uri !== 'cc-whiskers.png'
+            }
+
+            return true;
+          }
+        )
+      }
+    }
+
+    if (type === Avatar.EXPLORER && t.traitType === TraitType.BODY) {
+      return {
+        ...t,
+        images: (t.images || []).filter(
+          (img: TraitImage) => {
+            if (hasFace) {
+              return !img.uri.includes('-face.png');
             }
 
             return true;

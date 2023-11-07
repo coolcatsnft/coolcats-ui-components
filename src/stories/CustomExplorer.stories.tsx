@@ -14,7 +14,8 @@ const shirtTraits = [
 ];
 
 const faceTraits = [
-  ''
+  '',
+  'rudolph-cc'
 ];
 
 const pantsTraits = [
