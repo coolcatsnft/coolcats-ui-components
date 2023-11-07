@@ -252,8 +252,9 @@ function isShirtAccessory(trait: Trait) {
 
 export const FLIP_SIDEKICK = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
   if (trait.traitType === TraitType.SIDEKICK
-    && !traits.find(isShirtAccessory)
-    && traits.find(t => t.traitType === TraitType.ACCESSORY && t.name !== 'no sidekick')
+    && (traits.find(t => t.traitType === TraitType.ACCESSORY && t.name !== 'no accessory')
+      && !traits.find(isShirtAccessory)
+    )
   ) {
     return {
       ...trait,

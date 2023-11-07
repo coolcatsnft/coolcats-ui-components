@@ -122,6 +122,7 @@ export default {
     shirt: '',
     pants: '',
     shoes: '',
+    accessory: '',
     sidekick: '',
     tokenId: '1',
     baseUrl: 'https://content.coolcatsnft.com/avatar/explorer/$traitType/',
@@ -153,6 +154,13 @@ export default {
       control: 'select',
       options: pantsTraits
     },
+    accessory: {
+      control: 'select',
+      options: [
+        '',
+        'blue-balloon'
+      ]
+    },
     shoes: {
       control: 'select',
       options: shirtTraits
@@ -178,7 +186,7 @@ export default {
 const ExplorerTraits = [] as any
 
 const Template: StoryFn<typeof AvatarCanvas> = (args) => {
-  const { pants, shirt, face, hat, sidekick, tokenId, shoes } = args as any;
+  const { pants, shirt, face, hat, sidekick, tokenId, shoes, accessory } = args as any;
   const traits = ExplorerTraits.concat(
     hat ? [
       {
@@ -254,6 +262,22 @@ const Template: StoryFn<typeof AvatarCanvas> = (args) => {
         images: [
           {
             uri: `${shoes.toLowerCase().replace(' ', '-')}-shoes.png`
+          }
+        ],
+        rules: []
+      }
+    ] : []
+  ).concat(
+    accessory ? [
+      {
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.ACCESSORY,
+        name: accessory,
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: `${accessory}.png`
           }
         ],
         rules: []
