@@ -130,8 +130,8 @@ export const Header = forwardRef((props: HeaderProps, ref: any) => {
       </StyledHeaderLogo>}
       <UserMenuNav visible={visible}>
         <UserMenuNavButtons visible={visible}>
-          {(icons || [])?.map(icon => (
-            <IconButton title={icon.title} active={icon.active} onClick={icon.clickAction}>
+          {(icons || [])?.map((icon, i) => (
+            <IconButton key={i} title={icon.title} active={icon.active} onClick={icon.clickAction}>
               <i>{icon.icon}</i>
               {icon.label || icon.title}
             </IconButton>  

@@ -42,8 +42,18 @@ export const WithIcons = Template2.bind({});
 
 const Template3: StoryFn<typeof Header> = () => {
   return (
-    <Header>
-      <img src='logo-with-text.svg' />
+    <Header  
+      icons={[
+        {
+          clickAction: (e) => alert('Test') as any,
+          icon: <MeowpadIcon />,
+          title: 'Meowpad'
+        }
+      ]}
+    >
+      <a href='https://coolcats.com'>
+        <img src='logo-with-text.svg' />
+      </a>
       <>
         <IconButton>
           <i><JourneysIcon /></i>
