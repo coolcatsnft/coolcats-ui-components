@@ -451,6 +451,38 @@ const CustomBackgroundAndEffectTemplate: StoryFn<typeof AvatarCanvas> = (args) =
 
 export const CustomBackgroundAndEffect = CustomBackgroundAndEffectTemplate.bind({});
 
+const CustomBackgroundAndEffectTemplate2: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      type={Avatar.CAT}
+      traits={
+        Cat4710Traits.concat([MiloTrait]).concat([{
+          type: Avatar.CAT,
+          view: AvatarView.FULL,
+          traitType: TraitType.BORDER,
+          name: 'homer nft',
+          rarity: TraitRarity.COMMON,
+          weight: 200,
+          images: [
+            {
+              uri: 'homer-nft.png'
+            }
+          ],
+          rules: [
+            {
+              type: TraitRuleType.MUTATE_ALL,
+              fn: TraitRuleFunction.HOMER_NFT_PLACEMENT
+            }
+          ] as any
+        }] as any)
+      }
+    />
+  )
+}
+
+export const HomerBorder = CustomBackgroundAndEffectTemplate2.bind({});
+
 const ExplorerTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 

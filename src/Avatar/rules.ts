@@ -199,6 +199,20 @@ export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number
   }
 };
 
+export const HOMER_NFT_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+  if (trait.traitType === TraitType.BORDER || trait.traitType === TraitType.BACKGROUND) {
+    return trait;
+  }
+  
+  return {
+    ...trait,
+    width: (width || 2000) * 0.25,
+    height: (height || 2000) * 0.25,
+    offsetX: (width * 0.64) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
+    offsetY: (height * 0.46) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1)
+  }
+};
+
 export const CHRISTMAS_CARD_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
   if (trait.traitType === TraitType.BORDER || trait.traitType === TraitType.BACKGROUND) {
     return trait;
@@ -297,112 +311,7 @@ export const HIDE_ARMS = (trait: Trait, traits: Trait[], width: number, height: 
   return trait;
 };
 
-const APPLY_TRAIT_RULE = (
-  trait: Trait,
-  traits: Trait[],
-  targetIsOneOf: string[],
-  exceptionTraitType: TraitType,
-  shouldInclude: string[]
-) => {
-  const targetException = traits.find(t => t.traitType === exceptionTraitType);
-  if (targetException
-    && targetIsOneOf.includes(targetException.name)
-    && shouldInclude.includes(trait.name)
-  ) {
-    return `${targetException.traitType} ${targetException.name} should not include ${trait.traitType} ${trait.name}`;
-  }
-}
-
-export const EXCEPTION_TV_FACE_1 = (trait: Trait, traits: Trait[]) => {
-  return APPLY_TRAIT_RULE(
-    trait,
-    traits,
-    ['tvface bobross', 'tvface xp', 'tvface 404', 'tvface nosignal'],
-    TraitType.FACE,
-    [ 'none', 'admiral', 'admiral pink', 'afro black', 'afro brown', 'afro rainbow unicorn', 'antlers',
-      'apple', 'arrowhead', 'astro', 'astro cheeks', 'astro fishbowl', 'beanie black', 'beanie blue',
-      'beanie orange', 'beanie red', 'beret black', 'beret green', 'beret pink', 'beret red', 'bow', 'bucket hat blue',
-      'bucket hat green', 'bucket hat tan', 'bucket hat white', 'candle', 'costume dragon', 'costume frog', 'costume gorilla',
-      'cowboy black', 'cowboy brown', 'crown black', 'crown fire', 'crown gold', 'cupcake', 'deepsea bronze', 'deepsea orange',
-      'dutch', 'flower blue', 'flower pink', 'flower red', 'goggles seaweed', 'halo', 'halo fire', 'hat black', 'hat skull',
-      'hat visor blue', 'hat visor yellow', 'hat white', 'headband blue', 'headband red', 'helm army', 'helm biker', 'helm bronze',
-      'helm silver', 'horns', 'knight black', 'knight blue', 'knight red', 'mohawk green', 'mohawk purple', 'mohawk red',
-      'mullet blonde', 'mullet brown', 'ninja black', 'ninja blue', 'ninja red', 'nurse', 'piercings', 'pirate black', 'pirate red',
-      'prince', 'sunhat black', 'sunhat tan', 'sunhat white', 'sushi', 'top hat', 'unicorn horn', 'visor green', 'visor purple',
-      'wreath', 'wreath flowers'
-    ],
-  )
-}
-
-export const EXCEPTION_SHADOWWOLF_RULE_1 = (trait: Trait, traits: Trait[]) => {
-  return APPLY_TRAIT_RULE(
-    trait,
-    traits,
-    ['Astro', 'Cat Costume', 'Fishbowl'],
-    TraitType.HAT,
-    ["Boss", "Celestial Blue", "Celestial Pink", "Dueler", "Lord Red", "Necklace Flint", "Necklace Jaw", "Necklace Teeth", "Overalls Skull", "Scarf Plaid", "Scarf Red", "Wreath Rainbow", "Wreath Red"]
-  )
-}
-
-export const EXCEPTION_SHADOWWOLF_RULE_2 = (trait: Trait, traits: Trait[]) => {
-  return APPLY_TRAIT_RULE(
-    trait,
-    traits,
-    ["Pilot"],
-    TraitType.HAT,
-    ["Frustrated", "Big Eyes", "Classic", "Crazy", "Cute", "Dots", "Ender", "Red Eyes", "Shadow Wolf", "Sunglasses Round", "Sunglasses Sleek", "Three Eyes", "Tired", "Wide Eye", "XO"]
-  )
-}
-
-export const EXCEPTION_SHADOWWOLF_RULE_3 = (trait: Trait, traits: Trait[]) => {
-  return APPLY_TRAIT_RULE(
-    trait,
-    traits,
-    ["Mask Village", "Masquerade"],
-    TraitType.HAT,
-    ["Big Eyes", "Classic", "Crazy", "Dots", "Ender", "Face Face", "Glow", "Red Eyes", "Shadow Wolf", "Sunglasses Round", "Tired", "Wide Eye", "XO"]
-  )
-}
-
-export const EXCEPTION_SHADOWWOLF_RULE_4 = (trait: Trait, traits: Trait[]) => {
-  return APPLY_TRAIT_RULE(
-    trait,
-    traits,
-    ["Astro"],
-    TraitType.HAT,
-    ["Boss", "Buttondown Indigo", "Buttondown Brown", "Celestial Blue", "Celestial Pink", "Chain", "Chain Medallion", 
-    "Dueler", "Lord Red", "Necklace Flint", "Necklace Jaw", "Necklace Teeth", "Overalls Skull", "Scarf Plaid",
-    "Scarf Red", "Sleeve Fire", "Sleeve Flower", "Sleeve Moon", "Sleeve Mushroom", "Sleeve Star", "Sleeve Symbol"]
-  )
-}
-
-export const EXCEPTION_SHADOWWOLF_RULE_5 = (trait: Trait, traits: Trait[]) => {
-  return APPLY_TRAIT_RULE(
-    trait,
-    traits,
-    ["Sunglasses Round"],
-    TraitType.FACE,
-    ["Disguise Fish", "Masquerade"]
-  )
-}
-
-export const exceptions = {
-  [Avatar.CAT]: {
-    [AvatarView.FRONT]: {
-      [TraitType.HAT]: [EXCEPTION_TV_FACE_1],
-    },
-    [AvatarView.LEFT]: {
-      [TraitType.HAT]: [EXCEPTION_TV_FACE_1],
-    }
-  },
-  [Avatar.SHADOWWOLF]: {
-    [AvatarView.RIGHT]: {
-      [TraitType.SHIRT]: [EXCEPTION_SHADOWWOLF_RULE_1, EXCEPTION_SHADOWWOLF_RULE_4],
-      [TraitType.FACE]: [EXCEPTION_SHADOWWOLF_RULE_2, EXCEPTION_SHADOWWOLF_RULE_3],
-      [TraitType.HAT]: [EXCEPTION_SHADOWWOLF_RULE_5]
-    }
-  }
-};
+export const exceptions = {};
 
 export const effects = {
   [TraitRuleFunction.EFFECT_BLACK_AND_WHITE]: EFFECT_BLACK_AND_WHITE,
@@ -421,6 +330,7 @@ export const mutations = {
   [TraitRuleFunction.MOVE_PANTS_OVER_SHIRT]: MOVE_PANTS_OVER_SHIRT,
   [TraitRuleFunction.MOVE_SHIRTS_OVER_HATS]: MOVE_SHIRTS_OVER_HATS,
   [TraitRuleFunction.COMIC_CON_PLACEMENT]: COMIC_CON_PLACEMENT,
+  [TraitRuleFunction.HOMER_NFT_PLACEMENT]: HOMER_NFT_PLACEMENT,
   [TraitRuleFunction.CHRISTMAS_CARD_PLACEMENT]: CHRISTMAS_CARD_PLACEMENT,
   [TraitRuleFunction.HIDE_FACE_FOR_MECHANICAL]: HIDE_FACE_FOR_MECHANICAL,
   [TraitRuleFunction.HIDE_LEGS_AND_FEET]: HIDE_LEGS_AND_FEET,
