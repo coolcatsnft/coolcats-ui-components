@@ -208,7 +208,7 @@ export const HOMER_NFT_PLACEMENT = (trait: Trait, traits: Trait[], width: number
     ...trait,
     width: (width || 2000) * 0.25,
     height: (height || 2000) * 0.25,
-    offsetX: (width * 0.64) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
+    offsetX: (width * 0.625) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
     offsetY: (height * 0.46) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1)
   }
 };
