@@ -249,7 +249,7 @@ export const HIDE_LEGS_AND_FEET = (trait: Trait, traits: Trait[], width: number,
   if (trait.traitType === TraitType.BODY) {
     return {
       ...trait,
-      images: trait.images.filter(i => !i.uri.includes('body'))
+      images: trait.images.filter(i => (!i.uri.includes('body') && !i.uri.includes('feet') && !i.uri.includes('-socks')))
     };
   }
   
