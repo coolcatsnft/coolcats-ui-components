@@ -150,13 +150,6 @@ export const imageUrlToBase64 = async (url: string): Promise<string> => {
  * @returns {Promise<HTMLImageElement>}
  */
 export function resolveImage(src: string) {
-  if (imgCache[src]) {
-    const img = new Image()
-    img.crossOrigin = "Anonymous";
-    img.src = imgCache[src];
-    return Promise.resolve(img);
-  }
-
   return new Promise((resolve, reject) => {
     return imageUrlToBase64(src).then((dUri) => {
       const img = new Image()
