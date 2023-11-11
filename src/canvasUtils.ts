@@ -85,15 +85,24 @@ export const downloadImage = (canvas: HTMLCanvasElement, tokenId: string | numbe
 };
 
 export const drawImageWrapper = (ctx: CanvasRenderingContext2D, src: any, x?: number, y?: number, width?: number, height?: number) => {
-  if (!src || !ctx) {
-    return;
+  if (!ctx) {
+    // alert('ctx is null');
+    // return;
   }
-  ctx.drawImage(src, x || 0, y || 0, width || ctx.canvas?.width || 1000, height || ctx.canvas?.height || 1000);
+  if (!ctx?.canvas) {
+    // alert('ctx canvas is null');
+    // return;
+  }
+  if (!src) {
+    // alert('src is null');
+    // return;
+  }
+  ctx.drawImage(src, x || 0, y || 0, width || ctx?.canvas?.width || 1000, height || ctx?.canvas?.height || 1000);
 }
 
 export const fillRectWrapper = (ctx: CanvasRenderingContext2D, x?: number, y?: number, width?: number, height?: number) => {
   if (!ctx) {
-    return;
+    // return;
   }
   ctx.fillRect(x || 0, y || 0, width || ctx.canvas?.width || 1000, height || ctx.canvas?.height || 1000);
 }
@@ -150,6 +159,13 @@ export const imageUrlToBase64 = async (url: string): Promise<string> => {
  * @returns {Promise<HTMLImageElement>}
  */
 export function resolveImage(src: string) {
+  if (imgCache[src]) {
+    const img = new Image()
+    img.crossOrigin = "Anonymous";
+    img.src = imgCache[src];
+    return Promise.resolve(img);
+  }
+
   return new Promise((resolve, reject) => {
     return imageUrlToBase64(src).then((dUri) => {
       const img = new Image()
@@ -290,6 +306,12 @@ const applyStickerEffect = (canvasCreate: Function, layerCanvas: HTMLCanvasEleme
   return stickerCanv;
 }
 
+const removeCanvas = (c: HTMLCanvasElement) => {
+  c.width = 0;
+  c.height = 0;
+  c.remove();
+}
+
 export const generateLayeredCanvas = (
   config: CanvasConfig,
   canvas?: HTMLCanvasElement,
@@ -406,6 +428,8 @@ export const generateLayeredCanvas = (
           layerCanvas.width,
           layerCanvas.height
         );
+
+        removeCanvas(tokenCanv);
       } else {
         drawImageWrapper(
           layerCtx,
@@ -466,6 +490,8 @@ export const generateLayeredCanvas = (
         tempCanvas.width,
         tempCanvas.height
       );
+
+      removeCanvas(tempCanvas);
     }
 
     if (l.canvasCallbacks && l.canvasCallbacks.length > 0) {
@@ -526,6 +552,8 @@ export const generateLayeredCanvas = (
 
     const stickerCanv = applyStickerEffect(canvasCreate, forground);
 
+    removeCanvas(forground);
+
     drawImageWrapper(
       ctx,
       stickerCanv,
@@ -546,6 +574,8 @@ export const generateLayeredCanvas = (
       );
     });
 
+    removeCanvas(stickerCanv);
+
   } else {
     renderedLayers.forEach(r => {
       drawImageWrapper(
@@ -558,6 +588,11 @@ export const generateLayeredCanvas = (
       );
     })
   }
+
+  // Kill old canvases
+  renderedLayers.forEach(r => {
+    removeCanvas(r.canvas);
+  });
 
   return layeredCanvas;
 }
