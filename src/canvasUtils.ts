@@ -84,6 +84,20 @@ export const downloadImage = (canvas: HTMLCanvasElement, tokenId: string | numbe
   link.click();
 };
 
+export const drawImageWrapper = (ctx: CanvasRenderingContext2D, src: any, x?: number, y?: number, width?: number, height?: number) => {
+  if (!src || !ctx) {
+    return;
+  }
+  ctx.drawImage(src, x || 0, y || 0, width || ctx.canvas?.width || 1000, height || ctx.canvas?.height || 1000);
+}
+
+export const fillRectWrapper = (ctx: CanvasRenderingContext2D, x?: number, y?: number, width?: number, height?: number) => {
+  if (!ctx) {
+    return;
+  }
+  ctx.fillRect(x || 0, y || 0, width || ctx.canvas?.width || 1000, height || ctx.canvas?.height || 1000);
+}
+
 /**
  * @returns {HTMLCanvasElement}
  */
@@ -92,7 +106,7 @@ export const imageToCanvas = (img: HTMLImageElement, width: number, height: numb
   const ctx = canvas.getContext('2d');
   canvas.height = height;
   canvas.width = width;
-  ctx.drawImage(img, 0, 0, width, height);
+  drawImageWrapper(ctx, img, 0, 0, width, height);
 
   return canvas;
 }
@@ -264,7 +278,8 @@ const applyStickerEffect = (canvasCreate: Function, layerCanvas: HTMLCanvasEleme
   const stickerCtx = stickerCanv.getContext('2d')!;
 
   for (let angle = 0; angle < 360; angle += 360 / samples) {
-    stickerCtx.drawImage(
+    drawImageWrapper(
+      stickerCtx,
       layerCanvas,
       thickness * Math.sin((Math.PI * 2 * angle) / 360) + x,
       thickness * Math.cos((Math.PI * 2 * angle) / 360) + y
@@ -273,10 +288,10 @@ const applyStickerEffect = (canvasCreate: Function, layerCanvas: HTMLCanvasEleme
 
   stickerCtx.globalCompositeOperation = 'source-in';
   stickerCtx.fillStyle = 'white';
-  stickerCtx.fillRect(0, 0, stickerCanv.width, stickerCanv.height);
+  fillRectWrapper(stickerCtx, 0, 0, stickerCanv.width, stickerCanv.height);
 
   stickerCtx.globalCompositeOperation = 'source-over';
-  stickerCtx.drawImage(layerCanvas, x, y);
+  drawImageWrapper(stickerCtx, layerCanvas, x, y);
   stickerCanv.thickness = thickness;
 
   return stickerCanv;
@@ -302,10 +317,11 @@ export const generateLayeredCanvas = (
 
   const layeredCanvas = (canvas || canvasCreate(width, height));
   const ctx = layeredCanvas.getContext('2d');
+
   ctx.clearRect(0, 0, width, height);
   if (background || parentBackground) {
     ctx.fillStyle = (background || parentBackground?.parentBackground);
-    ctx.fillRect(0, 0, width, height);
+    fillRectWrapper(ctx, 0, 0, width, height);
   }
 
   layers.forEach((l, index) => {
@@ -343,14 +359,14 @@ export const generateLayeredCanvas = (
     const bg = debug ? 'blue' : (l.background || '');
     if (bg && bg !== 'inherit') {
       layerCtx.fillStyle = debug ? 'blue' : (l.background || '');
-      layerCtx.fillRect(0, 0, layerCanvas.width, layerCanvas.height);
+      fillRectWrapper(layerCtx, 0, 0, layerCanvas.width, layerCanvas.height);
     }
 
     if (typeof (l as any).src !== 'undefined') {
       if (l.transparent === true || l.background === 'inherit') {
         const tokenCanv = canvasCreate(layerCanvas.width, layerCanvas.height);
         const tokenCtx = tokenCanv.getContext('2d', { willReadFrequently: true });
-        tokenCtx.drawImage(l.src, 0, 0, layerCanvas.width, layerCanvas.height);
+        drawImageWrapper(tokenCtx, l.src, 0, 0, layerCanvas.width, layerCanvas.height);
         const pixelData = tokenCtx.getImageData(0, 0, 1, 1).data;
         const imageData = tokenCtx.getImageData(0, 0, lWidth, lHeight);
         const hexBg = hex(pixelData);
@@ -363,8 +379,9 @@ export const generateLayeredCanvas = (
           );
           const bgCtx = bgCanvas.getContext('2d');
           bgCtx.fillStyle = `#${shortendHexBg}`;
-          bgCtx.fillRect(0, 0, width, height);
-          ctx.drawImage(
+          fillRectWrapper(bgCtx, 0, 0, width, height);
+          drawImageWrapper(
+            ctx,
             bgCanvas,
             0,
             0,
@@ -388,7 +405,8 @@ export const generateLayeredCanvas = (
           tokenCtx.putImageData(imageData, 0, 0);
         }
   
-        layerCtx.drawImage(
+        drawImageWrapper(
+          layerCtx,
           tokenCanv,
           0,
           0,
@@ -396,7 +414,8 @@ export const generateLayeredCanvas = (
           layerCanvas.height
         );
       } else {
-        layerCtx.drawImage(
+        drawImageWrapper(
+          layerCtx,
           l.src,
           0,
           0,
@@ -437,7 +456,8 @@ export const generateLayeredCanvas = (
         font: font || undefined
       });
 
-      tempCtx.drawImage(
+      drawImageWrapper(
+        tempCtx,
         tempCanvas,
         0,
         0,
@@ -445,7 +465,8 @@ export const generateLayeredCanvas = (
         tempCanvas.height
       );
 
-      layerCtx.drawImage(
+      drawImageWrapper(
+        layerCtx,
         tempCanvas,
         0,
         0,
@@ -484,7 +505,8 @@ export const generateLayeredCanvas = (
 
   if (stickerEffect) {
     renderedLayers.slice(0, 1).forEach(r => {
-      ctx.drawImage(
+      drawImageWrapper(
+        ctx,
         r.canvas,
         r.x,
         r.y,
@@ -499,7 +521,8 @@ export const generateLayeredCanvas = (
       1,
       renderedLayers.filter(l => !l.stickerExempt).length - 1
     ).forEach(r => {
-      forgroundCtx.drawImage(
+      drawImageWrapper(
+        forgroundCtx,
         r.canvas,
         r.x,
         r.y,
@@ -510,7 +533,8 @@ export const generateLayeredCanvas = (
 
     const stickerCanv = applyStickerEffect(canvasCreate, forground);
 
-    ctx.drawImage(
+    drawImageWrapper(
+      ctx,
       stickerCanv,
       0,
       stickerCanv.thickness,
@@ -519,7 +543,8 @@ export const generateLayeredCanvas = (
     );
 
     renderedLayers.filter(l => l.stickerExempt).forEach(r => {
-      ctx.drawImage(
+      drawImageWrapper(
+        ctx,
         r.canvas,
         r.x,
         r.y,
@@ -530,7 +555,8 @@ export const generateLayeredCanvas = (
 
   } else {
     renderedLayers.forEach(r => {
-      ctx.drawImage(
+      drawImageWrapper(
+        ctx,
         r.canvas,
         r.x,
         r.y,

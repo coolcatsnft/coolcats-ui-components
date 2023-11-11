@@ -474,3 +474,26 @@ const WolfTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
 }
 
 export const Wolf = WolfTemplate.bind({});
+
+const TestTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  const traits = Wolftraits.concat(
+    [
+      {
+        "id":284,
+        "name":"astro",
+        "rarity":4,
+        "type":"SHADOWWOLF",
+        "weight":null,
+        "traitType":"SHIRT","additional":0,"displayName":"Astro","tokenId":null,"contract":null,"boundTo":{"token_id":2390,"token_type":"SHADOWWOLF"},"images":[{"uri":"astro.png"}],"rules":[]},{"id":348,"name":"pirate blackbeard","rarity":2,"type":"SHADOWWOLF","weight":null,"traitType":"HAT","additional":0,"displayName":"Pirate blackbeard","tokenId":null,"contract":null,"boundTo":{"token_id":2390,"token_type":"SHADOWWOLF"},"images":[{"uri":"pirate-blackbeard.png"}],"rules":[]},{"id":386,"name":"frustrated","rarity":1,"type":"SHADOWWOLF","weight":null,"traitType":"FACE","additional":0,"displayName":"Frustrated","tokenId":null,"contract":null,"boundTo":{"token_id":2390,"token_type":"SHADOWWOLF"},"images":[{"uri":"frustrated.png"}],"rules":[]},{"id":429,"name":"no effect","rarity":1,"type":"SHADOWWOLF","weight":-2,"traitType":"EFFECT","additional":1,"displayName":"No Effect","tokenId":null,"contract":null,"displayImage":{"uri":"/images/avatar/none.svg"},"images":[{"uri":"transparent.png"}],"rules":[]},{"id":856,"name":"black cycling shorts","rarity":1,"type":"SHADOWWOLF","weight":null,"traitType":"PANTS","additional":1,"displayName":"Black Cycling Shorts","tokenId":null,"contract":null,"images":[{"uri":"cycling-shorts-black.png"}],"rules":[]},{"id":955,"name":"monster shoes","rarity":2,"type":"SHADOWWOLF","weight":null,"traitType":"SHOES","additional":0,"displayName":"Monster Shoes","tokenId":203,"contract":{"tokenId":203},"images":[{"uri":"monster-shoes.png"}],"rules":[]},{"id":1031,"name":"mausoleum","rarity":3,"type":"SHADOWWOLF","weight":null,"traitType":"BACKGROUND","additional":0,"displayName":"Mausoleum","tokenId":213,"contract":{"tokenId":213},"images":[{"uri":"mausoleum.png"}],"rules":[]},{"name":"cloud sage #13","type":"SHADOWWOLF","view":"FRONT","traitType":"SIDEKICK","rarity":3,"contract":{"tokenId":288,"contract":{"address":"0xda11e1d06e4e0d0ac26805bdb063ecdbac426aa0","network":"etheruem"}},"displayImage":{"uri":"https://s3.amazonaws.com/metadata.coolcatsnft.com/library/sidekick/thumbnail/288.png"},"images":[{"uri":"cloud-sage-blue.png"}],"rules":[]}] as any
+  );
+  
+  return (
+    <AvatarCanvas 
+      {...args}
+      traits={traits}
+      height={400}
+      width={400}
+    />
+  )
+}
+export const WolfTest = TestTemplate.bind({});
