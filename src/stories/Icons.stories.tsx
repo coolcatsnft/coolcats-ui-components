@@ -32,6 +32,7 @@ import {
   PantsIcon,
   PencilIcon,
   PlusIcon,
+  ProgressToTickIcon,
   QuestionIcon,
   RefreshIcon,
   RingIcon,
@@ -57,7 +58,15 @@ import {
 
 export default {
   title: 'Icons',
-  component: ArrowLeftIcon  
+  component: ArrowLeftIcon,
+  args: {
+    ticked: false
+  },
+  argTypes: {
+    ticked: {
+      control: 'boolean'
+    }
+  }
 } as Meta<typeof ArrowLeftIcon>;
 
 const Template: StoryFn<typeof ArrowLeftIcon> = (args) => <ArrowLeftIcon {...args} />; 
@@ -215,3 +224,6 @@ export const Bin = Template51.bind({});
 
 const Template52: StoryFn<typeof BinIcon> = (args) => <MailIcon {...args} />; 
 export const Mail = Template52.bind({});
+
+const Template53: StoryFn<typeof ProgressToTickIcon> = (args) => <ProgressToTickIcon {...args} />; 
+export const ProgressToTick = Template53.bind({});

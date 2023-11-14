@@ -30,6 +30,8 @@ const Variables = {
   'font-color-jored': 'white',
   'color-rainoreblue': '#0094E3',
   'font-color-rainoreblue': 'var(--cc-color-primary)',
+  'color-success': '#63bc01',
+  'font-color-success': 'var(--cc-color-primary)',
   'color-mallowwhite': '#FFFFFF',
   'font-color-mallowwhite': 'var(--cc-color-primary)',
   'color-outlineblack': 'var(--cc-color-primary)',
