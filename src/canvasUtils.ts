@@ -85,25 +85,10 @@ export const downloadImage = (canvas: HTMLCanvasElement, tokenId: string | numbe
 };
 
 export const drawImageWrapper = (ctx: CanvasRenderingContext2D, src: any, x?: number, y?: number, width?: number, height?: number) => {
-  if (!ctx) {
-    // alert('ctx is null');
-    // return;
-  }
-  if (!ctx?.canvas) {
-    // alert('ctx canvas is null');
-    // return;
-  }
-  if (!src) {
-    // alert('src is null');
-    // return;
-  }
   ctx.drawImage(src, x || 0, y || 0, width || ctx?.canvas?.width || 1000, height || ctx?.canvas?.height || 1000);
 }
 
 export const fillRectWrapper = (ctx: CanvasRenderingContext2D, x?: number, y?: number, width?: number, height?: number) => {
-  if (!ctx) {
-    // return;
-  }
   ctx.fillRect(x || 0, y || 0, width || ctx.canvas?.width || 1000, height || ctx.canvas?.height || 1000);
 }
 
@@ -307,9 +292,9 @@ const applyStickerEffect = (canvasCreate: Function, layerCanvas: HTMLCanvasEleme
 }
 
 const removeCanvas = (c: HTMLCanvasElement) => {
-  c.width = 0;
-  c.height = 0;
-  c.remove();
+  // c.width = 0;
+  // c.height = 0;
+  // c.remove();
 }
 
 export const generateLayeredCanvas = (
