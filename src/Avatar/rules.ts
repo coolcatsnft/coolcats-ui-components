@@ -217,6 +217,13 @@ export const CHRISTMAS_CARD_PLACEMENT = (trait: Trait, traits: Trait[], width: n
   if (trait.traitType === TraitType.BORDER || trait.traitType === TraitType.BACKGROUND) {
     return trait;
   }
+
+  if (trait.traitType === TraitType.SIDEKICK) {
+    return {
+      ...trait,
+      weight: -1
+    };
+  }
   
   return {
     ...trait,

@@ -185,6 +185,8 @@ export type AvatarItem = {
   id: number;
   trait: Trait;
   tokenId: string;
+  fromTokenId?: string;
+  toTokenId?: string;
   owner: `0x${string}`;
   equipped?: number[];
   disabledReason?: string[];
