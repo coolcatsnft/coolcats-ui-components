@@ -438,7 +438,7 @@ export function createAvatarCanvasLayers(
           stickerSpecial: typeof (trait.rules || []).find(r => r.fn === TraitRuleFunction.EFFECT_STICKER) !== 'undefined',
           background: trait.background,
           parentBackground: trait.parentBackground,
-          stickerExempt: trait.traitType === TraitType.BORDER || trait.traitType === TraitType.BACKGROUND
+          stickerExempt: trait.traitType === TraitType.BORDER
         }
       ])
     }, []);
