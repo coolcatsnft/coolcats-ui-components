@@ -10,6 +10,7 @@ import {
   BottomIcon, 
   CharacterIcon, 
   CloseIcon, 
+  CoinbaseIcon, 
   CopyIcon, 
   CrossIcon,
   DiscordIcon,
@@ -227,3 +228,6 @@ export const Mail = Template52.bind({});
 
 const Template53: StoryFn<typeof ProgressToTickIcon> = (args) => <ProgressToTickIcon {...args} />; 
 export const ProgressToTick = Template53.bind({});
+
+const Template54: StoryFn<typeof CoinbaseIcon> = (args) => <CoinbaseIcon {...args} />; 
+export const Coinbase = Template54.bind({});

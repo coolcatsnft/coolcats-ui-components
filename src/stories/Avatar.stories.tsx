@@ -535,3 +535,30 @@ const ChristmasCardTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
 }
 
 export const ChristmasCard = ChristmasCardTemplate.bind({});
+
+const WootTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      type={Avatar.CAT}
+      traits={Cat4710Traits.concat([{
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.BORDER,
+        name: 'woot',
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: 'woot.png'
+          }
+        ],
+        rules: [{
+          type: 'MUTATE_ALL',
+          fn: TraitRuleFunction.WOOT_PLACEMENT
+        }] as any
+      }])}
+    />
+  )
+}
+
+export const Woot = WootTemplate.bind({});

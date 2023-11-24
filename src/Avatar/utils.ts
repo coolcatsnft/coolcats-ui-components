@@ -242,15 +242,6 @@ export function createAvatarCanvasLayers(
   ).filter(t => scholarSkin ? ![TraitType.SHIRT, TraitType.HAT].includes(t.traitType) : true).concat(
     scholarSkin ? [scholarSkin] : []
   ).map(t => {
-    return evaluateTraitMutateAllRules(
-      t,
-      traits,
-      width || CANVAS_WIDTH,
-      height || CANVAS_HEIGHT,
-      tokenId,
-      type
-    );
-  }).map(t => {
     // Apply special rules for upside down cat...!
     if (type === Avatar.CAT && tokenId === '500' && ![TraitType.BACKGROUND, TraitType.BODY].includes(t.traitType)) {
       return {
@@ -321,7 +312,20 @@ export function createAvatarCanvasLayers(
     }
 
     return t;
-  });
+  }).map(t => {
+    return evaluateTraitMutateAllRules(
+      t,
+      traits,
+      width || CANVAS_WIDTH,
+      height || CANVAS_HEIGHT,
+      tokenId,
+      type
+    );  
+  }).filter(
+    t => {
+      return t
+    }
+  );
 
   // Map out traits into the Layered canvas config.  
   // This may require reducing as some layers will have multiple images

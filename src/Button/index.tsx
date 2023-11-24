@@ -1,13 +1,13 @@
 import React, { forwardRef, useState } from "react";
 import styled from "../Styled";
-import { styledButtonPartial, styledCircleButtonPartial } from "../partials";
-import { CoolCatsUITheme } from "../constants";
+import { styledButtonPartial, styledCircleButtonPartial, largeElementHeightPartial } from "../partials";
+import { ButtonSizeType, CoolCatsUITheme } from "../constants";
 
 export type ButtonThemeType = {
   $extended?: boolean;
   $theme?: CoolCatsUITheme;
   $circle?: boolean;
-  $size?: 'large';
+  $size?: ButtonSizeType;
 }
 
 export type ButtonType = React.ComponentProps<"button"> & ButtonThemeType;
@@ -17,18 +17,47 @@ export const ButtonTheme = (props: ButtonThemeType) => {
   return `
     ${$circle ===  true ? `${styledCircleButtonPartial}`: `${styledButtonPartial}`}
 
+    ${!$circle && `
+      &:has(> i),
+      &:has(> svg) {
+        position: relative;
+        padding-left: 40px;
+        overflow: hidden;
+
+        ${$size === 'large' ? `
+          padding-left: 55px;
+        ` : ``}
+
+        > i,
+        > svg {
+          position: absolute;
+          left: 12px;
+          display: flex;
+          align-items: center;
+          height: 100%;
+        }
+
+        > i > svg {
+          height: 80%;
+          width: 80%;
+        }
+      }
+    `}
+
     ${$extended === true ? `
       width: 100%;
     ` : ``}
 
     ${$size === 'large' ? `
-      line-height: 48px;
-      border-radius: 26px;
+      ${largeElementHeightPartial}
     ` : ``}
 
     ${typeof $theme !== 'undefined' ? `
       color: var(--cc-font-color-${$theme.toLowerCase()});
       background-color: var(--cc-color-${$theme.toLowerCase()});
+      svg path {
+        fill: var(--cc-font-color-${$theme.toLowerCase()});
+      }
     ` : ``}
 
     ${typeof $theme !== 'undefined' && $theme === CoolCatsUITheme.PRIMARY ? `

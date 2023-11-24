@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 
 import AvatarCanvas from '../AvatarCanvas';
-import { Avatar, AvatarView, TraitRarity, TraitType } from '../Avatar/types';
+import { Avatar, AvatarView, TraitRarity, TraitRuleFunction, TraitType } from '../Avatar/types';
 
 const pantsTraits = [
   '',
@@ -127,6 +127,7 @@ export default {
     shoes: '',
     sidekick: '',
     accessory: '',
+    border: '',
     type: 'CAT',
     tokenId: '',
     baseUrl: 'https://content.coolcatsnft.com/avatar/cat/$traitType/',
@@ -169,6 +170,13 @@ export default {
       control: 'select',
       options: sidekicks
     },
+    border: {
+      control: 'select',
+      options: [
+        '',
+        'woot'
+      ]
+    },
     accessory: {
       control: 'select',
       options: ['', 'chugs-balloon', 'red-riding-basket']
@@ -203,14 +211,14 @@ const BlueCatTraits = [
     images: [
       {
         uri: 'cool_2.png'
-      }
+      } 
     ],
     rules: []
   }
 ]
 
 const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
-  const { pants, shirt, face, shoes, hat, sidekick, tokenId, accessory } = args as any;
+  const { pants, shirt, face, shoes, hat, sidekick, tokenId, accessory, border } = args as any;
   const traits = BlueCatTraits.concat(
     hat ? [
       {
@@ -321,6 +329,25 @@ const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
           }
         ],
         rules: []
+      }
+    ] : []
+  ).concat(
+    border ? [
+      {
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.BORDER,
+        name: border,
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: `${border}.png`
+          }
+        ],
+        rules: [{
+          type: 'MUTATE_ALL',
+          fn: TraitRuleFunction.WOOT_PLACEMENT
+        }] as any
       }
     ] : []
   );

@@ -164,3 +164,28 @@ const Template6: StoryFn<typeof LayeredCanvas> = (args) => {
 }
 
 export const StickerEffect = Template6.bind({});
+
+const OfflineTemplate: StoryFn<typeof LayeredCanvas> = (args) => {
+  return (
+    <LayeredCanvas 
+      {...args}
+      layers={[
+        {
+          src: 'cool_2.png'
+        },
+        {
+          src: 'chugs-surprised.png',
+          height: 200,
+          width: 200,
+          sticker: true,
+          x: 100,
+          y: 100
+        }
+      ]}
+      height={400}
+      width={400}
+    />
+  )
+}
+
+export const Offline = OfflineTemplate.bind({});

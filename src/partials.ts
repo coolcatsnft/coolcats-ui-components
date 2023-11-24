@@ -1,5 +1,17 @@
 import { device } from "./constants";
 
+export const wrapperWidthPartial = `
+  max-width: var(--cc-site-width);
+  width: 100%;
+  margin: 0 auto;
+  padding-left: var(--cc-wrapper-spacing);
+  padding-right: var(--cc-wrapper-spacing);
+
+  ${device.desktop} {
+    padding: 0;
+  }
+`;
+
 export const styledButtonText = `
   letter-spacing: 0.8px;
   font-weight: 700;
@@ -19,16 +31,29 @@ export const fontSizePartial = `
   }
 `;
 
+export const elementHeightPartial = `
+  line-height: 28px;
+  height: 32px;
+  padding: 0 22px;
+  padding-bottom: 4px;
+  border-radius: var(--cc-radius);
+`;
+
+export const largeElementHeightPartial = `
+  line-height: 44px;
+  height: 48px;
+  padding: 0 30px;
+  padding-bottom: 4px;
+  border-radius: calc(var(--cc-radius) + 4px);
+`;
+
 export const styledInputPartial = `
   border: 0 none;
   background: var(--cc-color-primary);
-  border-radius: var(--cc-radius);
   display: inline-block;
   justify-content: center;
   align-items: center;
   text-align: center;
-  line-height: 32px;
-  padding: 0 30px;
   border: 2px solid var(--cc-color-primary);
   background: var(--cc-color-white);
   outline: none;
@@ -36,6 +61,7 @@ export const styledInputPartial = `
   color: var(--cc-font-color-primary);
 
   ${fontFamilyPartial}
+  ${elementHeightPartial}
   font-size: var(--cc-default-font-size);
 
   &:not([disabled]) {

@@ -199,6 +199,31 @@ export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number
   }
 };
 
+export const WOOT_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+  if (![TraitType.BODY, TraitType.FACE, TraitType.HAT].includes(trait.traitType)) {
+    return {
+      ...trait,
+      weight: -1
+    };
+  }
+  
+  if (trait.traitType === TraitType.BORDER) {
+    return {
+      ...trait,
+      weight: 0
+    };
+  }
+  
+  return {
+    ...trait,
+    width: (width || 2000) * 1.4,
+    height: (height || 2000) * 1.4,
+    offsetX: (width * 0.02) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
+    offsetY: (height * 0.48) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
+    images: trait.traitType === TraitType.BODY ? trait.images.filter(i => (i.uri.includes('head'))) : trait.images
+  }
+};
+
 export const HOMER_NFT_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
   if (trait.traitType === TraitType.BORDER || trait.traitType === TraitType.BACKGROUND) {
     return trait;
@@ -340,6 +365,7 @@ export const mutations = {
   [TraitRuleFunction.HOMER_NFT_PLACEMENT]: HOMER_NFT_PLACEMENT,
   [TraitRuleFunction.CHRISTMAS_CARD_PLACEMENT]: CHRISTMAS_CARD_PLACEMENT,
   [TraitRuleFunction.HIDE_FACE_FOR_MECHANICAL]: HIDE_FACE_FOR_MECHANICAL,
+  [TraitRuleFunction.WOOT_PLACEMENT]: WOOT_PLACEMENT,
   [TraitRuleFunction.HIDE_LEGS_AND_FEET]: HIDE_LEGS_AND_FEET,
   [TraitRuleFunction.FLIP_ACCESSORY]: FLIP_ACCESSORY,
   [TraitRuleFunction.FLIP_SIDEKICK]: FLIP_SIDEKICK,

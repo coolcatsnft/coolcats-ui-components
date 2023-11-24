@@ -31,7 +31,7 @@ const draw = keyframes`
 const Base = Styled.circle<{ stroke?: string }>`
   fill: none;
   stroke: ${({ stroke }) => stroke || 'var(--cc-color-primary)'};
-  stroke-width: 8;
+  stroke-width: 12;
 `
 
 const Circle = Styled(Base)<{ $ticked?: boolean }>`
@@ -62,7 +62,7 @@ const Icon: React.FC<TickProps> = (props) => {
   const { ticked } = props;
 
   return (
-    <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width='20' {...props}>
+    <Svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 120 120" width='20' {...props}>
       <Circle cx="50" cy="50" r="46" {...props} $ticked={ticked} />
       <Polyline as='polyline' points="25,55 45,70 75,33" {...props} $ticked={ticked} />
     </Svg>

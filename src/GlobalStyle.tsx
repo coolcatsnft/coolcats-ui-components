@@ -5,9 +5,12 @@ const Variables = {
   radius: '20px',
   gap: '20px',
   'default-font': '-apple-system, BlinkMacSystemFont, Ubuntu, Helvetica Neue, sans-serif',
+  'hero-font': '-apple-system, BlinkMacSystemFont, Ubuntu, Helvetica Neue, sans-serif',
   'default-font-size': '16px',
   'mobile-header-height': '60px',
   'desktop-header-height': '90px',
+  'site-width': '1320px',
+  'wrapper-spacing': '28px',
 
   // Colours
   'color-white': 'white',

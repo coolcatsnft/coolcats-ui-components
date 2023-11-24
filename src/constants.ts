@@ -52,3 +52,5 @@ export enum CoolCatsUITheme {
   ARDIGREY = 'ARDIGREY',
   WHITE = 'WHITE'
 }
+
+export type ButtonSizeType = 'large' | 'normal';
