@@ -48,15 +48,13 @@ export const ButtonTheme = (props: ButtonThemeType) => {
       width: 100%;
     ` : ``}
 
-    ${$size === 'large' ? `
-      ${largeElementHeightPartial}
-    ` : ``}
-
     ${typeof $theme !== 'undefined' ? `
       color: var(--cc-font-color-${$theme.toLowerCase()});
       background-color: var(--cc-color-${$theme.toLowerCase()});
       svg path {
-        fill: var(--cc-font-color-${$theme.toLowerCase()});
+        &:not([fill="none"]) {
+          fill: var(--cc-font-color-${$theme.toLowerCase()});
+        }
       }
     ` : ``}
 
@@ -64,6 +62,15 @@ export const ButtonTheme = (props: ButtonThemeType) => {
       &:not(:active) {
         box-shadow: 4px 4px 0px 0px var(--cc-color-disabled);
       }
+    ` : ``}
+
+    ${$size === 'large' ? `
+      ${largeElementHeightPartial}
+
+      ${$circle === true && `
+        width: 48px;
+        padding: 0;
+      `}
     ` : ``}
   `;
 };

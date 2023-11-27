@@ -562,3 +562,30 @@ const WootTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
 }
 
 export const Woot = WootTemplate.bind({});
+
+const OfflineAvatarTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      baseUrl=''
+      height={4000}
+      width={4000}
+      type={Avatar.CAT}
+      traits={Cat4710Traits.concat([{
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.EFFECT,
+        name: 'Sepia',
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: 'transparent.png'
+          }
+        ],
+        rules: SepiaRules
+      }])}
+    />
+  )
+}
+
+export const OfflineAvatar = OfflineAvatarTemplate.bind({});

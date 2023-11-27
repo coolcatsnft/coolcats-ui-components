@@ -85,7 +85,17 @@ export const downloadImage = (canvas: HTMLCanvasElement, tokenId: string | numbe
 };
 
 export const drawImageWrapper = (ctx: CanvasRenderingContext2D, src: any, x?: number, y?: number, width?: number, height?: number) => {
-  ctx.drawImage(src, x || 0, y || 0, width || ctx?.canvas?.width || 1000, height || ctx?.canvas?.height || 1000);
+  try {
+    ctx.drawImage(
+      src,
+      x || 0,
+      y || 0,
+      width || ctx?.canvas?.width || 1000,
+      height || ctx?.canvas?.height || 1000
+    );
+  } catch(e) {
+    console.error(`Error drawing ${src?.src} onto canvas`);
+  }
 }
 
 export const fillRectWrapper = (ctx: CanvasRenderingContext2D, x?: number, y?: number, width?: number, height?: number) => {

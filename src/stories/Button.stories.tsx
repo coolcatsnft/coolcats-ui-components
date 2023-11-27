@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 
 import Button from '../Button';
-import { ProgressToTickIcon, YoutubeIcon } from '../Icon';
+import { BinIcon, ProgressToTickIcon, YoutubeIcon } from '../Icon';
 
 export default {
   title: 'Button',
@@ -37,6 +37,13 @@ const CircleWithIconTemplate: StoryFn<typeof Button> = (args) => {
     </Button>
   )
 };
+const BinButtonTemplate: StoryFn<typeof Button> = (args) => {
+  return (
+    <Button {...args} $circle>
+      <BinIcon />
+    </Button>
+  )
+};
 const ButtonWithIconTemplate: StoryFn<typeof Button> = (args) => {
   return (
     <Button {...args}>
@@ -63,4 +70,5 @@ export const WithPromise = WithPromiseTemplate.bind({});
 export const Circle = CircleTemplate.bind({});
 export const CircleWithIcon = CircleWithIconTemplate.bind({});
 export const ButtonWithIcon = ButtonWithIconTemplate.bind({});
+export const BinButton = BinButtonTemplate.bind({});
 export const Loading = LoadingButtonTemplate.bind({});
