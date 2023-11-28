@@ -226,9 +226,9 @@ export const WOOT_PLACEMENT = (trait: Trait, traits: Trait[], width: number, hei
   
   return {
     ...trait,
-    width: (width || 2000) * 1.4,
-    height: (height || 2000) * 1.4,
-    offsetX: (width * 0.02) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
+    width: (width || 2000) * 1.2,
+    height: (height || 2000) * 1.2,
+    offsetX: (width * 0.135) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
     offsetY: (height * 0.48) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1)
   }
 };
