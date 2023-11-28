@@ -1,5 +1,5 @@
 import { CanvasLayer } from "../canvasUtils";
-import { Avatar, Trait, TraitRuleFunction, TraitRuleFunctionMap, TraitRuleType, TraitType } from "./types";
+import { Avatar, AvatarView, Trait, TraitRuleFunction, TraitRuleFunctionMap, TraitRuleType, TraitType } from "./types";
 
 export const EFFECT_BLACK_AND_WHITE = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, layer: CanvasLayer) => {
   const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -185,9 +185,19 @@ export const HIDE_VISOR_IF = (trait: Trait, traits: Trait[]) => {
   return trait;
 };
 
-export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar, view?: AvatarView) => {
   if (trait.traitType === TraitType.BORDER || trait.traitType === TraitType.BACKGROUND) {
     return trait;
+  }
+
+  if (view === AvatarView.HEAD) {
+    return {
+      ...trait,
+      width: (width || 2000) * 1.5,
+      height: (height || 2000) * 1.5,
+      offsetX: (width * -0.09) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
+      offsetY: (height * 0.35) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1)
+    }
   }
   
   return {
@@ -199,7 +209,7 @@ export const COMIC_CON_PLACEMENT = (trait: Trait, traits: Trait[], width: number
   }
 };
 
-export const WOOT_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+export const WOOT_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar, view?: AvatarView) => {
   if (![TraitType.BODY, TraitType.FACE, TraitType.HAT].includes(trait.traitType)) {
     return {
       ...trait,
@@ -219,14 +229,23 @@ export const WOOT_PLACEMENT = (trait: Trait, traits: Trait[], width: number, hei
     width: (width || 2000) * 1.4,
     height: (height || 2000) * 1.4,
     offsetX: (width * 0.02) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
-    offsetY: (height * 0.48) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
-    images: trait.traitType === TraitType.BODY ? trait.images.filter(i => (i.uri.includes('head'))) : trait.images
+    offsetY: (height * 0.48) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1)
   }
 };
 
-export const HOMER_NFT_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+export const HOMER_NFT_PLACEMENT = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar, view?: AvatarView) => {
   if (trait.traitType === TraitType.BORDER || trait.traitType === TraitType.BACKGROUND) {
     return trait;
+  }
+
+  if (view === AvatarView.HEAD) {
+    return {
+      ...trait,
+      width: (width || 2000) * 0.7,
+      height: (height || 2000) * 0.7,
+      offsetX: (width * 0.4) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
+      offsetY: (height * 0.45) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1)
+    }
   }
   
   return {

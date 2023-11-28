@@ -4,7 +4,8 @@ import AvatarCanvas from '../AvatarCanvas';
 import { Avatar, AvatarView, TraitRarity, TraitType } from '../Avatar/types';
 
 const hatTraits = [
-  ''
+  '',
+  'knight-black'
 ];
 
 const shirtTraits = [
@@ -136,7 +137,7 @@ export default {
     },
     view: {
       control: 'select',
-      options: ['FULL', 'FRONT']
+      options: ['FULL', 'FRONT', 'HEAD']
     },
     hat: {
       control: 'select',

@@ -297,7 +297,7 @@ export default {
     },
     view: {
       control: 'select',
-      options: ['FULL', 'FRONT']
+      options: ['FULL', 'FRONT', 'HEAD']
     },
     hat: {
       control: 'select',
