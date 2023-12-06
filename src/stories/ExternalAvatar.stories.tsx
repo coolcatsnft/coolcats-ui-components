@@ -127,6 +127,7 @@ export default {
     shoes: '',
     sidekick: '',
     accessory: '',
+    effect: '',
     border: '',
     type: 'CAT',
     tokenId: '',
@@ -181,6 +182,10 @@ export default {
       control: 'select',
       options: ['', 'chugs-balloon', 'red-riding-basket']
     },
+    effect: {
+      control: 'select',
+      options: ['', 'sticker']
+    },
     tokenId: {
       control: 'select',
       options: [
@@ -218,7 +223,7 @@ const BlueCatTraits = [
 ]
 
 const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
-  const { pants, shirt, face, shoes, hat, sidekick, tokenId, accessory, border } = args as any;
+  const { pants, shirt, face, shoes, hat, sidekick, tokenId, accessory, border, effect } = args as any;
   const traits = BlueCatTraits.concat(
     hat ? [
       {
@@ -350,14 +355,33 @@ const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
         }] as any
       }
     ] : []
+  ).concat(
+    effect ? [
+      {
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.EFFECT,
+        name: effect,
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: `transparent.png`
+          }
+        ],
+        rules: [{
+          type: 'EFFECT',
+          fn: TraitRuleFunction.EFFECT_STICKER
+        }] as any
+      }
+    ] : []
   );
   
   return (
     <AvatarCanvas 
       {...args}
       traits={traits}
-      height={400}
-      width={400}
+      height={1000}
+      width={1000}
     />
   )
 }
