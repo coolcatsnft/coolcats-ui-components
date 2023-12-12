@@ -33,7 +33,16 @@ export function applyDefaultWeights(trait: Trait) {
   }
 }
 
-function evaluateRule(rules: TraitRule[], trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar, view?: AvatarView) {
+function evaluateRule(
+  rules: TraitRule[],
+  trait: Trait,
+  traits: Trait[],
+  width: number,
+  height: number,
+  tokenId?: string,
+  type?: Avatar,
+  view?: AvatarView
+) {
   return rules.map(r => {
     const fn = mutations[r.fn];
     if (typeof fn === 'function') {
@@ -346,25 +355,25 @@ export function createAvatarCanvasLayers(
     }
 
     return t;
-  }).map(t => {
-    return evaluateTraitMutateAllRules(
-      t,
-      traits,
-      width || CANVAS_WIDTH,
-      height || CANVAS_HEIGHT,
-      tokenId,
-      type,
-      view
-    );  
-  }).filter(
-    t => {
-      return t
-    }
-  );
+  });
+  
+  
+  let evaldTraits = traitsIncludingBody as Trait[];
+
+  // Get the mutate all rules
+  const rules = traits.reduce((rules: TraitRule[], trait: Trait) => {
+    return rules.concat((trait?.rules || []).filter(r => r.type === TraitRuleType.MUTATE_ALL));
+  }, []);
+  
+  rules.forEach(r => {
+    evaldTraits = evaldTraits.map(
+      t => evaluateRule([r], t, evaldTraits, width || CANVAS_WIDTH, height || CANVAS_HEIGHT, tokenId, type, view)
+    )
+  });
 
   // Map out traits into the Layered canvas config.  
   // This may require reducing as some layers will have multiple images
-  const sortedTraits = traitsIncludingBody.map((trait: Trait) => {
+  const sortedTraits = evaldTraits.map((trait: Trait) => {
     // Apply default rules
     return {
       ...trait,

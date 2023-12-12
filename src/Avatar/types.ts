@@ -76,6 +76,7 @@ export enum TraitRuleFunction {
   EFFECT_STICKER = 'EFFECT_STICKER',
   EFFECT_SEPIA = 'EFFECT_SEPIA',
   HIDE_ARMS = 'HIDE_ARMS',
+  HIDE_CHEEKS = 'HIDE_CHEEKS'
 }
 
 export type TraitRuleFunctionMap = {

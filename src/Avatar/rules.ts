@@ -282,7 +282,7 @@ export const HIDE_FACE_FOR_MECHANICAL = (trait: Trait, traits: Trait[], width: n
   if (trait.traitType === TraitType.FACE && traits.find(t => t.traitType === TraitType.SKIN && t.name.toLowerCase().includes('mechanical'))) {
     return {
       ...trait,
-      weight: 0
+      weight: -1
     };
   }
   
@@ -362,6 +362,17 @@ export const HIDE_ARMS = (trait: Trait, traits: Trait[], width: number, height: 
   return trait;
 };
 
+export const HIDE_CHEEKS = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+  if (trait.traitType === TraitType.BODY) {
+    return {
+      ...trait,
+      images: trait.images.filter(i => i.uri !== 'sw-cheeks.png')
+    };
+  }
+  
+  return trait;
+};
+
 export const exceptions = {};
 
 export const effects = {
@@ -388,7 +399,8 @@ export const mutations = {
   [TraitRuleFunction.HIDE_LEGS_AND_FEET]: HIDE_LEGS_AND_FEET,
   [TraitRuleFunction.FLIP_ACCESSORY]: FLIP_ACCESSORY,
   [TraitRuleFunction.FLIP_SIDEKICK]: FLIP_SIDEKICK,
-  [TraitRuleFunction.HIDE_ARMS]: HIDE_ARMS
+  [TraitRuleFunction.HIDE_ARMS]: HIDE_ARMS,
+  [TraitRuleFunction.HIDE_CHEEKS]: HIDE_CHEEKS
 } as TraitRuleFunctionMap;
 
 export default {
