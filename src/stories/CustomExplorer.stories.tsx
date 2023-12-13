@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 
 import AvatarCanvas from '../AvatarCanvas';
-import { Avatar, AvatarView, TraitRarity, TraitType } from '../Avatar/types';
+import { Avatar, AvatarView, TraitRarity, TraitRuleFunction, TraitRuleType, TraitType } from '../Avatar/types';
 
 const hatTraits = [
   '',
@@ -125,6 +125,7 @@ export default {
     shoes: '',
     accessory: '',
     sidekick: '',
+    skin: '',
     tokenId: '1',
     baseUrl: 'https://content.coolcatsnft.com/avatar/explorer/$traitType/',
     view: 'FULL',
@@ -174,6 +175,10 @@ export default {
       control: 'select',
       options: ['https://content.coolcatsnft.com/avatar/explorer/$traitType/', 'https://content.coolcatsnft.com/avatar/explorer2000x2000/$traitType/']
     },
+    skin: {
+      control: 'select',
+      options: ['', 'mechanical-x-ray-suit-ex']
+    },
     tokenId: {
       control: 'select',
       options: [
@@ -187,7 +192,7 @@ export default {
 const ExplorerTraits = [] as any
 
 const Template: StoryFn<typeof AvatarCanvas> = (args) => {
-  const { pants, shirt, face, hat, sidekick, tokenId, shoes, accessory } = args as any;
+  const { pants, shirt, skin, face, hat, sidekick, tokenId, shoes, accessory } = args as any;
   const traits = ExplorerTraits.concat(
     hat ? [
       {
@@ -202,6 +207,25 @@ const Template: StoryFn<typeof AvatarCanvas> = (args) => {
           }
         ],
         rules: []
+      }
+    ] : []
+  ).concat(
+    skin ? [
+      {
+        type: Avatar.EXPLORER,
+        view: AvatarView.FULL,
+        traitType: TraitType.SKIN,
+        name: skin,
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: `${skin.toLowerCase().replace(' ', '-')}.png`
+          }
+        ],
+        rules: [{
+          fn: TraitRuleFunction.HIDE_FACE_FOR_MECHANICAL,
+          type: TraitRuleType.MUTATE_ALL
+        }] as any
       }
     ] : []
   ).concat(

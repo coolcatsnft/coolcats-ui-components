@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 
 import AvatarCanvas from '../AvatarCanvas';
-import { Avatar, AvatarView, TraitRarity, TraitRuleFunction, TraitType } from '../Avatar/types';
+import { Avatar, AvatarView, TraitRarity, TraitRuleFunction, TraitRuleType, TraitType } from '../Avatar/types';
 
 const pantsTraits = [
   '',
@@ -129,6 +129,7 @@ export default {
     accessory: '',
     effect: '',
     border: '',
+    skin: '',
     type: 'CAT',
     tokenId: '',
     baseUrl: 'https://content.coolcatsnft.com/avatar/cat/$traitType/',
@@ -154,6 +155,10 @@ export default {
     shirt: {
       control: 'select',
       options: shirtTraits
+    },
+    skin: {
+      control: 'select',
+      options: ['', 'mechanical-x-ray-suit-cc']
     },
     pants: {
       control: 'select',
@@ -223,7 +228,7 @@ const BlueCatTraits = [
 ]
 
 const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
-  const { pants, shirt, face, shoes, hat, sidekick, tokenId, accessory, border, effect } = args as any;
+  const { pants, shirt, face, skin, shoes, hat, sidekick, tokenId, accessory, border, effect } = args as any;
   const traits = BlueCatTraits.concat(
     hat ? [
       {
@@ -238,6 +243,25 @@ const BlueCatTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
           }
         ],
         rules: []
+      }
+    ] : []
+  ).concat(
+    skin ? [
+      {
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.SKIN,
+        name: skin,
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: `${skin.toLowerCase().replace(' ', '-')}.png`
+          }
+        ],
+        rules: [{
+          fn: TraitRuleFunction.HIDE_FACE_FOR_MECHANICAL,
+          type: TraitRuleType.MUTATE_ALL
+        }] as any
       }
     ] : []
   ).concat(

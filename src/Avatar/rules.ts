@@ -279,7 +279,10 @@ export const CHRISTMAS_CARD_PLACEMENT = (trait: Trait, traits: Trait[], width: n
 };
 
 export const HIDE_FACE_FOR_MECHANICAL = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
-  if (trait.traitType === TraitType.FACE && traits.find(t => t.traitType === TraitType.SKIN && t.name.toLowerCase().includes('mechanical'))) {
+  if (
+    (trait.traitType === TraitType.FACE || (trait.traitType === TraitType.SHOES && trait.type === Avatar.SHADOWWOLF))
+    && traits.find(t => t.traitType === TraitType.SKIN && t.name.toLowerCase().includes('mechanical'))
+  ) {
     return {
       ...trait,
       weight: -1
