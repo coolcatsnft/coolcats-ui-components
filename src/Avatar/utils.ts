@@ -446,6 +446,13 @@ export function createAvatarCanvasLayers(
       }
     }
 
+    if (view === AvatarView.FULL && trait.name.includes('ghost tail') && traits.find(t => t.name.includes('mechanical'))) {
+      return {
+        ...trait,
+        weight: -1
+      }
+    }
+
     if (view === AvatarView.HEAD && trait.traitType !== TraitType.BACKGROUND && trait.traitType !== TraitType.BORDER
       && typeof trait.offsetX !== 'number'  
     ) {
