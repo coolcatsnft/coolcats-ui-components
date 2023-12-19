@@ -687,3 +687,207 @@ const ExplorerChugTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
 }
 
 export const ExplorerMilkChug = ExplorerChugTemplate.bind({});
+
+
+
+const WolfChugTemplate2: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      baseUrl={args.baseUrl?.replace('/cat', '/shadowwolf')}
+      type={Avatar.SHADOWWOLF}
+      traits={
+        [
+          {
+            "name": "backyard bones #18",
+            "type": "SHADOWWOLF",
+            "view": "FULL",
+            "traitType": "SIDEKICK",
+            "rarity": 3,
+            "contract": {
+              "tokenId": 125,
+              "contract": {
+                "address": "0x8d2d8ba0775e64e419d2bb2de31336a0e7eeba39",
+                "network": "goerli"
+              }
+            },
+            "displayImage": {
+              "uri": "https://s3.amazonaws.com/metadata.coolcatsnft.com/library/sidekick/thumbnail/125.png"
+            },
+            "images": [
+              {
+                "uri": "backyard-bones-orange.png"
+              }
+            ],
+            "rules": []
+          },
+          {
+            "id": 318,
+            "name": "beanie orange",
+            "rarity": 1,
+            "type": "SHADOWWOLF",
+            "weight": null,
+            "traitType": "HAT",
+            "additional": 0,
+            "displayName": "Beanie orange",
+            "tokenId": null,
+            "fromTokenId": null,
+            "toTokenId": null,
+            "contract": null,
+            "boundTo": {
+              "token_id": 7,
+              "token_type": "SHADOWWOLF"
+            },
+            "images": [
+              {
+                "uri": "beanie-orange.png"
+              }
+            ],
+            "rules": []
+          },
+          {
+            "id": 385,
+            "name": "evil",
+            "rarity": 1,
+            "type": "SHADOWWOLF",
+            "weight": null,
+            "traitType": "FACE",
+            "additional": 0,
+            "displayName": "Evil",
+            "tokenId": null,
+            "fromTokenId": null,
+            "toTokenId": null,
+            "contract": null,
+            "boundTo": {
+              "token_id": 7,
+              "token_type": "SHADOWWOLF"
+            },
+            "images": [
+              {
+                "uri": "evil.png"
+              }
+            ],
+            "rules": []
+          },
+          {
+            "id": 416,
+            "name": "shadow 1",
+            "rarity": 1,
+            "type": "SHADOWWOLF",
+            "weight": null,
+            "traitType": "BACKGROUND",
+            "additional": 0,
+            "displayName": "Shadow 1",
+            "tokenId": null,
+            "fromTokenId": null,
+            "toTokenId": null,
+            "contract": null,
+            "boundTo": {
+              "token_id": 7,
+              "token_type": "SHADOWWOLF"
+            },
+            "images": [
+              {
+                "uri": "shadow-1.png"
+              }
+            ],
+            "rules": []
+          },
+          {
+            "id": 840,
+            "name": "chain",
+            "rarity": 2,
+            "type": "SHADOWWOLF",
+            "weight": null,
+            "traitType": "PANTS",
+            "additional": 0,
+            "displayName": "Orange Swim Shorts",
+            "tokenId": 9,
+            "fromTokenId": null,
+            "toTokenId": null,
+            "contract": {
+              "tokenId": 9
+            },
+            "images": [
+              {
+                "uri": "chain-pants.png"
+              }
+            ],
+            "rules": []
+          },
+          {
+            "id": 1063,
+            "name": "blue balloon",
+            "rarity": 4,
+            "type": "SHADOWWOLF",
+            "weight": null,
+            "traitType": "ACCESSORY",
+            "additional": 1,
+            "displayName": "Blue Balloon",
+            "tokenId": 217,
+            "fromTokenId": null,
+            "toTokenId": null,
+            "contract": {
+              "tokenId": 217
+            },
+            "images": [
+              {
+                "uri": "blue-balloon.png"
+              }
+            ],
+            "rules": []
+          },
+          {
+            "id": 1122,
+            "name": "black track jacket",
+            "rarity": 3,
+            "type": "SHADOWWOLF",
+            "weight": null,
+            "traitType": "SHIRT",
+            "additional": 1,
+            "displayName": "Black Track Jacket",
+            "tokenId": 262,
+            "fromTokenId": null,
+            "toTokenId": null,
+            "contract": {
+              "tokenId": 262
+            },
+            "images": [
+              {
+                "uri": "track-jacket-black.png"
+              }
+            ],
+            "rules": []
+          },
+          {
+            "id": 1770,
+            "name": "the milk chug",
+            "rarity": 0,
+            "type": "SHADOWWOLF",
+            "weight": null,
+            "traitType": "BORDER",
+            "additional": 1,
+            "displayName": "The Milk Chug",
+            "tokenId": null,
+            "fromTokenId": null,
+            "toTokenId": null,
+            "contract": null,
+            "displayImage": {
+              "uri": "/images/avatar/tiles/the-milk-chug.png"
+            },
+            "images": [
+              {
+                "uri": "milk-chug-logo.png"
+              }
+            ],
+            "rules": [{
+              type: 'MUTATE_ALL',
+              fn: TraitRuleFunction.MILK_CHUG
+            }] as any
+          }
+        ] as any}
+    />
+  )
+}
+
+export const WolfMilkChug2 = WolfChugTemplate2.bind({});

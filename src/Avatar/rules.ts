@@ -286,6 +286,7 @@ export const MILK_CHUG = (trait: Trait, traits: Trait[], width: number, height: 
   if (
     trait.traitType === TraitType.SIDEKICK 
     || trait.traitType === TraitType.PANTS 
+    || trait.traitType === TraitType.ACCESSORY 
     || trait.traitType === TraitType.SHOES
     || trait.traitType === TraitType.SKIN
   ) {
@@ -295,11 +296,13 @@ export const MILK_CHUG = (trait: Trait, traits: Trait[], width: number, height: 
     };
   }
 
-  const offsetX = type === Avatar.CAT ? 0.06 : 0.045;
+  const offsetX = 0.045;
   
   return {
     ...trait,
-    images: trait.traitType === TraitType.BODY ? trait.images.filter(i => !['cc-body.png', 'sw-feet.png', '1-socks.png', '2-socks.png'].includes(i.uri)) : trait.images,
+    images: trait.traitType === TraitType.BODY ? trait.images.filter(
+      i => !['sw-feet.png', '1-socks.png', '2-socks.png'].includes(i.uri)
+    ) : trait.images,
     offsetX: (width * offsetX) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
     offsetY: (height * 0.01) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1)
   }
