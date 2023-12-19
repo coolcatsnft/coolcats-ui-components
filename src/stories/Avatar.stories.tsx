@@ -563,6 +563,75 @@ const WootTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
 
 export const Woot = WootTemplate.bind({});
 
+const MulkChugTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      type={Avatar.CAT}
+      traits={Cat4710Traits.concat([{
+        type: Avatar.CAT,
+        view: AvatarView.FULL,
+        traitType: TraitType.BORDER,
+        name: 'milk chug',
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: 'milk-chug-logo.png'
+          }
+        ],
+        rules: [{
+          type: 'MUTATE_ALL',
+          fn: TraitRuleFunction.MILK_CHUG
+        }] as any
+      }])}
+    />
+  )
+}
+
+export const MilkChug = MulkChugTemplate.bind({});
+
+const WolfChugTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      baseUrl={args.baseUrl?.replace('/cat', '/shadowwolf')}
+      type={Avatar.SHADOWWOLF}
+      traits={[
+        {
+          type: Avatar.SHADOWWOLF,
+          view: args.view,
+          traitType: TraitType.FACE,
+          name: 'shadow wolf',
+          rarity: TraitRarity.COMMON,
+          images: [
+            {
+              uri: 'shadow-wolf.png'
+            }
+          ],
+          rules: []
+        }, {
+          type: Avatar.SHADOWWOLF,
+          view: AvatarView.FULL,
+          traitType: TraitType.BORDER,
+          name: 'milk chug',
+          rarity: TraitRarity.COMMON,
+          images: [
+            {
+              uri: 'milk-chug-logo.png'
+            }
+          ],
+          rules: [{
+            type: 'MUTATE_ALL',
+            fn: TraitRuleFunction.MILK_CHUG
+          }] as any
+        }
+      ]}
+    />
+  )
+}
+
+export const WolfMilkChug = WolfChugTemplate.bind({});
+
 const OfflineAvatarTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
   return (
     <AvatarCanvas 
@@ -589,3 +658,32 @@ const OfflineAvatarTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
 }
 
 export const OfflineAvatar = OfflineAvatarTemplate.bind({});
+
+const ExplorerChugTemplate: StoryFn<typeof AvatarCanvas> = (args) => {
+  return (
+    <AvatarCanvas 
+      {...args}
+      tokenId='1'
+      baseUrl='https://content.coolcatsnft.com/avatar/explorer2000x2000/$traitType/'
+      type={Avatar.EXPLORER}
+      traits={[{
+        type: Avatar.EXPLORER,
+        view: AvatarView.FULL,
+        traitType: TraitType.BORDER,
+        name: 'milk chug',
+        rarity: TraitRarity.COMMON,
+        images: [
+          {
+            uri: 'milk-chug-logo.png'
+          }
+        ],
+        rules: [{
+          type: 'MUTATE_ALL',
+          fn: TraitRuleFunction.MILK_CHUG
+        }] as any
+      }]}
+    />
+  )
+}
+
+export const ExplorerMilkChug = ExplorerChugTemplate.bind({});

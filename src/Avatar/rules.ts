@@ -278,6 +278,33 @@ export const CHRISTMAS_CARD_PLACEMENT = (trait: Trait, traits: Trait[], width: n
   }
 };
 
+export const MILK_CHUG = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
+  if (trait.traitType === TraitType.BORDER || trait.traitType === TraitType.BACKGROUND) {
+    return trait;
+  }
+
+  if (
+    trait.traitType === TraitType.SIDEKICK 
+    || trait.traitType === TraitType.PANTS 
+    || trait.traitType === TraitType.SHOES
+    || trait.traitType === TraitType.SKIN
+  ) {
+    return {
+      ...trait,
+      weight: -1
+    };
+  }
+
+  const offsetX = type === Avatar.CAT ? 0.06 : 0.045;
+  
+  return {
+    ...trait,
+    images: trait.traitType === TraitType.BODY ? trait.images.filter(i => !['cc-body.png', 'sw-feet.png', '1-socks.png', '2-socks.png'].includes(i.uri)) : trait.images,
+    offsetX: (width * offsetX) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1),
+    offsetY: (height * 0.01) * ((type === Avatar.CAT && tokenId === '500') ? -1 : 1)
+  }
+};
+
 export const HIDE_FACE_FOR_MECHANICAL = (trait: Trait, traits: Trait[], width: number, height: number, tokenId?: string, type?: Avatar) => {
   if (
     (trait.traitType === TraitType.FACE || (trait.traitType === TraitType.SHOES && trait.type === Avatar.SHADOWWOLF))
@@ -397,6 +424,7 @@ export const mutations = {
   [TraitRuleFunction.COMIC_CON_PLACEMENT]: COMIC_CON_PLACEMENT,
   [TraitRuleFunction.HOMER_NFT_PLACEMENT]: HOMER_NFT_PLACEMENT,
   [TraitRuleFunction.CHRISTMAS_CARD_PLACEMENT]: CHRISTMAS_CARD_PLACEMENT,
+  [TraitRuleFunction.MILK_CHUG]: MILK_CHUG,
   [TraitRuleFunction.HIDE_FACE_FOR_MECHANICAL]: HIDE_FACE_FOR_MECHANICAL,
   [TraitRuleFunction.WOOT_PLACEMENT]: WOOT_PLACEMENT,
   [TraitRuleFunction.HIDE_LEGS_AND_FEET]: HIDE_LEGS_AND_FEET,
