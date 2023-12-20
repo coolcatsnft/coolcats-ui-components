@@ -288,7 +288,6 @@ export const MILK_CHUG = (trait: Trait, traits: Trait[], width: number, height: 
     || trait.traitType === TraitType.PANTS 
     || trait.traitType === TraitType.ACCESSORY 
     || trait.traitType === TraitType.SHOES
-    || trait.traitType === TraitType.SKIN
   ) {
     return {
       ...trait,
