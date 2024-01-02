@@ -56,7 +56,7 @@ export const styledInputPartial = `
   text-align: center;
   border: 2px solid var(--cc-color-primary);
   background: var(--cc-color-white);
-  outline: none;
+  outline-offset: 4px;
   transition-duration: 0.1s;
   color: var(--cc-font-color-primary);
 
@@ -89,10 +89,19 @@ export const styledButtonPartial = `
   
   ${styledButtonText}
 
+  &:hover {
+    &:not([disabled]) {
+      transform: translateY(-1px);
+      box-shadow: 5px 5px 0px 0px var(--cc-color-primary);
+      transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5), box-shadow 250ms cubic-bezier(.3, .7, .4, 1.5);
+    }
+  }
+
   &:active {
     &:not([disabled]) {
-      box-shadow: none;
+      box-shadow: 0 0 0 0 var(--cc-color-primary);
       transform: translateX(4px) translateY(4px);
+      transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5), box-shadow 250ms cubic-bezier(.3, .7, .4, 1.5);
     }
   }
 `;
