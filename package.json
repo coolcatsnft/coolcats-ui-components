@@ -1,7 +1,7 @@
 {
-  "name": "cool-cats-ui",
+  "name": "coolcats-ui-components",
   "description": "",
-  "version": "0.0.91",
+  "version": "0.0.1",
   "author": "",
   "license": "",
   "keywords": [],
@@ -135,7 +135,6 @@
     "yaml": ">=2.2.2"
   },
   "dependencies": {
-    "cool-cats-ui": "file:.yalc/cool-cats-ui",
     "styled-components": "^5.3.6"
   }
 }
