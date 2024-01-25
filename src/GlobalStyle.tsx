@@ -41,22 +41,24 @@ const Variables = {
   'font-color-outlineblack': 'white',
 };
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle<{ $doNotRevert?: boolean }>`
   :root {
     ${Object.entries(Variables).map(([k, v]) => `--cc-${k}: var(--cc-theme-${k}, ${v});`)}
   }
 
-  *:where(:not(html, iframe, canvas, img, svg, video, audio, input, select):not(svg *, symbol *)) {
-    all: unset;
-    display: revert;
-  }
+  ${({ $doNotRevert }) => !$doNotRevert && css`
+    *:where(:not(html, iframe, canvas, img, svg, video, audio, input, select):not(svg *, symbol *)) {
+      all: unset;
+      display: revert;
+    }
 
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    transition: all 0.3s;
-  }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      transition: all 0.3s;
+    }
+  `}
 `;
 
 export const unselectable = css`
