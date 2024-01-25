@@ -55,4 +55,5 @@ export { default as BinIcon } from './Bin';
 export { default as MailIcon } from './Mail';
 export { default as ProgressToTickIcon } from './ProgressToTick';
 export { default as CoinbaseIcon } from './Coinbase';
+export { default as WallpaperIcon } from './Wallpaper';
 export { default as Svg } from './Svg';

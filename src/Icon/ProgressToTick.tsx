@@ -29,9 +29,9 @@ const draw = keyframes`
 `;
 
 const Base = Styled.circle<{ stroke?: string }>`
-  fill: none;
-  stroke: ${({ stroke }) => stroke || 'var(--cc-color-primary)'};
-  stroke-width: 12;
+  fill: none !important;
+  stroke: ${({ stroke }) => stroke || 'var(--cc-color-primary)'} !important;
+  stroke-width: 12 !important;
 `
 
 const Circle = Styled(Base)<{ $ticked?: boolean }>`
@@ -43,7 +43,7 @@ const Circle = Styled(Base)<{ $ticked?: boolean }>`
   ${({ $ticked }) => $ticked && css`
     stroke-dashoffset: 66;
     stroke-dasharray: 1000;
-    stroke: var(--cc-color-success);
+    stroke: var(--cc-color-success) !important;
   `}
 `;
 
@@ -54,7 +54,7 @@ const Polyline = Styled(Base)<{ $ticked?: boolean }>`
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
     animation: ${draw} 8s ease-out forwards;
-    stroke: var(--cc-color-success);
+    stroke: var(--cc-color-success) !important;
   `}
 `;
 

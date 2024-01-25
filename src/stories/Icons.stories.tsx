@@ -54,6 +54,7 @@ import {
   VolumeIcon,
   WalletConnectIcon,
   WalletIcon,
+  WallpaperIcon,
   YoutubeIcon
 } from '../Icon';
 
@@ -231,3 +232,6 @@ export const ProgressToTick = Template53.bind({});
 
 const Template54: StoryFn<typeof CoinbaseIcon> = (args) => <CoinbaseIcon {...args} />; 
 export const Coinbase = Template54.bind({});
+
+const Template55: StoryFn<typeof WallpaperIcon> = (args) => <WallpaperIcon {...args} />; 
+export const Wallpaper = Template55.bind({});
