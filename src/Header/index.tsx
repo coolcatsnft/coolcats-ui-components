@@ -107,6 +107,7 @@ export type HeaderProps = {
     active?: boolean,
     clickAction: MouseEventHandler<HTMLButtonElement>
   }[],
+  menuClickAction?: MouseEventHandler<HTMLButtonElement>,
   children: ReactNode | [ReactNode, ReactNode]
 };
 
@@ -115,10 +116,18 @@ export const Header = forwardRef((props: HeaderProps, ref: any) => {
 
   const {
     children,
-    icons
+    icons,
+    menuClickAction
   } = props;
 
   const isTwoChildren = Array.isArray(children) && children.length === 2;
+
+  const onMenuClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setVisible(v => !v);
+    if (menuClickAction) {
+      menuClickAction(e);
+    }
+  }
 
   return (
     <StyledHeader ref={ref}>
@@ -140,8 +149,8 @@ export const Header = forwardRef((props: HeaderProps, ref: any) => {
             {children[1]}
           </>}
         </UserMenuNavButtons>
-        {((icons || []).length > 0 || isTwoChildren) && (
-          <IconButton onClick={() => setVisible(v => !v)} title={visible ? 'Close Menu' : 'Open Menu'}>
+        {((icons || []).length > 0 || isTwoChildren || menuClickAction) && (
+          <IconButton onClick={onMenuClick} title={visible ? 'Close Menu' : 'Open Menu'}>
             <i><MenuIcon open={visible} /></i>
             {visible ? 'Close' : 'Menu'}
           </IconButton>
