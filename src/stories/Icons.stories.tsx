@@ -4,6 +4,8 @@ import {
   ArrowLeftIcon, 
   ArrowRightIcon, 
   BackgroundIcon, 
+  BackpackIcon, 
+  BasketIcon, 
   BinIcon, 
   BodyIcon, 
   BorderIcon, 
@@ -235,3 +237,9 @@ export const Coinbase = Template54.bind({});
 
 const Template55: StoryFn<typeof WallpaperIcon> = (args) => <WallpaperIcon {...args} />; 
 export const Wallpaper = Template55.bind({});
+
+const Template56: StoryFn<typeof BackpackIcon> = (args) => <BackpackIcon {...args} />; 
+export const Backpack = Template56.bind({});
+
+const Template57: StoryFn<typeof BasketIcon> = (args) => <BasketIcon {...args} />; 
+export const Basket = Template57.bind({});
